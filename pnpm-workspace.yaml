@@ -1,5 +1,5 @@
-# pnpm 10+/11 reads the build-script allowlist here (no longer from package.json).
+# pnpm 11.5 reads the build-script allowlist here as an `allowBuilds` map.
 # sharp = image processing, esbuild = TS bundling — both need their install scripts.
-onlyBuiltDependencies:
-  - sharp
-  - esbuild
+allowBuilds:
+  esbuild: true
+  sharp: true
