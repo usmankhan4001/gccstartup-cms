@@ -1,0 +1,38 @@
+# Compose-style deploy for Dokploy (app + postgres).
+# In Dokploy you can also run Postgres as a separate service and deploy the app
+# from the Dockerfile — then you only need this 'app' block's env.
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on: [postgres]
+    environment:
+      DATABASE_URI: postgres://gcc:${POSTGRES_PASSWORD:-gcc}@postgres:5432/gccstartup
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:3000}
+      MEDIA_DIR: /app/media
+      TWENTY_BASE_URL: ${TWENTY_BASE_URL}
+      TWENTY_API_KEY: ${TWENTY_API_KEY}
+      WAHA_BASE_URL: ${WAHA_BASE_URL}
+      WAHA_SESSION: ${WAHA_SESSION:-default}
+      WAHA_API_KEY: ${WAHA_API_KEY}
+      ADMIN_WHATSAPP: ${ADMIN_WHATSAPP}
+      NOTIFY_LEAD: ${NOTIFY_LEAD:-true}
+    ports:
+      - '3000:3000'
+    volumes:
+      - media:/app/media
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: gcc
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-gcc}
+      POSTGRES_DB: gccstartup
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  media:
+  pgdata:

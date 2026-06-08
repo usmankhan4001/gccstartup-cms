@@ -1,0 +1,44 @@
+import { buildConfig } from 'payload'
+import { postgresAdapter } from '@payloadcms/db-postgres'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { seoPlugin } from '@payloadcms/plugin-seo'
+import sharp from 'sharp'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+import { Users } from './collections/Users'
+import { Media } from './collections/Media'
+import { Countries } from './collections/Countries'
+import { Services } from './collections/Services'
+import { PricingTiers } from './collections/PricingTiers'
+import { Posts } from './collections/Posts'
+import { Leads } from './collections/Leads'
+import { Homepage } from './globals/Homepage'
+import { SiteSettings } from './globals/SiteSettings'
+import { leadEndpoint } from './endpoints/lead'
+
+const filename = fileURLToPath(import.meta.url)
+const dirname = path.dirname(filename)
+
+export default buildConfig({
+  admin: { user: Users.slug, importMap: { baseDir: path.resolve(dirname) } },
+  editor: lexicalEditor(),
+  collections: [Users, Media, Countries, Services, PricingTiers, Posts, Leads],
+  globals: [Homepage, SiteSettings],
+  endpoints: [leadEndpoint],
+  cors: (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(','),
+  csrf: (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(','),
+  db: postgresAdapter({ pool: { connectionString: process.env.DATABASE_URI || '' } }),
+  secret: process.env.PAYLOAD_SECRET || '',
+  sharp,
+  typescript: { outputFile: path.resolve(dirname, 'payload-types.ts') },
+  plugins: [
+    seoPlugin({
+      collections: ['countries', 'services', 'pricingTiers', 'posts'],
+      globals: ['homepage'],
+      uploadsCollection: 'media',
+      generateTitle: ({ doc }: any) => `${doc?.name || doc?.title || 'GCC Startup'} — GCC Startup`,
+      generateDescription: ({ doc }: any) => doc?.intro || doc?.excerpt || '',
+    }),
+  ],
+})
