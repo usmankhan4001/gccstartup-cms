@@ -1,0 +1,5 @@
+# pnpm 10+/11 reads the build-script allowlist here (no longer from package.json).
+# sharp = image processing, esbuild = TS bundling — both need their install scripts.
+onlyBuiltDependencies:
+  - sharp
+  - esbuild
