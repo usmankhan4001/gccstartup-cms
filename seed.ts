@@ -7,9 +7,8 @@
  *
  * Idempotent: upserts by slug, so you can re-run it safely.
  */
-import 'dotenv/config'
 import { getPayload } from 'payload'
-import config from './payload.config'
+import config from './src/payload.config'
 import { createRequire } from 'module'
 
 const require = createRequire(import.meta.url)
