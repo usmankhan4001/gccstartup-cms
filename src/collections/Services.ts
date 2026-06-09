@@ -11,7 +11,7 @@ export const Services: CollectionConfig = {
     { name: 'headline', type: 'text', admin: { description: 'Hero headline. Wrap emphasis in <em>…</em>' } },
     { name: 'intro', type: 'textarea' },
     {
-      name: 'meta',
+      name: 'statChips',
       type: 'array',
       labels: { singular: 'Stat chip', plural: 'Stat chips' },
       maxRows: 3,

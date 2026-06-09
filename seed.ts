@@ -57,7 +57,7 @@ async function run() {
     await upsert(payload, 'services', s.slug, {
       name: s.name, slug: s.slug, icon: ICON[s.slug],
       headline: s.headline, intro: s.intro,
-      meta: (s.meta || []).map(([value, label]: [string, string]) => ({ value, label })),
+      statChips: (s.meta || []).map(([value, label]: [string, string]) => ({ value, label })),
       features: pairs(s.features), process: pairs(s.process), faq: s.faq,
     })
   }
