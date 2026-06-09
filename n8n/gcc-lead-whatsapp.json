@@ -1,0 +1,115 @@
+{
+  "name": "GCC Startup — Lead → Human WhatsApp",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "gcc-lead",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "webhook1",
+      "name": "Lead Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-360, 300],
+      "webhookId": "gcc-lead"
+    },
+    {
+      "parameters": {
+        "jsCode": "const d = $json.body || $json;\nconst len = (d.leadText || '').length;\n// ~human typing speed: ~0.045s per char, clamped between 2 and 7 seconds\nconst typingSeconds = Math.min(Math.max(Math.round(len * 0.045), 2), 7);\nreturn [{ json: { ...d, typingSeconds } }];"
+      },
+      "id": "code1",
+      "name": "Compute Fields",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-140, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR_WAHA_URL/api/startTyping",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { session: 'default', chatId: $('Compute Fields').item.json.leadChatId } }}",
+        "options": {}
+      },
+      "id": "http1",
+      "name": "Start Typing",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [120, 180]
+    },
+    {
+      "parameters": {
+        "unit": "seconds",
+        "amount": "={{ $('Compute Fields').item.json.typingSeconds }}"
+      },
+      "id": "wait1",
+      "name": "Dynamic Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [340, 180],
+      "webhookId": "gcc-wait"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR_WAHA_URL/api/stopTyping",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { session: 'default', chatId: $('Compute Fields').item.json.leadChatId } }}",
+        "options": {}
+      },
+      "id": "http2",
+      "name": "Stop Typing",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [560, 180]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR_WAHA_URL/api/sendText",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { session: 'default', chatId: $('Compute Fields').item.json.leadChatId, text: $('Compute Fields').item.json.leadText } }}",
+        "options": {}
+      },
+      "id": "http3",
+      "name": "Message Student",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [780, 180]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR_WAHA_URL/api/sendText",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { session: 'default', chatId: $('Compute Fields').item.json.adminChatId, text: $('Compute Fields').item.json.adminText } }}",
+        "options": {}
+      },
+      "id": "http4",
+      "name": "Alert Admin",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [120, 440]
+    }
+  ],
+  "connections": {
+    "Lead Webhook": { "main": [[{ "node": "Compute Fields", "type": "main", "index": 0 }]] },
+    "Compute Fields": {
+      "main": [[
+        { "node": "Start Typing", "type": "main", "index": 0 },
+        { "node": "Alert Admin", "type": "main", "index": 0 }
+      ]]
+    },
+    "Start Typing": { "main": [[{ "node": "Dynamic Wait", "type": "main", "index": 0 }]] },
+    "Dynamic Wait": { "main": [[{ "node": "Stop Typing", "type": "main", "index": 0 }]] },
+    "Stop Typing": { "main": [[{ "node": "Message Student", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false
+}

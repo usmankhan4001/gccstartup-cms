@@ -21,6 +21,9 @@ const WAHA_SESSION = process.env.WAHA_SESSION || 'default'
 const WAHA_API_KEY = process.env.WAHA_API_KEY || ''
 const ADMIN_WHATSAPP = (process.env.ADMIN_WHATSAPP || '').replace(/[^\d]/g, '')
 const NOTIFY_LEAD = String(process.env.NOTIFY_LEAD || 'true') === 'true'
+// When set, leads are forwarded to n8n which runs the human-like WhatsApp flow
+// (start typing → wait → stop typing → send). The CMS composes the messages.
+const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || ''
 
 const digits = (s?: string) => String(s || '').replace(/[^\d]/g, '')
 
@@ -107,9 +110,42 @@ const leadMessage = (d: LeadData) => {
   ].join('\n')
 }
 
+/** Forward the lead to n8n, which runs the human-like WhatsApp sequence. */
+async function forwardToN8n(d: LeadData): Promise<boolean> {
+  if (!N8N_WEBHOOK_URL) return false
+  const payload = {
+    // composed messages — n8n only adds the typing/wait/send behavior
+    leadChatId: d.phone ? `${digits(d.phone)}@c.us` : '',
+    leadText: leadMessage(d),
+    adminChatId: ADMIN_WHATSAPP ? `${ADMIN_WHATSAPP}@c.us` : '',
+    adminText: adminMessage(d),
+    notifyLead: NOTIFY_LEAD && Boolean(d.phone),
+    lead: {
+      name: d.name, email: d.email, phone: d.phone, country: d.country,
+      interest: d.interest, message: d.message, source: d.source, page: d.page,
+    },
+  }
+  try {
+    const res = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+    if (!res.ok) console.error('[n8n] forward failed', res.status)
+    return true
+  } catch (e) {
+    console.error('[n8n] error', (e as Error).message)
+    return false
+  }
+}
+
 /** Fire all notifications. Failures are logged, never thrown. */
 export async function notifyLead(d: LeadData) {
   await pushToTwenty(d)
-  if (ADMIN_WHATSAPP) await wahaSend(ADMIN_WHATSAPP, adminMessage(d))
-  if (NOTIFY_LEAD && d.phone) await wahaSend(digits(d.phone), leadMessage(d))
+  // Prefer n8n (human-like typing). Only fall back to direct WAHA if n8n isn't configured.
+  const forwarded = await forwardToN8n(d)
+  if (!forwarded) {
+    if (ADMIN_WHATSAPP) await wahaSend(ADMIN_WHATSAPP, adminMessage(d))
+    if (NOTIFY_LEAD && d.phone) await wahaSend(digits(d.phone), leadMessage(d))
+  }
 }
