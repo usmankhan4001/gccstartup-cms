@@ -12,8 +12,8 @@ import config from './src/payload.config'
 import { createRequire } from 'module'
 
 const require = createRequire(import.meta.url)
-// build_pages.js ships inside the repo, next to the static site source
-const { countries, services, tiers } = require('./website-static/build_pages.cjs') as {
+// Reuse the bundled generator's data (no website-static / fs dependency)
+const { countries, services, tiers } = require('./src/site/generator.cjs') as {
   countries: any[]
   services: any[]
   tiers: any[]
