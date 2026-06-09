@@ -163,7 +163,21 @@ hr { border: none; border-top: 1px solid var(--line); }
 .nav-drawer.open { display: flex; }
 .nav-drawer a { padding: 11px 32px; font-size: 15px; color: var(--body); transition: color 0.2s; }
 .nav-drawer a:hover { color: var(--blue); }
-.nav-drawer .btn { margin: 10px 32px 0; justify-content: center; }
+.nav-drawer .btn { margin: 14px 32px 4px; justify-content: center; }
+/* collapsible groups */
+.drawer-group {
+  display: flex; justify-content: space-between; align-items: center; width: 100%;
+  background: none; border: none; border-top: 1px solid var(--line);
+  padding: 14px 32px; font-size: 15px; font-weight: 600; color: var(--ink);
+  cursor: pointer; font-family: var(--font);
+}
+.drawer-group:first-child { border-top: none; }
+.drawer-group .dg-ic { font-size: 18px; font-weight: 400; color: var(--muted); transition: transform 0.25s; line-height: 1; }
+.drawer-group.open .dg-ic { transform: rotate(45deg); }
+.drawer-sub { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; background: var(--bg); }
+.drawer-sub.open { max-height: 360px; }
+.drawer-sub a { display: block; padding: 11px 40px; font-size: 14px; }
+.nav-drawer .drawer-link { border-top: 1px solid var(--line); font-weight: 500; }
 
 /* ─────────────────────────────────────────
    HERO
@@ -868,8 +882,14 @@ hr { border: none; border-top: 1px solid var(--line); }
 .compare-cta { padding: 20px 24px; text-align: center; }
 @media (max-width: 768px) {
   .est-row { grid-template-columns: 1fr; }
-  .compare-table { grid-template-columns: 1fr; }
-  .compare-table .ct-rowlabel { margin-top: 8px; }
+  /* keep the A vs B comparison readable: label spans full width, values sit side by side */
+  .compare-table { grid-template-columns: 1fr 1fr; }
+  .compare-table > div { padding: 11px 14px; font-size: 13px; }
+  .compare-table .ct-rowlabel { grid-column: 1 / -1; margin-top: 0; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .compare-table .ct-rowlabel:empty { display: none; }
+  .compare-table .ct-head { font-size: 14px; }
+  .compare-controls { grid-template-columns: 1fr; }
+  .compare-ctrl:first-child { border-right: none; border-bottom: 1px solid var(--line); }
 }
 
 /* ─── EXIT-INTENT POPUP ─── */
@@ -1056,7 +1076,7 @@ h3 { font-size: 20px; }
 .section-header.center p { margin: 0 auto; }
 
 /* Breathing room */
-.section { padding: 132px 0; }
+.section { padding: 96px 0; }
 .section-alt { background: #FBFCFE; }
 
 /* Hero */
@@ -1125,9 +1145,10 @@ h3 { font-size: 20px; }
 }
 @media (max-width:768px){
   .services-grid, .jur-grid, .pricing-grid, .benefit-grid, .process-grid, .req-list, .testimonials-grid, .pd-feature-grid, .magnets-grid { grid-template-columns: 1fr !important; }
-  .section { padding: 76px 0; }
+  .section { padding: 58px 0; }
   .hero-copy h1 { font-size: clamp(38px, 9vw, 50px); }
-  .section-header { margin-bottom: 48px; }
+  .section-header { margin-bottom: 40px; }
+  .wrap, .wrap-sm { padding: 0 18px; }
 }
 
 /* ═════════════════════════════════════════════════════════
@@ -1166,7 +1187,7 @@ h3 { font-size: 22px; }
 .midcta h3 { font-size: 21px; } .midcta p { font-size: 15px; }
 .whofor h3 { font-size: 19px; } .whofor li { font-size: 16px; }
 .req-list li { font-size: 16px; }
-.section-header { margin-bottom: 80px; }
+.section-header { margin-bottom: 52px; }
 @media (max-width:768px){
   .hero-copy h1 { font-size: clamp(40px, 10vw, 54px); }
   .hero-copy p, .section-header p, .subhero p { font-size: 18px; }
@@ -1272,27 +1293,33 @@ h3 { font-size: 22px; }
     </div>
   </div>
   <div class="nav-drawer" id="drawer">
-    <a href="#services" onclick="closeNav()" style="font-weight:500">Services</a>
-    <a href="service-company-registration.html" onclick="closeNav()" style="padding-left:48px">Company Registration</a>
-    <a href="service-bank-account.html" onclick="closeNav()" style="padding-left:48px">Bank Account Setup</a>
-    <a href="service-nominee-ubo.html" onclick="closeNav()" style="padding-left:48px">Nominee UBO Service</a>
-    <a href="service-shelf-company.html" onclick="closeNav()" style="padding-left:48px">Shelf Companies</a>
-    <a href="service-tax-residency.html" onclick="closeNav()" style="padding-left:48px">Tax Residency</a>
-    <a href="service-annual-renewals.html" onclick="closeNav()" style="padding-left:48px">Annual Renewals</a>
-    <a href="#jur" onclick="closeNav()" style="font-weight:500">Jurisdictions</a>
-    <a href="country-uae.html" onclick="closeNav()" style="padding-left:48px">🇦🇪 UAE</a>
-    <a href="country-bahrain.html" onclick="closeNav()" style="padding-left:48px">🇧🇭 Bahrain</a>
-    <a href="country-hongkong.html" onclick="closeNav()" style="padding-left:48px">🇭🇰 Hong Kong</a>
-    <a href="country-singapore.html" onclick="closeNav()" style="padding-left:48px">🇸🇬 Singapore</a>
-    <a href="country-ireland.html" onclick="closeNav()" style="padding-left:48px">🇮🇪 Ireland</a>
-    <a href="country-bvi-cayman.html" onclick="closeNav()" style="padding-left:48px">🌴 BVI &amp; Cayman</a>
-    <a href="#tiers" onclick="closeNav()" style="font-weight:500">Pricing</a>
-    <a href="pricing-self-ubo.html" onclick="closeNav()" style="padding-left:48px">Self as UBO</a>
-    <a href="pricing-nominee-ubo.html" onclick="closeNav()" style="padding-left:48px">Nominee UBO</a>
-    <a href="pricing-shelf-company.html" onclick="closeNav()" style="padding-left:48px">Shelf Company</a>
-    <a href="#tools" onclick="closeNav()">Free Tools</a>
-    <a href="#resources" onclick="closeNav()">Free Guides</a>
-    <a href="#faq" onclick="closeNav()">FAQ</a>
+    <button class="drawer-group" onclick="toggleGroup(this)">Services <span class="dg-ic">+</span></button>
+    <div class="drawer-sub">
+      <a href="service-company-registration.html" onclick="closeNav()">Company Registration</a>
+      <a href="service-bank-account.html" onclick="closeNav()">Bank Account Setup</a>
+      <a href="service-nominee-ubo.html" onclick="closeNav()">Nominee UBO Service</a>
+      <a href="service-shelf-company.html" onclick="closeNav()">Shelf Companies</a>
+      <a href="service-tax-residency.html" onclick="closeNav()">Tax Residency</a>
+      <a href="service-annual-renewals.html" onclick="closeNav()">Annual Renewals</a>
+    </div>
+    <button class="drawer-group" onclick="toggleGroup(this)">Jurisdictions <span class="dg-ic">+</span></button>
+    <div class="drawer-sub">
+      <a href="country-uae.html" onclick="closeNav()">🇦🇪 UAE</a>
+      <a href="country-bahrain.html" onclick="closeNav()">🇧🇭 Bahrain</a>
+      <a href="country-hongkong.html" onclick="closeNav()">🇭🇰 Hong Kong</a>
+      <a href="country-singapore.html" onclick="closeNav()">🇸🇬 Singapore</a>
+      <a href="country-ireland.html" onclick="closeNav()">🇮🇪 Ireland</a>
+      <a href="country-bvi-cayman.html" onclick="closeNav()">🌴 BVI &amp; Cayman</a>
+    </div>
+    <button class="drawer-group" onclick="toggleGroup(this)">Pricing <span class="dg-ic">+</span></button>
+    <div class="drawer-sub">
+      <a href="pricing-self-ubo.html" onclick="closeNav()">Self as UBO</a>
+      <a href="pricing-nominee-ubo.html" onclick="closeNav()">Nominee UBO</a>
+      <a href="pricing-shelf-company.html" onclick="closeNav()">Shelf Company</a>
+    </div>
+    <a href="#tools" onclick="closeNav()" class="drawer-link">Free Tools</a>
+    <a href="#resources" onclick="closeNav()" class="drawer-link">Free Guides</a>
+    <a href="#faq" onclick="closeNav()" class="drawer-link">FAQ</a>
     <a href="mailto:info@gccstartup.com?subject=Free Consultation" class="btn btn-fill" onclick="closeNav()">Book a Free Consultation</a>
   </div>
 </nav>
@@ -2086,6 +2113,14 @@ function toggleNav() {
 function closeNav() {
   document.getElementById('burger').classList.remove('open');
   document.getElementById('drawer').classList.remove('open');
+}
+function toggleGroup(btn) {
+  const sub = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  // accordion: close others
+  document.querySelectorAll('.drawer-group').forEach(g => g.classList.remove('open'));
+  document.querySelectorAll('.drawer-sub').forEach(s => s.classList.remove('open'));
+  if (!isOpen) { btn.classList.add('open'); sub.classList.add('open'); }
 }
 
 // REVEAL
