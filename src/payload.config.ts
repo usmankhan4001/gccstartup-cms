@@ -28,7 +28,11 @@ export default buildConfig({
   endpoints: [leadEndpoint],
   cors: (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(','),
   csrf: (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(','),
-  db: postgresAdapter({ pool: { connectionString: process.env.DATABASE_URI || '' } }),
+  db: postgresAdapter({
+    pool: { connectionString: process.env.DATABASE_URI || '' },
+    // Auto-create/sync tables on boot (simple deploys without a migration step).
+    push: true,
+  }),
   secret: process.env.PAYLOAD_SECRET || '',
   sharp,
   typescript: { outputFile: path.resolve(dirname, 'payload-types.ts') },
