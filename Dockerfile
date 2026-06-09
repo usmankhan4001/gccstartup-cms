@@ -13,6 +13,7 @@ RUN pnpm install --frozen-lockfile || pnpm install
 FROM base AS build
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN echo "website-static contents:" && ls -la website-static | head
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm build
@@ -23,6 +24,9 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 COPY --from=build /app ./
+# Guarantee the HTML generator + templates are present at runtime (the site renderer requires them)
+COPY website-static ./website-static
+RUN echo "runtime website-static:" && ls website-static | head
 EXPOSE 3000
 # Media volume is mounted at /app/media (see docker-compose / Dokploy)
 CMD ["pnpm", "start"]
