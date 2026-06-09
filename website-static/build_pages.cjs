@@ -1110,8 +1110,37 @@ ${faqBlock(`${s.name} questions, answered.`, s.faq, waMsg)}
 ${footer(waMsg)}`;
 }
 
-// ── Export the content data so the CMS seed can reuse it (no duplication) ──
-module.exports = { countries, tiers, services };
+// ── Convert clean CMS-served links (the app serves at /uae, /services/x, /pricing/x, /) ──
+function linkFix(html) {
+  return html
+    .replace(/href="index\.html#/g, 'href="/#')
+    .replace(/href="index\.html"/g, 'href="/"')
+    .replace(/href="country-([a-z-]+)\.html"/g, 'href="/$1"')
+    .replace(/href="service-([a-z-]+)\.html"/g, 'href="/services/$1"')
+    .replace(/href="pricing-([a-z-]+)\.html"/g, 'href="/pricing/$1"')
+    // lead form posts to the same Payload app
+    .replace(/const LEAD_ENDPOINT = '';/g, "const LEAD_ENDPOINT = '/api/lead';");
+}
+
+// The homepage HTML (index.html) with editable bits swapped in from the CMS homepage global.
+function homepageHTML(hp, settings) {
+  let html = indexHtml;
+  if (hp && hp.hero) {
+    if (hp.hero.eyebrow) html = html.replace('Company Formation · Global Banking · Tax Residency', hp.hero.eyebrow);
+    if (hp.hero.headline) html = html.replace('Legally pay <em>0% tax.</em><br>Bank globally. Own 100%.', hp.hero.headline);
+    if (hp.hero.subhead) html = html.replace(/Launch your company in the UAE[^<]*not months\./, hp.hero.subhead);
+    if (hp.hero.primaryCta) html = html.replace('Start My Company Today', hp.hero.primaryCta);
+    if (hp.hero.secondaryCta) html = html.replace('Get the Free 2026 Guide', hp.hero.secondaryCta);
+  }
+  return linkFix(html);
+}
+
+// ── Export render functions + data so the CMS app (and seed) can reuse them ──
+module.exports = {
+  countries, tiers, services,
+  head, nav, footer, countryPage, pricingPage, servicePage,
+  linkFix, homepageHTML,
+};
 
 // ── Write the static pages only when run directly (`node build_pages.js`) ──
 if (require.main === module) {
