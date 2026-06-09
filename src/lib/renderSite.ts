@@ -5,10 +5,32 @@
  */
 import { createRequire } from 'module'
 import path from 'path'
+import fs from 'fs'
 
 const requireCjs = createRequire(import.meta.url)
-// Loaded dynamically from disk at runtime (not bundled) — the file ships in the image.
-const gen = () => requireCjs(path.join(process.cwd(), 'website-static', 'build_pages.cjs'))
+
+// Find the HTML generator wherever it landed in the image; print diagnostics if missing.
+let cachedGen: any = null
+const gen = () => {
+  if (cachedGen) return cachedGen
+  const cwd = process.cwd()
+  const tries = [
+    path.join(cwd, 'website-static', 'build_pages.cjs'),
+    path.join(cwd, '.next', 'server', 'website-static', 'build_pages.cjs'),
+    '/app/website-static/build_pages.cjs',
+  ]
+  for (const p of tries) {
+    if (fs.existsSync(p)) {
+      cachedGen = requireCjs(p)
+      return cachedGen
+    }
+  }
+  let cwdList: string[] = []
+  try { cwdList = fs.readdirSync(cwd) } catch {}
+  throw new Error(
+    `[renderSite] generator not found. cwd=${cwd}; tried=${tries.join(' | ')}; cwd contents=[${cwdList.join(', ')}]`,
+  )
+}
 
 const pairs = (a: any[] = []) => (a || []).map((x: any) => [x.title, x.desc])
 const items = (a: any[] = [], k = 'item') => (a || []).map((x: any) => x[k])
