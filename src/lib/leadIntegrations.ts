@@ -1,7 +1,8 @@
 /**
- * Twenty CRM + WAHA WhatsApp integrations (folded in from the standalone endpoint).
+ * Twenty CRM + WAHA WhatsApp + Meta CAPI integrations.
  * Used by the Leads collection afterChange hook. Framework-agnostic (Node 18+ fetch).
  */
+import crypto from 'crypto'
 
 export type LeadData = {
   name?: string
@@ -12,6 +13,11 @@ export type LeadData = {
   message?: string
   source?: string
   page?: string
+  // Meta click tracking (passed from UTM/fbclid on the landing page)
+  fbclid?: string
+  clientIp?: string
+  userAgent?: string
+  eventId?: string
 }
 
 const TWENTY_BASE_URL = (process.env.TWENTY_BASE_URL || '').replace(/\/$/, '')
@@ -24,6 +30,10 @@ const NOTIFY_LEAD = String(process.env.NOTIFY_LEAD || 'true') === 'true'
 // When set, leads are forwarded to n8n which runs the human-like WhatsApp flow
 // (start typing → wait → stop typing → send). The CMS composes the messages.
 const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || ''
+// Meta Conversions API
+const META_PIXEL_ID    = process.env.META_PIXEL_ID || ''
+const META_ACCESS_TOKEN = process.env.META_ACCESS_TOKEN || ''
+const META_TEST_CODE   = process.env.META_TEST_EVENT_CODE || '' // remove after testing
 
 const digits = (s?: string) => String(s || '').replace(/[^\d]/g, '')
 
@@ -139,9 +149,60 @@ async function forwardToN8n(d: LeadData): Promise<boolean> {
   }
 }
 
+// SHA-256 hash helper — Meta requires PII to be hashed
+const sha256 = (s: string) => crypto.createHash('sha256').update(s.trim().toLowerCase()).digest('hex')
+
+/** Send a Lead event to Meta Conversions API. Silently no-ops if not configured. */
+async function sendMetaCapi(d: LeadData) {
+  if (!META_PIXEL_ID || !META_ACCESS_TOKEN) return
+  try {
+    const userData: Record<string, string> = {}
+    if (d.email) userData['em'] = sha256(d.email)
+    if (d.phone) userData['ph'] = sha256(digits(d.phone))
+    if (d.name) {
+      const [first, ...rest] = d.name.trim().split(' ')
+      if (first) userData['fn'] = sha256(first)
+      if (rest.length) userData['ln'] = sha256(rest.join(' '))
+    }
+    if (d.clientIp)  userData['client_ip_address'] = d.clientIp
+    if (d.userAgent) userData['client_user_agent']  = d.userAgent
+    if (d.fbclid)    userData['fbc'] = `fb.1.${Date.now()}.${d.fbclid}`
+
+    const event: Record<string, unknown> = {
+      event_name:  'Lead',
+      event_time:  Math.floor(Date.now() / 1000),
+      event_id:    d.eventId || crypto.randomUUID(),
+      action_source: 'website',
+      event_source_url: d.page || '',
+      user_data:   userData,
+      custom_data: {
+        content_name:     'Tax Guide Download',
+        content_category: d.source || 'Website Lead',
+        currency:         'USD',
+        value:            0,
+      },
+    }
+
+    const body: Record<string, unknown> = { data: [event] }
+    if (META_TEST_CODE) body['test_event_code'] = META_TEST_CODE
+
+    const res = await fetch(
+      `https://graph.facebook.com/v19.0/${META_PIXEL_ID}/events?access_token=${META_ACCESS_TOKEN}`,
+      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
+    )
+    if (!res.ok) console.error('[meta-capi] failed', res.status, (await res.text()).slice(0, 300))
+    else console.log('[meta-capi] Lead event sent')
+  } catch (e) {
+    console.error('[meta-capi] error', (e as Error).message)
+  }
+}
+
 /** Fire all notifications. Failures are logged, never thrown. */
 export async function notifyLead(d: LeadData) {
-  await pushToTwenty(d)
+  await Promise.all([
+    pushToTwenty(d),
+    sendMetaCapi(d),
+  ])
   // Prefer n8n (human-like typing). Only fall back to direct WAHA if n8n isn't configured.
   const forwarded = await forwardToN8n(d)
   if (!forwarded) {

@@ -26,14 +26,21 @@ export const leadEndpoint: Endpoint = {
         collection: 'leads',
         overrideAccess: true,
         data: {
-          name: body.name,
-          email: body.email,
-          phone: body.phone,
-          country: body.country,
-          interest: body.interest,
-          message: body.message,
-          source: body.source,
-          page: body.page,
+          name:      body.name,
+          email:     body.email,
+          phone:     body.phone,
+          country:   body.country,
+          interest:  body.interest,
+          message:   body.message,
+          source:    body.source,
+          page:      body.page,
+          // Meta CAPI enrichment — passed from the browser alongside the form data
+          fbclid:    body.fbclid,
+          clientIp:  req.headers.get('x-forwarded-for')?.split(',')[0].trim()
+                     || req.headers.get('cf-connecting-ip')
+                     || '',
+          userAgent: req.headers.get('user-agent') || '',
+          eventId:   body.eventId,
         },
       })
     } catch (e) {
