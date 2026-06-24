@@ -1282,7 +1282,7 @@ function partnerPageHTML() {
 @media(max-width:640px){.pp-mobile-sticky{display:block}.pp-how,.pp-faq{padding:48px 20px}.pp-apply{padding:48px 20px}.pp-hero{padding:52px 20px 44px}}
 </style>`;
 
-  return head(
+  const html = head(
     'Join the Global Verification Network | GCCstartup Partners',
     'Earn $100 USD per completed corporate verification. Join GCCstartup as an independent remote director or representative in the Philippines. Secure, 100% remote, and free to join.',
   ) + pageCSS + nav() + `
@@ -1534,6 +1534,7 @@ function ppSubmit(e) {
 </script>
 ` + footer('I am interested in joining the GCCstartup Philippines verification network.') + `
 </body></html>`;
+  return linkFix(html, 'en');
 }
 
 // ── Export render functions + data so the CMS app (and seed) can reuse them ──
