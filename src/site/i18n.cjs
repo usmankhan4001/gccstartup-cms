@@ -125,34 +125,69 @@ function translator(locale) {
 }
 
 /**
- * Self-contained floating language switcher (markup + styles + script).
- * Uses the current pathname to swap the locale prefix, so it always points at
- * the equivalent page in the chosen language.
+ * Inline nav lang dropdown — embedded inside the navbar (not a floating overlay).
+ * Desktop: globe icon + current lang code + dropdown.
+ * Mobile: rendered as a flat link grid in the mobile drawer.
+ */
+function navLangWidget(locale) {
+  const cur = byCode(locale)
+  const ddItems = LOCALES.map(
+    (l) => `<a href="#" data-lang="${l.code}" class="nld-opt${l.code === locale ? ' nld-cur' : ''}" onclick="return gccSwitchLang('${l.code}')">${l.native}</a>`,
+  ).join('')
+  const drawerItems = LOCALES.map(
+    (l) => `<a href="#" data-lang="${l.code}" onclick="closeNav();return gccSwitchLang('${l.code}')" style="padding-left:48px;opacity:${l.code === locale ? '1' : '.75'};font-weight:${l.code === locale ? '600' : '400'}">${l.native}</a>`,
+  ).join('')
+  return { cur, ddItems, drawerItems }
+}
+
+const LANG_SCRIPT = (NON_DEFAULT) => `<script>
+function gccSwitchLang(code){
+  var codes=${JSON.stringify(NON_DEFAULT)};
+  var re=new RegExp('^/('+codes.join('|')+')(?=/|$)');
+  var rest=window.location.pathname.replace(re,'')||'/';
+  var dest=(code==='en'?'':'/'+code);
+  if(rest!=='/'||code==='en') dest+=rest;
+  if(dest==='') dest='/';
+  window.location.href=dest+window.location.search+window.location.hash;
+  return false;
+}
+document.addEventListener('click',function(e){
+  var d=document.getElementById('navLangDd');
+  var b=document.getElementById('navLangBtn');
+  if(d&&b&&!b.contains(e.target)&&!d.contains(e.target)){d.style.display='none';}
+});
+function toggleLangDd(){
+  var d=document.getElementById('navLangDd');
+  if(d) d.style.display=(d.style.display==='block'?'none':'block');
+}
+</script>`
+
+/**
+ * Legacy floating switcher — still injected into the static homepage HTML
+ * (which doesn't go through nav()) until the homepage template is rebuilt.
  */
 function langSwitcher(locale) {
   const cur = byCode(locale)
-  const opts = LOCALES.map(
-    (l) => `<a href="#" data-lang="${l.code}" onclick="return gccSwitchLang('${l.code}')">${l.native}</a>`,
-  ).join('')
+  const { ddItems } = navLangWidget(locale)
   return `
 <style>
-.gcc-lang{position:fixed;top:14px;right:16px;z-index:9000;font-family:Roboto,system-ui,sans-serif}
+.gcc-lang{position:fixed;top:72px;right:16px;z-index:9000;font-family:Roboto,system-ui,sans-serif}
 [dir=rtl] .gcc-lang{right:auto;left:16px}
 .gcc-lang-btn{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid rgba(0,0,0,.1);
   border-radius:999px;padding:7px 13px;font-size:13px;font-weight:500;color:#1B4FD8;cursor:pointer;
   box-shadow:0 4px 14px rgba(0,0,0,.10)}
 .gcc-lang-dd{position:absolute;top:calc(100% + 6px);right:0;background:#fff;border-radius:12px;
-  box-shadow:0 12px 34px rgba(0,0,0,.16);padding:6px;min-width:150px;display:none}
+  box-shadow:0 12px 34px rgba(0,0,0,.16);padding:6px;min-width:160px;display:none}
 [dir=rtl] .gcc-lang-dd{right:auto;left:0}
 .gcc-lang.open .gcc-lang-dd{display:block}
 .gcc-lang-dd a{display:block;padding:8px 12px;border-radius:8px;font-size:14px;color:#222;text-decoration:none}
-.gcc-lang-dd a:hover{background:#F2F5FF;color:#1B4FD8}
+.gcc-lang-dd a:hover,.gcc-lang-dd .nld-cur{background:#F2F5FF;color:#1B4FD8}
 </style>
 <div class="gcc-lang" id="gccLang">
   <button class="gcc-lang-btn" type="button" onclick="document.getElementById('gccLang').classList.toggle('open')">
     🌐 ${cur.native} <span style="font-size:10px">▼</span>
   </button>
-  <div class="gcc-lang-dd">${opts}</div>
+  <div class="gcc-lang-dd">${ddItems}</div>
 </div>
 <script>
 function gccSwitchLang(code){
@@ -185,5 +220,5 @@ const RTL_CSS = `<style>
 
 module.exports = {
   LOCALES, CODES, NON_DEFAULT, byCode, dir, prefix,
-  STRINGS, translator, langSwitcher, RTL_CSS,
+  STRINGS, translator, navLangWidget, LANG_SCRIPT, langSwitcher, RTL_CSS,
 }

@@ -134,7 +134,21 @@ ${L.dir === 'rtl' ? I18N.RTL_CSS : ''}
 
 function nav(locale = 'en') {
   const tr = I18N.translator(locale);
+  const { cur, ddItems, drawerItems } = I18N.navLangWidget(locale);
   return `
+<style>
+.nav-lang{position:relative;display:flex;align-items:center}
+.nav-lang-btn{display:inline-flex;align-items:center;gap:5px;background:transparent;border:1px solid rgba(255,255,255,.25);padding:6px 11px;font-size:13px;font-weight:500;color:#fff;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color .15s,background .15s}
+.nav-lang-btn:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.08)}
+.site-nav.shadow .nav-lang-btn{border-color:rgba(0,0,0,.15);color:#222}
+.site-nav.shadow .nav-lang-btn:hover{background:#f5f5f5}
+.nav-lang-dd{position:absolute;top:calc(100% + 8px);right:0;background:#fff;box-shadow:0 12px 34px rgba(0,0,0,.16);padding:6px;min-width:160px;display:none;z-index:2000}
+[dir=rtl] .nav-lang-dd{right:auto;left:0}
+.nav-lang-dd a{display:block;padding:8px 12px;font-size:13px;color:#222;text-decoration:none;white-space:nowrap}
+.nav-lang-dd a:hover,.nav-lang-dd .nld-cur{background:#F2F5FF;color:#1B4FD8}
+.nav-lang-dd .nld-cur{font-weight:600}
+.drawer-lang-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#888;padding:16px 20px 6px}
+</style>
 <div class="topbar">
   <div class="wrap">
     <div class="topbar-left">
@@ -193,6 +207,12 @@ function nav(locale = 'en') {
       <div class="nav-right">
         <a href="https://wa.me/gccstartup" class="btn btn-ghost">${tr('WhatsApp')}</a>
         <a href="mailto:info@gccstartup.com?subject=Free Consultation" class="btn btn-fill">${tr('Book a Call')}</a>
+        <div class="nav-lang">
+          <button class="nav-lang-btn" id="navLangBtn" type="button" onclick="toggleLangDd()" aria-label="Language">
+            🌐 <span>${cur.code.toUpperCase()}</span> <span style="font-size:10px;opacity:.7">▼</span>
+          </button>
+          <div class="nav-lang-dd" id="navLangDd">${ddItems}</div>
+        </div>
         <button class="nav-burger" id="burger" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -219,10 +239,12 @@ function nav(locale = 'en') {
     <a href="index.html#tools" onclick="closeNav()">${tr('Free Tools')}</a>
     <a href="index.html#resources" onclick="closeNav()">${tr('Free Guides')}</a>
     <a href="index.html#faq" onclick="closeNav()">${tr('FAQ')}</a>
+    <div class="drawer-lang-label">🌐 ${tr('Language')}</div>
+    ${drawerItems}
     <a href="mailto:info@gccstartup.com?subject=Free Consultation" class="btn btn-fill" onclick="closeNav()">${tr('Book a Free Consultation')}</a>
   </div>
 </nav>
-${I18N.langSwitcher(locale)}`;
+${I18N.LANG_SCRIPT(I18N.NON_DEFAULT)}`;
 }
 
 function footer(waMsg, locale = 'en') {
