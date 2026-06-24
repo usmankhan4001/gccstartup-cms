@@ -24,22 +24,6 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: { user: Users.slug, importMap: { baseDir: path.resolve(dirname) } },
-  // Multilingual content. English is the default/fallback; every other locale is
-  // served under a /<code> path prefix and populated by translate.ts (Google Cloud Translate).
-  localization: {
-    locales: [
-      { label: 'English', code: 'en' },
-      { label: 'العربية (Arabic)', code: 'ar', rtl: true },
-      { label: '繁體中文 (Chinese)', code: 'zh' },
-      { label: 'Deutsch (German)', code: 'de' },
-      { label: 'Français (French)', code: 'fr' },
-      { label: 'Nederlands (Dutch)', code: 'nl' },
-      { label: 'Español (Spanish)', code: 'es' },
-      { label: 'Italiano (Italian)', code: 'it' },
-    ],
-    defaultLocale: 'en',
-    fallback: true,
-  },
   editor: lexicalEditor(),
   collections: [Users, Media, Countries, Services, PricingTiers, Posts, Leads, PartnerApplications],
   globals: [Homepage, SiteSettings],
