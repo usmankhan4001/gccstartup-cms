@@ -2,11 +2,18 @@
  * Renders the marketing pages by driving the HTML generator with CMS content.
  * The generator + its index.html template are BUNDLED (src/site/*) — no runtime
  * file reads, so nothing can go missing in the container.
+ *
+ * We load the generator via eval('require') to prevent webpack from statically
+ * following the require('./i18n.cjs') chain inside generator.cjs at build time.
  */
-// @ts-ignore - bundled CommonJS generator (no type declarations needed)
-import generator from '@/site/generator.cjs'
+import path from 'path'
 
-const gen: any = generator
+// eval('require') bypasses webpack's static module resolution —
+// the require happens at runtime via Node.js, not at build time via webpack.
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const gen: any = (eval('require') as NodeRequire)(
+  path.join(process.cwd(), 'src/site/generator.cjs'),
+)
 
 const pairs = (a: any[] = []) => (a || []).map((x: any) => [x.title, x.desc])
 const items = (a: any[] = [], k = 'item') => (a || []).map((x: any) => x[k])
