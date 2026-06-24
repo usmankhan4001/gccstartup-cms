@@ -1,19 +1,12 @@
 /**
  * Renders the marketing pages by driving the HTML generator with CMS content.
- * The generator + its index.html template are BUNDLED (src/site/*) — no runtime
- * file reads, so nothing can go missing in the container.
- *
- * We load the generator via eval('require') to prevent webpack from statically
- * following the require('./i18n.cjs') chain inside generator.cjs at build time.
+ * The generator + its i18n/template files are committed to src/site/ —
+ * no runtime file reads, so nothing can go missing in the container.
  */
-import path from 'path'
+// @ts-ignore - bundled CommonJS generator (no type declarations needed)
+import generator from '@/site/generator.cjs'
 
-// eval('require') bypasses webpack's static module resolution —
-// the require happens at runtime via Node.js, not at build time via webpack.
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const gen: any = (eval('require') as NodeRequire)(
-  path.join(process.cwd(), 'src/site/generator.cjs'),
-)
+const gen: any = generator
 
 const pairs = (a: any[] = []) => (a || []).map((x: any) => [x.title, x.desc])
 const items = (a: any[] = [], k = 'item') => (a || []).map((x: any) => x[k])
@@ -64,13 +57,13 @@ export function homeHTML(hp: any, settings: any, locale = 'en'): string {
   return gen.homepageHTML(hp, settings, locale)
 }
 
+export function partnerPageHTML(): string {
+  return gen.partnerPageHTML()
+}
+
 /** Supported locale codes (en + translated). Used by route handlers. */
 export const LOCALES: string[] = gen.i18n.CODES
 export const isLocale = (c: string): boolean => gen.i18n.CODES.includes(c)
 
 export const htmlResponse = (html: string, status = 200) =>
   new Response(html, { status, headers: { 'content-type': 'text/html; charset=utf-8' } })
-
-export function partnerPageHTML(): string {
-  return gen.partnerPageHTML()
-}
