@@ -5,15 +5,14 @@ export const Services: CollectionConfig = {
   admin: { useAsTitle: 'name', defaultColumns: ['name', 'slug'], group: 'Content' },
   access: { read: () => true },
   fields: [
-    { name: 'name', type: 'text', required: true, localized: true },
+    { name: 'name', type: 'text', required: true },
     { name: 'slug', type: 'text', required: true, unique: true, admin: { description: 'URL: /services/<slug>' } },
     { name: 'icon', type: 'select', options: ['building', 'bank', 'shield', 'box', 'id', 'refresh'], admin: { description: 'Icon key' } },
-    { name: 'headline', type: 'text', localized: true, admin: { description: 'Hero headline. Wrap emphasis in <em>…</em>' } },
-    { name: 'intro', type: 'textarea', localized: true },
+    { name: 'headline', type: 'text', admin: { description: 'Hero headline. Wrap emphasis in <em>…</em>' } },
+    { name: 'intro', type: 'textarea' },
     {
       name: 'statChips',
       type: 'array',
-      localized: true,
       labels: { singular: 'Stat chip', plural: 'Stat chips' },
       maxRows: 3,
       fields: [
@@ -24,7 +23,6 @@ export const Services: CollectionConfig = {
     {
       name: 'features',
       type: 'array',
-      localized: true,
       labels: { singular: 'Feature', plural: "What's included" },
       fields: [
         { name: 'title', type: 'text', required: true },
@@ -34,7 +32,6 @@ export const Services: CollectionConfig = {
     {
       name: 'process',
       type: 'array',
-      localized: true,
       labels: { singular: 'Step', plural: 'Process steps' },
       fields: [
         { name: 'title', type: 'text', required: true },
@@ -44,7 +41,6 @@ export const Services: CollectionConfig = {
     {
       name: 'faq',
       type: 'array',
-      localized: true,
       labels: { singular: 'FAQ', plural: 'FAQs' },
       fields: [
         { name: 'q', type: 'text', required: true },
