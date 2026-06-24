@@ -9,16 +9,17 @@ export const Homepage: GlobalConfig = {
       type: 'group',
       name: 'hero',
       fields: [
-        { name: 'eyebrow', type: 'text' },
-        { name: 'headline', type: 'text', admin: { description: 'Wrap emphasis in <em>…</em>' } },
-        { name: 'subhead', type: 'textarea' },
-        { name: 'primaryCta', type: 'text' },
-        { name: 'secondaryCta', type: 'text' },
+        { name: 'eyebrow', type: 'text', localized: true },
+        { name: 'headline', type: 'text', localized: true, admin: { description: 'Wrap emphasis in <em>…</em>' } },
+        { name: 'subhead', type: 'textarea', localized: true },
+        { name: 'primaryCta', type: 'text', localized: true },
+        { name: 'secondaryCta', type: 'text', localized: true },
       ],
     },
     {
       name: 'stats',
       type: 'array',
+      localized: true,
       maxRows: 4,
       fields: [
         { name: 'number', type: 'text' },
@@ -28,6 +29,7 @@ export const Homepage: GlobalConfig = {
     {
       name: 'sections',
       type: 'array',
+      localized: true,
       labels: { singular: 'Section header', plural: 'Section headers' },
       admin: { description: 'Editable eyebrow/title/intro for each homepage section' },
       fields: [

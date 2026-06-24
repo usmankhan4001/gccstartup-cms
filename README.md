@@ -54,6 +54,43 @@ website-static/              Current live marketing site + build_pages.js (seed 
 Dockerfile, docker-compose.yml
 ```
 
+## Multilingual (i18n)
+
+The site is available in **8 languages**: English (default), Arabic (RTL),
+Traditional Chinese, German, French, Dutch, Spanish, Italian.
+
+- **URLs:** English stays at the root (`/`, `/uae`, `/services/x`, `/pricing/x`).
+  Every other language is served under a prefix: `/de`, `/de/uae`,
+  `/ar/services/x`, etc. A floating 🌐 language switcher is on every page.
+- **Content** lives in Payload as `localized` fields (per-locale values).
+- **UI chrome** (nav/footer/buttons/headings) is translated into
+  `src/site/locales/<code>.json`; the generator falls back to English per-string
+  if a translation is missing — so the site never breaks.
+- **Homepage** template is translated into `src/site/indexHtml.<code>.b64.cjs`;
+  falls back to the English template if absent.
+
+### Generating / refreshing translations (Google Cloud Translate)
+
+1. Enable the **Cloud Translation API** in Google Cloud and create an API key.
+2. Put it in `.env`: `GOOGLE_TRANSLATE_API_KEY=...`
+3. Seed base English content first: `pnpm seed`
+4. Run (locally, with `DATABASE_URI` pointing at the target DB):
+
+   ```bash
+   pnpm translate
+   ```
+
+   This (A) writes `src/site/locales/*.json`, (B) fills the Payload localized
+   fields for every locale in the DB, and (C) writes `src/site/indexHtml.*.b64.cjs`.
+
+5. **Commit** the generated files (`src/site/locales/*.json`,
+   `src/site/indexHtml.*.b64.cjs`) and **redeploy** so the image ships them.
+   (The DB already holds the localized content from step B.)
+
+Re-run `pnpm translate` whenever you add/edit English content or chrome strings.
+New chrome strings must be added to `STRINGS` in `src/site/i18n.cjs`.
+Human-review legal/financial terms before go-live — MT is a first draft.
+
 ## Roadmap
 - [x] CMS: collections, globals, SEO, blog
 - [x] Lead pipeline: /api/lead → Twenty + WAHA

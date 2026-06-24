@@ -19,8 +19,8 @@ export const SiteSettings: GlobalConfig = {
       type: 'group',
       name: 'footer',
       fields: [
-        { name: 'about', type: 'textarea' },
-        { name: 'legal', type: 'textarea' },
+        { name: 'about', type: 'textarea', localized: true },
+        { name: 'legal', type: 'textarea', localized: true },
       ],
     },
     {
