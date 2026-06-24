@@ -1,5 +1,4 @@
-import { htmlResponse } from '@/lib/renderSite'
-import { partnerPageHTML } from '@/lib/partnerPage'
+import { htmlResponse, partnerPageHTML } from '@/lib/renderSite'
 
 export const dynamic = 'force-dynamic'
 

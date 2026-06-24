@@ -15,7 +15,7 @@ const relatedDefault =
   '<a href="/#tiers" class="btn btn-ghost btn-arrow">See pricing</a>' +
   '<a href="mailto:info@gccstartup.com?subject=Enquiry" class="btn btn-fill">Get started</a>'
 
-export function countryHTML(doc: any): string {
+export function countryHTML(doc: any, locale = 'en'): string {
   return gen.linkFix(
     gen.countryPage({
       slug: doc.slug, name: doc.name, flag: doc.flag, file: `country-${doc.slug}.html`,
@@ -23,11 +23,12 @@ export function countryHTML(doc: any): string {
       headline: doc.headline || doc.name, intro: doc.intro || '',
       benefits: pairs(doc.benefits), docs: items(doc.documents), process: pairs(doc.process),
       faq: doc.faq || [],
-    }),
+    }, locale),
+    locale,
   )
 }
 
-export function serviceHTML(doc: any): string {
+export function serviceHTML(doc: any, locale = 'en'): string {
   return gen.linkFix(
     gen.servicePage({
       slug: doc.slug, name: doc.name, file: `service-${doc.slug}.html`,
@@ -35,24 +36,34 @@ export function serviceHTML(doc: any): string {
       meta: (doc.statChips || []).map((m: any) => [m.value, m.label]),
       features: pairs(doc.features), process: pairs(doc.process), faq: doc.faq || [],
       related: relatedDefault,
-    }),
+    }, locale),
+    locale,
   )
 }
 
-export function pricingHTML(doc: any): string {
+export function pricingHTML(doc: any, locale = 'en'): string {
   return gen.linkFix(
     gen.pricingPage({
       slug: doc.slug, name: doc.name, tierLabel: doc.tierLabel, featured: !!doc.featured,
       price: doc.price, note: doc.priceNote, intro: doc.intro || '',
       features: pairs(doc.features), whofor: items(doc.whoFor), process: pairs(doc.process),
       faq: doc.faq || [],
-    }),
+    }, locale),
+    locale,
   )
 }
 
-export function homeHTML(hp: any, settings: any): string {
-  return gen.homepageHTML(hp, settings)
+export function homeHTML(hp: any, settings: any, locale = 'en'): string {
+  return gen.homepageHTML(hp, settings, locale)
 }
+
+/** Supported locale codes (en + translated). Used by route handlers. */
+export const LOCALES: string[] = gen.i18n.CODES
+export const isLocale = (c: string): boolean => gen.i18n.CODES.includes(c)
 
 export const htmlResponse = (html: string, status = 200) =>
   new Response(html, { status, headers: { 'content-type': 'text/html; charset=utf-8' } })
+
+export function partnerPageHTML(): string {
+  return gen.partnerPageHTML()
+}
