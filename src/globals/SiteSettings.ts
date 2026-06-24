@@ -7,6 +7,7 @@ export const SiteSettings: GlobalConfig = {
   fields: [
     { name: 'brandName', type: 'text', defaultValue: 'GCC Startup' },
     { name: 'logo', type: 'upload', relationTo: 'media' },
+    { name: 'siteUrl', type: 'text', admin: { description: 'Production URL e.g. https://cms.gccstartup.com — used for canonical tags' } },
     {
       type: 'group',
       name: 'contact',

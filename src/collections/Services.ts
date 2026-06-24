@@ -47,5 +47,16 @@ export const Services: CollectionConfig = {
         { name: 'a', type: 'textarea', required: true },
       ],
     },
+    {
+      name: 'relatedLinks',
+      type: 'array',
+      labels: { singular: 'Related link', plural: 'Related links (bottom CTA row)' },
+      maxRows: 3,
+      admin: { description: 'Up to 3 buttons shown in the "Related options" row at the bottom of the page' },
+      fields: [
+        { name: 'label', type: 'text', required: true },
+        { name: 'url', type: 'text', required: true, admin: { description: 'Relative path e.g. /pricing/nominee-ubo or absolute URL' } },
+      ],
+    },
   ],
 }

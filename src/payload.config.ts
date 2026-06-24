@@ -16,6 +16,7 @@ import { Leads } from './collections/Leads'
 import { PartnerApplications } from './collections/PartnerApplications'
 import { Homepage } from './globals/Homepage'
 import { SiteSettings } from './globals/SiteSettings'
+import { PartnerPage } from './globals/PartnerPage'
 import { leadEndpoint } from './endpoints/lead'
 import { partnerEndpoint } from './endpoints/partner'
 
@@ -26,7 +27,7 @@ export default buildConfig({
   admin: { user: Users.slug, importMap: { baseDir: path.resolve(dirname) } },
   editor: lexicalEditor(),
   collections: [Users, Media, Countries, Services, PricingTiers, Posts, Leads, PartnerApplications],
-  globals: [Homepage, SiteSettings],
+  globals: [Homepage, SiteSettings, PartnerPage],
   endpoints: [leadEndpoint, partnerEndpoint],
   cors: (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(','),
   csrf: (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(','),

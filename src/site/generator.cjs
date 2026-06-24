@@ -114,8 +114,49 @@ function procSteps(steps){
 }
 
 // ── Shared head/nav/footer ──
-function head(title, desc, locale = 'en') {
+// Helper: safely read nested prop from settings with fallback
+function cfg(s, path, fallback) {
+  const parts = path.split('.');
+  let v = s;
+  for (const p of parts) { if (v == null) break; v = v[p]; }
+  return (v != null && v !== '') ? v : fallback;
+}
+
+function siteEmail(s) { return cfg(s, 'contact.email', 'info@gccstartup.com'); }
+function siteWa(s)    { const n = cfg(s, 'contact.whatsappNumber', ''); return n ? `https://wa.me/${n.replace(/\D/g,'')}` : 'https://wa.me/gccstartup'; }
+function siteWaLink(s, text) { const n = cfg(s, 'contact.whatsappNumber', ''); return n ? `https://wa.me/${n.replace(/\D/g,'')}?text=${encodeURIComponent(text)}` : `https://wa.me/gccstartup?text=${encodeURIComponent(text)}`; }
+function siteBrand(s) { return cfg(s, 'brandName', 'GCC Startup'); }
+
+const _SOCIAL_SVG = {
+  linkedin: '<svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.8-2.05 3.7-2.05 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.27-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21h-4z"/></svg>',
+  x: '<svg viewBox="0 0 24 24"><path d="M17.5 3h3l-7.2 8.2L22 21h-6.4l-5-6.1L4.8 21H1.8l7.7-8.8L2 3h6.6l4.5 5.6zM16.4 19.2h1.66L7.7 4.7H5.9z"/></svg>',
+  whatsapp: '<svg viewBox="0 0 24 24"><path d="M12 2a9.9 9.9 0 00-8.4 15.2L2 22l4.9-1.5A10 10 0 1012 2zm0 18a8 8 0 01-4.1-1.1l-.3-.2-2.9.9.9-2.8-.2-.3A8 8 0 1112 20zm4.4-5.9c-.24-.12-1.43-.7-1.65-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-1.43-.72-2.37-1.28-3.31-2.9-.25-.43.25-.4.71-1.32.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.7 2.6 4.12 3.65 1.53.66 2.13.72 2.9.6.46-.07 1.43-.58 1.63-1.15.2-.56.2-1.05.14-1.15-.06-.1-.22-.16-.46-.28z"/></svg>',
+  telegram: '<svg viewBox="0 0 24 24"><path d="M21.9 4.3l-3 14.2c-.2 1-.8 1.2-1.7.75l-4.6-3.4-2.2 2.1c-.25.25-.45.45-.9.45l.3-4.6 8.5-7.7c.37-.33-.08-.5-.57-.18L7.05 12.9l-4.5-1.4c-1-.3-1-1 .2-1.45L20.6 3.1c.8-.3 1.5.2 1.3 1.2z"/></svg>',
+};
+
+function socialLinks(s) {
+  const arr = (s && Array.isArray(s.social) && s.social.length)
+    ? s.social
+    : [
+        { platform: 'linkedin', url: '#' },
+        { platform: 'x', url: '#' },
+        { platform: 'whatsapp', url: siteWa(s) },
+        { platform: 'telegram', url: '#' },
+      ];
+  return arr.map(item => {
+    const svg = _SOCIAL_SVG[item.platform] || '';
+    const label = item.platform.charAt(0).toUpperCase() + item.platform.slice(1);
+    return `<a href="${item.url || '#'}" title="${label}">${svg}</a>`;
+  }).join('\n          ');
+}
+
+function head(title, desc, locale = 'en', meta = {}) {
   const L = I18N.byCode(locale);
+  const ogTitle = meta.title || title;
+  const ogDesc = meta.description || desc;
+  const ogImage = meta.image || '';
+  const canonical = meta.canonical || '';
+  const robots = meta.robots || 'index, follow';
   return `<!DOCTYPE html>
 <html lang="${L.code}" dir="${L.dir}">
 <head>
@@ -123,6 +164,17 @@ function head(title, desc, locale = 'en') {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${title}</title>
 <meta name="description" content="${desc}">
+<meta name="robots" content="${robots}">
+${canonical ? `<link rel="canonical" href="${canonical}">` : ''}
+<meta property="og:title" content="${ogTitle}">
+<meta property="og:description" content="${ogDesc}">
+<meta property="og:type" content="website">
+${ogImage ? `<meta property="og:image" content="${ogImage}">` : ''}
+${canonical ? `<meta property="og:url" content="${canonical}">` : ''}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${ogTitle}">
+<meta name="twitter:description" content="${ogDesc}">
+${ogImage ? `<meta name="twitter:image" content="${ogImage}">` : ''}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 ${baseStyle}
@@ -132,9 +184,11 @@ ${L.dir === 'rtl' ? I18N.RTL_CSS : ''}
 <body>`;
 }
 
-function nav(locale = 'en') {
+function nav(locale = 'en', settings = {}) {
   const tr = I18N.translator(locale);
   const { cur, ddItems, drawerItems } = I18N.navLangWidget(locale);
+  const email = siteEmail(settings);
+  const waHref = siteWa(settings);
   return `
 <style>
 .nav-lang{position:relative;display:flex;align-items:center}
@@ -152,8 +206,8 @@ function nav(locale = 'en') {
 <div class="topbar">
   <div class="wrap">
     <div class="topbar-left">
-      <a href="mailto:info@gccstartup.com">info@gccstartup.com</a>
-      <a href="https://wa.me/gccstartup">${tr('WhatsApp Consultation')}</a>
+      <a href="mailto:${email}">${email}</a>
+      <a href="${waHref}">${tr('WhatsApp Consultation')}</a>
     </div>
     <div class="topbar-right">
       <a href="index.html#resources">${tr('Free Guides')}</a>
@@ -166,7 +220,7 @@ function nav(locale = 'en') {
   <div class="wrap">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
-        <img src="GCC_Startup_Logo.png" alt="GCC Startup" onerror="this.style.display='none';document.getElementById('logoText').style.display='block'">
+        <img src="GCC_Startup_Logo.png" alt="${siteBrand(settings)}" onerror="this.style.display='none';document.getElementById('logoText').style.display='block'">
         <div id="logoText" class="nav-logo-text" style="display:none">GCC <span>Startup</span></div>
       </a>
       <nav class="nav-menu">
@@ -205,8 +259,8 @@ function nav(locale = 'en') {
         <a href="index.html#faq">${tr('FAQ')}</a>
       </nav>
       <div class="nav-right">
-        <a href="https://wa.me/gccstartup" class="btn btn-ghost">${tr('WhatsApp')}</a>
-        <a href="mailto:info@gccstartup.com?subject=Free Consultation" class="btn btn-fill">${tr('Book a Call')}</a>
+        <a href="${waHref}" class="btn btn-ghost">${tr('WhatsApp')}</a>
+        <a href="mailto:${email}?subject=Free Consultation" class="btn btn-fill">${tr('Book a Call')}</a>
         <div class="nav-lang">
           <button class="nav-lang-btn" id="navLangBtn" type="button" onclick="toggleLangDd()" aria-label="Language">
             🌐 <span>${cur.code.toUpperCase()}</span> <span style="font-size:10px;opacity:.7">▼</span>
@@ -241,14 +295,19 @@ function nav(locale = 'en') {
     <a href="index.html#faq" onclick="closeNav()">${tr('FAQ')}</a>
     <div class="drawer-lang-label">🌐 ${tr('Language')}</div>
     ${drawerItems}
-    <a href="mailto:info@gccstartup.com?subject=Free Consultation" class="btn btn-fill" onclick="closeNav()">${tr('Book a Free Consultation')}</a>
+    <a href="mailto:${email}?subject=Free Consultation" class="btn btn-fill" onclick="closeNav()">${tr('Book a Free Consultation')}</a>
   </div>
 </nav>
 ${I18N.LANG_SCRIPT(I18N.NON_DEFAULT)}`;
 }
 
-function footer(waMsg, locale = 'en') {
+function footer(waMsg, locale = 'en', settings = {}) {
   const tr = I18N.translator(locale);
+  const email = siteEmail(settings);
+  const waHref = siteWaLink(settings, waMsg);
+  const brand = siteBrand(settings);
+  const aboutText = cfg(settings, 'footer.about', tr('Global company registration and tax optimization. Founded by a Finance Director with deep UAE oil & gas corporate finance expertise. Trusted by 500+ entrepreneurs worldwide.'));
+  const legalText = cfg(settings, 'footer.legal', tr('Tax optimization services. Not legal or financial advice. All structures are jurisdiction-compliant.'));
   return `
 <section class="cta-block">${GLOBE}
   <div class="wrap">
@@ -258,8 +317,8 @@ function footer(waMsg, locale = 'en') {
         <p>${tr('Direct access to the founder. No obligation, no sales script — just an honest answer about what works for your situation.')}</p>
       </div>
       <div class="cta-actions">
-        <a href="mailto:info@gccstartup.com?subject=Free Strategy Call" class="btn btn-fill btn-arrow">${tr('Book a free call')}</a>
-        <a href="https://wa.me/gccstartup?text=${encodeURIComponent(waMsg)}" class="btn btn-stroke">${tr('WhatsApp us')}</a>
+        <a href="mailto:${email}?subject=Free Strategy Call" class="btn btn-fill btn-arrow">${tr('Book a free call')}</a>
+        <a href="${waHref}" class="btn btn-stroke">${tr('WhatsApp us')}</a>
       </div>
     </div>
   </div>
@@ -268,13 +327,10 @@ function footer(waMsg, locale = 'en') {
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <div class="footer-brand-name">GCC <span>Startup</span></div>
-        <p>${tr('Global company registration and tax optimization. Founded by a Finance Director with deep UAE oil & gas corporate finance expertise. Trusted by 500+ entrepreneurs worldwide.')}</p>
+        <div class="footer-brand-name">${brand.includes(' ') ? brand.replace(' ', ' <span>') + '</span>' : brand}</div>
+        <p>${aboutText}</p>
         <div class="footer-social">
-          <a href="#" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.8-2.05 3.7-2.05 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.27-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21h-4z"/></svg></a>
-          <a href="#" title="X"><svg viewBox="0 0 24 24"><path d="M17.5 3h3l-7.2 8.2L22 21h-6.4l-5-6.1L4.8 21H1.8l7.7-8.8L2 3h6.6l4.5 5.6zM16.4 19.2h1.66L7.7 4.7H5.9z"/></svg></a>
-          <a href="https://wa.me/gccstartup" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a9.9 9.9 0 00-8.4 15.2L2 22l4.9-1.5A10 10 0 1012 2zm0 18a8 8 0 01-4.1-1.1l-.3-.2-2.9.9.9-2.8-.2-.3A8 8 0 1112 20zm4.4-5.9c-.24-.12-1.43-.7-1.65-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-1.43-.72-2.37-1.28-3.31-2.9-.25-.43.25-.4.71-1.32.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.7 2.6 4.12 3.65 1.53.66 2.13.72 2.9.6.46-.07 1.43-.58 1.63-1.15.2-.56.2-1.05.14-1.15-.06-.1-.22-.16-.46-.28z"/></svg></a>
-          <a href="#" title="Telegram"><svg viewBox="0 0 24 24"><path d="M21.9 4.3l-3 14.2c-.2 1-.8 1.2-1.7.75l-4.6-3.4-2.2 2.1c-.25.25-.45.45-.9.45l.3-4.6 8.5-7.7c.37-.33-.08-.5-.57-.18L7.05 12.9l-4.5-1.4c-1-.3-1-1 .2-1.45L20.6 3.1c.8-.3 1.5.2 1.3 1.2z"/></svg></a>
+          ${socialLinks(settings)}
         </div>
       </div>
       <div class="footer-col">
@@ -311,14 +367,14 @@ function footer(waMsg, locale = 'en') {
         <div class="nl-row"><input type="email" placeholder="${tr('Your email address')}"><button type="button">${tr('Get guide')}</button></div>
         <div class="footer-contact">
           <h5>${tr('Contact')}</h5>
-          <a href="mailto:info@gccstartup.com">info@gccstartup.com</a>
-          <a href="https://wa.me/gccstartup">${tr('WhatsApp consultation')}</a>
+          <a href="mailto:${email}">${email}</a>
+          <a href="${siteWa(settings)}">${tr('WhatsApp consultation')}</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">${tr('© {year} GCCStartup.com — All rights reserved.', { year: '<span class="cur-year">2025</span>' })}</span>
-      <span class="footer-legal">${tr('Tax optimization services. Not legal or financial advice. All structures are jurisdiction-compliant.')}</span>
+      <span class="footer-legal">${legalText}</span>
     </div>
   </div>
 </footer>
@@ -443,7 +499,7 @@ function timeCalc(workingDays){
 }
 
 // FAQ builder
-function faqBlock(intro, items, waMsg, locale = 'en') {
+function faqBlock(intro, items, waMsg, locale = 'en', settings = {}) {
   const tr = I18N.translator(locale);
   return `
 <section class="section" id="faq">
@@ -456,7 +512,7 @@ function faqBlock(intro, items, waMsg, locale = 'en') {
         <div class="faq-contact">
           <h4>${tr('Still have questions?')}</h4>
           <p>${tr('WhatsApp us for a direct, honest answer — usually within a couple of hours.')}</p>
-          <a href="https://wa.me/gccstartup?text=${encodeURIComponent(waMsg)}" class="btn btn-fill">${tr('WhatsApp us now')}</a>
+          <a href="${siteWaLink(settings, waMsg)}" class="btn btn-fill">${tr('WhatsApp us now')}</a>
         </div>
       </div>
       <div class="faq-list reveal" style="transition-delay:.1s">
@@ -639,12 +695,13 @@ const countries = [
   },
 ];
 
-function countryPage(c, locale = 'en'){
+function countryPage(c, locale = 'en', settings = {}){
   const tr = I18N.translator(locale);
   const waMsg = `Hi, I'm interested in setting up in ${c.name}.`;
-  return head(`${c.name} Company Registration — Cost, Process & Requirements | GCC Startup`,
-    `Register your company in ${c.name}: ${c.tax}. Costs, timeline, requirements, process and FAQs. Founder-led, fully compliant setup from ${c.from}.`, locale)
-  + nav(locale)
+  const defaultTitle = `${c.name} Company Registration — Cost, Process & Requirements | GCC Startup`;
+  const defaultDesc = `Register your company in ${c.name}: ${c.tax}. Costs, timeline, requirements, process and FAQs. Founder-led, fully compliant setup from ${c.from}.`;
+  return head(c.metaTitle || defaultTitle, c.metaDesc || defaultDesc, locale, { title: c.metaTitle || defaultTitle, description: c.metaDesc || defaultDesc, image: c.metaImage, canonical: c.canonical, robots: c.robots })
+  + nav(locale, settings)
   + `
 <section class="subhero">${SKYLINE}
   <div class="subhero-watermark">${c.flag}</div>
@@ -654,8 +711,8 @@ function countryPage(c, locale = 'en'){
     <h1>${c.headline}</h1>
     <p>${c.intro}</p>
     <div class="subhero-btns">
-      <a href="mailto:info@gccstartup.com?subject=${encodeURIComponent(c.name+' company registration')}" class="btn btn-fill btn-arrow">${tr('Start my {name} setup', { name: c.name })}</a>
-      <a href="https://wa.me/gccstartup?text=${encodeURIComponent(waMsg)}" class="btn btn-stroke">${tr('WhatsApp us')}</a>
+      <a href="mailto:${siteEmail(settings)}?subject=${encodeURIComponent(c.name+' company registration')}" class="btn btn-fill btn-arrow">${tr('Start my {name} setup', { name: c.name })}</a>
+      <a href="${siteWaLink(settings, waMsg)}" class="btn btn-stroke">${tr('WhatsApp us')}</a>
     </div>
     <div class="subhero-meta">
       <div><span class="smi-n">${c.tax}</span><span class="smi-l">${tr('Tax position')}</span></div>
@@ -689,8 +746,8 @@ function countryPage(c, locale = 'en'){
     </div>
     <div style="margin-top:36px">
       <div class="midcta reveal">
-        <div><h3>${tr('Not sure you’ll hit your launch date?')}</h3><p>${tr('Use the timeline calculator below, or message us for an honest answer in minutes.')}</p></div>
-        <a href="https://wa.me/gccstartup?text=${encodeURIComponent(waMsg)}" class="btn btn-fill btn-arrow">${tr('Ask about my timeline')}</a>
+        <div><h3>${tr(‘Not sure you’ll hit your launch date?’)}</h3><p>${tr(‘Use the timeline calculator below, or message us for an honest answer in minutes.’)}</p></div>
+        <a href="${siteWaLink(settings, waMsg)}" class="btn btn-fill btn-arrow">${tr(‘Ask about my timeline’)}</a>
       </div>
     </div>
   </div>
@@ -717,7 +774,7 @@ function countryPage(c, locale = 'en'){
         <div class="timecalc-body">
           <div class="timecalc-field"><label>${tr('Your target launch date')}</label><input type="date" id="tcDate" onchange="timeCalc(${c.workDays})"></div>
           <div class="timecalc-result" id="tcResult">${c.name} setup needs ~${c.workDays} working days. Pick a date to check if you can make it.</div>
-          <a href="mailto:info@gccstartup.com?subject=${encodeURIComponent('Lock in my '+c.name+' start date')}" class="est-cta" style="display:block;text-align:center;text-decoration:none">${tr('Lock in my start date →')}</a>
+          <a href="mailto:${siteEmail(settings)}?subject=${encodeURIComponent('Lock in my '+c.name+' start date')}" class="est-cta" style="display:block;text-align:center;text-decoration:none">${tr('Lock in my start date →')}</a>
         </div>
       </div>
     </div>
@@ -737,9 +794,9 @@ function countryPage(c, locale = 'en'){
   </div>
 </section>
 
-${faqBlock(tr('{name} questions, answered.', { name: c.name }), c.faq, waMsg, locale)}
+${faqBlock(tr('{name} questions, answered.', { name: c.name }), c.faq, waMsg, locale, settings)}
 
-${footer(waMsg, locale)}`;
+${footer(waMsg, locale, settings)}`;
 }
 
 // ───────────────────────── PRICING DATA ─────────────────────────
@@ -826,12 +883,13 @@ const tiers = [
   },
 ];
 
-function pricingPage(t, locale = 'en'){
+function pricingPage(t, locale = ‘en’, settings = {}){
   const tr = I18N.translator(locale);
-  const waMsg = `Hi, I'd like to know more about the ${t.name} package.`;
-  return head(`${t.name} — Pricing, What’s Included & FAQ | GCC Startup`,
-    `${t.name} (${t.tierLabel}) from GCC Startup. Full breakdown of pricing, what’s included, who it’s for, the process and FAQs.`, locale)
-  + nav(locale)
+  const waMsg = `Hi, I’d like to know more about the ${t.name} package.`;
+  const defaultTitle = `${t.name} — Pricing, What’s Included & FAQ | GCC Startup`;
+  const defaultDesc = `${t.name} (${t.tierLabel}) from GCC Startup. Full breakdown of pricing, what’s included, who it’s for, the process and FAQs.`;
+  return head(t.metaTitle || defaultTitle, t.metaDesc || defaultDesc, locale, { title: t.metaTitle || defaultTitle, description: t.metaDesc || defaultDesc, image: t.metaImage, canonical: t.canonical, robots: t.robots })
+  + nav(locale, settings)
   + `
 <section class="subhero">${SKYLINE}
   <div class="wrap">
@@ -844,8 +902,8 @@ function pricingPage(t, locale = 'en'){
     </div>
     <div class="pd-note" style="color:rgba(255,255,255,0.45)">${t.note}</div>
     <div class="subhero-btns">
-      <a href="mailto:info@gccstartup.com?subject=${encodeURIComponent(t.name+' enquiry')}" class="btn btn-fill btn-arrow">${tr('Get started with {name}', { name: t.name })}</a>
-      <a href="https://wa.me/gccstartup?text=${encodeURIComponent(waMsg)}" class="btn btn-stroke">${tr('WhatsApp us')}</a>
+      <a href="mailto:${siteEmail(settings)}?subject=${encodeURIComponent(t.name+' enquiry')}" class="btn btn-fill btn-arrow">${tr('Get started with {name}', { name: t.name })}</a>
+      <a href="${siteWaLink(settings, waMsg)}" class="btn btn-stroke">${tr('WhatsApp us')}</a>
     </div>
   </div>
 </section>
@@ -878,7 +936,7 @@ function pricingPage(t, locale = 'en'){
         <p style="color:var(--muted);font-size:15px;line-height:1.7;margin-bottom:22px">${tr('Take the 60-second jurisdiction quiz, or message the founder directly for a straight recommendation based on your situation.')}</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap">
           <a href="index.html#finder" class="btn btn-ghost btn-arrow">${tr('Take the quiz')}</a>
-          <a href="https://wa.me/gccstartup?text=${encodeURIComponent(waMsg)}" class="btn btn-fill">${tr('Ask the founder')}</a>
+          <a href="${siteWaLink(settings, waMsg)}" class="btn btn-fill">${tr('Ask the founder')}</a>
         </div>
       </div>
     </div>
@@ -897,15 +955,15 @@ function pricingPage(t, locale = 'en'){
     <div style="margin-top:36px">
       <div class="midcta reveal">
         <div><h3>${tr('Ready to move forward with {name}?', { name: t.name })}</h3><p>${tr('Get a fixed, all-in quote with no hidden fees — usually within a few hours.')}</p></div>
-        <a href="mailto:info@gccstartup.com?subject=${encodeURIComponent(t.name+' quote')}" class="btn btn-fill btn-arrow">${tr('Get my fixed quote')}</a>
+        <a href="mailto:${siteEmail(settings)}?subject=${encodeURIComponent(t.name+' quote')}" class="btn btn-fill btn-arrow">${tr('Get my fixed quote')}</a>
       </div>
     </div>
   </div>
 </section>
 
-${faqBlock(tr('{name} questions, answered.', { name: t.name }), t.faq, waMsg, locale)}
+${faqBlock(tr('{name} questions, answered.', { name: t.name }), t.faq, waMsg, locale, settings)}
 
-${footer(waMsg, locale)}`;
+${footer(waMsg, locale, settings)}`;
 }
 
 // ───────────────────────── SERVICES DATA ─────────────────────────
@@ -1068,12 +1126,13 @@ const services = [
   },
 ];
 
-function servicePage(s, locale = 'en'){
+function servicePage(s, locale = 'en', settings = {}){
   const tr = I18N.translator(locale);
   const waMsg = `Hi, I'd like to know more about your ${s.name} service.`;
-  return head(`${s.name} — GCC Startup`,
-    `${s.name} from GCC Startup. What's included, how it works, and FAQs. Founder-led, fully compliant.`, locale)
-  + nav(locale)
+  const defaultTitle = `${s.name} — GCC Startup`;
+  const defaultDesc = `${s.name} from GCC Startup. What's included, how it works, and FAQs. Founder-led, fully compliant.`;
+  return head(s.metaTitle || defaultTitle, s.metaDesc || defaultDesc, locale, { title: s.metaTitle || defaultTitle, description: s.metaDesc || defaultDesc, image: s.metaImage, canonical: s.canonical, robots: s.robots })
+  + nav(locale, settings)
   + `
 <section class="subhero">${SKYLINE}
   <div class="wrap">
@@ -1083,8 +1142,8 @@ function servicePage(s, locale = 'en'){
     <h1>${s.headline}</h1>
     <p>${s.intro}</p>
     <div class="subhero-btns">
-      <a href="mailto:info@gccstartup.com?subject=${encodeURIComponent(s.name+' enquiry')}" class="btn btn-fill btn-arrow">${tr('Enquire about {name}', { name: s.name })}</a>
-      <a href="https://wa.me/gccstartup?text=${encodeURIComponent(waMsg)}" class="btn btn-stroke">${tr('WhatsApp us')}</a>
+      <a href="mailto:${siteEmail(settings)}?subject=${encodeURIComponent(s.name+' enquiry')}" class="btn btn-fill btn-arrow">${tr('Enquire about {name}', { name: s.name })}</a>
+      <a href="${siteWaLink(settings, waMsg)}" class="btn btn-stroke">${tr('WhatsApp us')}</a>
     </div>
     <div class="subhero-meta">
       ${s.meta.map(m=>`<div><span class="smi-n">${m[0]}</span><span class="smi-l">${m[1]}</span></div>`).join('\n      ')}
@@ -1117,7 +1176,7 @@ function servicePage(s, locale = 'en'){
     <div style="margin-top:36px">
       <div class="midcta reveal">
         <div><h3>${tr('Want this handled for you?')}</h3><p>${tr('Get a fixed, all-in quote with no hidden fees — usually within a few hours.')}</p></div>
-        <a href="mailto:info@gccstartup.com?subject=${encodeURIComponent(s.name+' quote')}" class="btn btn-fill btn-arrow">${tr('Get my fixed quote')}</a>
+        <a href="mailto:${siteEmail(settings)}?subject=${encodeURIComponent(s.name+' quote')}" class="btn btn-fill btn-arrow">${tr('Get my fixed quote')}</a>
       </div>
     </div>
   </div>
@@ -1133,9 +1192,9 @@ function servicePage(s, locale = 'en'){
   </div>
 </section>
 
-${faqBlock(tr('{name} questions, answered.', { name: s.name }), s.faq, waMsg, locale)}
+${faqBlock(tr('{name} questions, answered.', { name: s.name }), s.faq, waMsg, locale, settings)}
 
-${footer(waMsg, locale)}`;
+${footer(waMsg, locale, settings)}`;
 }
 
 // ── Convert clean CMS-served links (the app serves at /uae, /services/x, /pricing/x, /) ──
@@ -1173,6 +1232,32 @@ function homepageHTML(hp, settings, locale = 'en') {
     if (hp.hero.primaryCta) html = html.replace('Start My Company Today', hp.hero.primaryCta);
     if (hp.hero.secondaryCta) html = html.replace('Get the Free 2026 Guide', hp.hero.secondaryCta);
   }
+  // Inject SEO meta from the CMS homepage global (seoPlugin fields live under hp.meta)
+  if (hp && hp.meta) {
+    const m = hp.meta;
+    if (m.title) html = html.replace(/<title>[^<]*<\/title>/, `<title>${m.title}</title>`);
+    if (m.description) html = html.replace(/<meta name="description"[^>]*>/, `<meta name="description" content="${m.description}">`);
+    const ogBlock = [
+      `<meta property="og:title" content="${m.title || 'GCC Startup'}">`,
+      `<meta property="og:description" content="${m.description || ''}">`,
+      m.image && m.image.url ? `<meta property="og:image" content="${m.image.url}">` : '',
+      `<meta name="twitter:card" content="summary_large_image">`,
+      `<meta name="twitter:title" content="${m.title || 'GCC Startup'}">`,
+      `<meta name="twitter:description" content="${m.description || ''}">`,
+    ].filter(Boolean).join('\n');
+    html = html.includes('</head>') ? html.replace('</head>', ogBlock + '\n</head>') : html;
+  }
+  // Inject contact info from settings into the static homepage HTML
+  if (settings && settings.contact) {
+    const email = siteEmail(settings);
+    const waNum = cfg(settings, 'contact.whatsappNumber', '');
+    if (email !== 'info@gccstartup.com') {
+      html = html.replace(/info@gccstartup\.com/g, email);
+    }
+    if (waNum) {
+      html = html.replace(/https:\/\/wa\.me\/gccstartup/g, `https://wa.me/${waNum.replace(/\D/g,'')}`);
+    }
+  }
   // Set lang/dir on the document and inject RTL CSS + the language switcher.
   html = html.replace(/<html[^>]*>/i, `<html lang="${L.code}" dir="${L.dir}">`);
   const inject = (L.dir === 'rtl' ? I18N.RTL_CSS : '') + I18N.langSwitcher(locale);
@@ -1181,7 +1266,47 @@ function homepageHTML(hp, settings, locale = 'en') {
 }
 
 // ── Philippines Partner Recruitment Page ──
-function partnerPageHTML() {
+function partnerPageHTML(data = {}, settings = {}) {
+  // CMS fields override defaults; fallback to hardcoded production copy
+  const urgency    = data.urgencyBar || 'Now Accepting Remote Verification Partners in the Philippines &nbsp;·&nbsp; <strong>Limited intake open</strong>';
+  const badge      = data.badge || '● Now Accepting Partners — Philippines';
+  const heroH1     = data.heroHeadline || 'Earn <em>$100 USD</em> per Completed<br>Corporate Verification.';
+  const heroSub    = data.heroSubhead || 'Become an independent remote director or entity representative for international companies entering global markets. 100% remote, zero upfront fees, and guaranteed milestone-based payouts.';
+  const heroBtn    = data.heroCta || 'Check Your Eligibility ↓';
+  const heroFine   = data.heroFine || 'Takes less than 60 seconds. No identity documents required to apply today.';
+  const stats      = Array.isArray(data.stats) && data.stats.length ? data.stats : [
+    { number: '$100', label: 'Per verification payout' },
+    { number: '100%', label: 'Remote — work from anywhere' },
+    { number: '$0',   label: 'Zero fees to join' },
+    { number: '500+', label: 'Global corporate clients' },
+  ];
+  const howLabel   = data.howLabel || 'How It Works';
+  const howH2      = data.howHeadline || '3 Simple Steps to Your First Payout';
+  const howIntro   = data.howIntro || 'No experience required. No upfront costs. Just follow the process and collect your milestone payment.';
+  const steps      = Array.isArray(data.steps) && data.steps.length ? data.steps : [
+    { title: 'Submit Eligibility', desc: 'Fill out our quick 1-minute basic registration form below. We only require your contact details and asset readiness to start — <strong>no sensitive ID uploads or documents are needed at this stage.</strong>' },
+    { title: 'WhatsApp Orientation', desc: 'When an international corporate client matches your profile, our automation engine will reach out to you directly on WhatsApp. You\'ll receive a short step-by-step instructional video detailing the specific assignment.' },
+    { title: 'Verify &amp; Get Paid', desc: 'Complete the secure identity verification (KYC) checkpoint for the assigned entity. Once the milestone is successfully achieved, your <strong>$100 USD payout is instantly released</strong> to your account.' },
+  ];
+  const applyLabel = data.applyLabel || 'Secure Application';
+  const applyH2    = data.applyHeadline || 'Apply for the Network';
+  const applySub   = data.applySubhead || 'Complete this basic screening form to log your profile into our backend matching database. One minute. No documents needed today.';
+  const faqLabel   = data.faqLabel || 'Common Questions';
+  const faqH2      = data.faqHeadline || 'Everything You Need to Know';
+  const faqIntro   = data.faqIntro || 'Answers to the most common questions from prospective partners.';
+  const faqs       = Array.isArray(data.faq) && data.faq.length ? data.faq : [
+    { q: 'Do I need formal corporate experience?', a: 'No. GCC Startup provides all training and materials. If you meet the basic eligibility — a valid passport and an active bank account — you can apply.' },
+    { q: 'How and when do I get paid?', a: 'Payments are milestone-based. Once the KYC verification for an assigned entity is successfully completed, your $100 USD payout is processed immediately to your nominated bank account.' },
+    { q: 'Is there any cost to join?', a: 'Zero. There is no registration fee, no training fee, and no subscription. We earn when you earn.' },
+    { q: 'What does the verification process actually involve?', a: 'You will receive a short instructional video via WhatsApp explaining the specific assignment. It typically involves verifying your identity as a representative for a corporate structure — a straightforward, guided process.' },
+    { q: 'How many verifications can I do?', a: 'There is no cap. Once you are in the network and successfully complete your first milestone, you become eligible for repeat assignments as more international clients are matched to your profile.' },
+    { q: 'Is this legal and compliant?', a: 'Yes. All structures and verification processes are fully compliant with international KYC, AML and corporate governance standards. GCC Startup operates across regulated jurisdictions globally.' },
+  ];
+  const successH3  = data.successTitle || 'Application Received!';
+  const successP   = data.successBody || 'Your profile has been logged in our matching database. When a corporate client matches your profile, you\'ll receive a WhatsApp message with your assignment details and instructional video.';
+  const metaTitle  = data.metaTitle || 'Join the Global Verification Network | GCCstartup Partners';
+  const metaDesc   = data.metaDesc || 'Earn $100 USD per completed corporate verification. Join GCCstartup as an independent remote director or representative in the Philippines. Secure, 100% remote, and free to join.';
+  const metaImage  = data.metaImage || '';
   const pageCSS = `<style>
 /* ── Partner page extras (extends base CSS vars) ── */
 .pp-urgency{background:var(--blue-dkr,#0C2872);color:#fff;text-align:center;padding:10px 16px;font-size:13px;font-weight:600;letter-spacing:.03em;position:relative;z-index:200}
@@ -1282,59 +1407,40 @@ function partnerPageHTML() {
 @media(max-width:640px){.pp-mobile-sticky{display:block}.pp-how,.pp-faq{padding:48px 20px}.pp-apply{padding:48px 20px}.pp-hero{padding:52px 20px 44px}}
 </style>`;
 
-  const html = head(
-    'Join the Global Verification Network | GCCstartup Partners',
-    'Earn $100 USD per completed corporate verification. Join GCCstartup as an independent remote director or representative in the Philippines. Secure, 100% remote, and free to join.',
-  ) + pageCSS + nav() + `
+  const html = head(metaTitle, metaDesc, 'en', { title: metaTitle, description: metaDesc, image: metaImage })
+  + pageCSS + nav('en', settings) + `
 
 <!-- URGENCY BAR -->
 <div class="pp-urgency">
-  <span></span>Now Accepting Remote Verification Partners in the Philippines &nbsp;·&nbsp; <strong>Limited intake open</strong>
+  <span></span>${urgency}
 </div>
 
 <!-- HERO -->
 <section class="pp-hero">
   <div class="pp-hero-inner">
-    <div class="pp-badge">● Now Accepting Partners — Philippines</div>
-    <h1>Earn <em>$100 USD</em> per Completed<br>Corporate Verification.</h1>
-    <p class="pp-hero-sub">Become an independent remote director or entity representative for international companies entering global markets. 100% remote, zero upfront fees, and guaranteed milestone-based payouts.</p>
-    <a class="pp-hero-btn" href="#apply">Check Your Eligibility ↓</a>
-    <p class="pp-hero-fine">Takes less than 60 seconds. No identity documents required to apply today.</p>
+    <div class="pp-badge">${badge}</div>
+    <h1>${heroH1}</h1>
+    <p class="pp-hero-sub">${heroSub}</p>
+    <a class="pp-hero-btn" href="#apply">${heroBtn}</a>
+    <p class="pp-hero-fine">${heroFine}</p>
   </div>
 </section>
 
 <!-- STATS BAR -->
 <div class="pp-stats">
   <div class="pp-stats-inner">
-    <div class="pp-stat"><div class="pp-stat-n">$100</div><div class="pp-stat-l">Per verification payout</div></div>
-    <div class="pp-stat"><div class="pp-stat-n">100%</div><div class="pp-stat-l">Remote — work from anywhere</div></div>
-    <div class="pp-stat"><div class="pp-stat-n">$0</div><div class="pp-stat-l">Zero fees to join</div></div>
-    <div class="pp-stat"><div class="pp-stat-n">500+</div><div class="pp-stat-l">Global corporate clients</div></div>
+    ${stats.map(s => `<div class="pp-stat"><div class="pp-stat-n">${s.number}</div><div class="pp-stat-l">${s.label}</div></div>`).join('\n    ')}
   </div>
 </div>
 
 <!-- HOW IT WORKS -->
 <section class="pp-how">
   <div class="pp-how-inner">
-    <span class="pp-sec-label">How It Works</span>
-    <h2 class="pp-sec-h">3 Simple Steps to Your First Payout</h2>
-    <p class="pp-sec-p">No experience required. No upfront costs. Just follow the process and collect your milestone payment.</p>
+    <span class="pp-sec-label">${howLabel}</span>
+    <h2 class="pp-sec-h">${howH2}</h2>
+    <p class="pp-sec-p">${howIntro}</p>
     <div class="pp-steps">
-      <div class="pp-step">
-        <div class="pp-step-num">1</div>
-        <h3>Submit Eligibility</h3>
-        <p>Fill out our quick 1-minute basic registration form below. We only require your contact details and asset readiness to start — <strong>no sensitive ID uploads or documents are needed at this stage.</strong></p>
-      </div>
-      <div class="pp-step">
-        <div class="pp-step-num">2</div>
-        <h3>WhatsApp Orientation</h3>
-        <p>When an international corporate client matches your profile, our automation engine will reach out to you directly on WhatsApp. You'll receive a short step-by-step instructional video detailing the specific assignment.</p>
-      </div>
-      <div class="pp-step">
-        <div class="pp-step-num">3</div>
-        <h3>Verify &amp; Get Paid</h3>
-        <p>Complete the secure identity verification (KYC) checkpoint for the assigned entity. Once the milestone is successfully achieved, your <strong>$100 USD payout is instantly released</strong> to your account.</p>
-      </div>
+      ${steps.map((step, i) => `<div class="pp-step"><div class="pp-step-num">${i+1}</div><h3>${step.title}</h3><p>${step.desc}</p></div>`).join('\n      ')}
     </div>
   </div>
 </section>
@@ -1355,9 +1461,9 @@ function partnerPageHTML() {
 <!-- APPLICATION FORM -->
 <section class="pp-apply" id="apply">
   <div class="pp-apply-inner">
-    <span class="pp-apply-lbl">Secure Application</span>
-    <h2>Apply for the Network</h2>
-    <p class="pp-apply-sub">Complete this basic screening form to log your profile into our backend matching database. One minute. No documents needed today.</p>
+    <span class="pp-apply-lbl">${applyLabel}</span>
+    <h2>${applyH2}</h2>
+    <p class="pp-apply-sub">${applySub}</p>
 
     <div class="pp-form-card" id="ppFormCard">
       <form id="ppForm" onsubmit="return ppSubmit(event)">
@@ -1411,8 +1517,8 @@ function partnerPageHTML() {
         <div style="display:flex;justify-content:center">
           <div class="pp-success-icon">✓</div>
         </div>
-        <h3>Application Securely Logged!</h3>
-        <p>Thank you. Your profile has been successfully added to the GCCstartup backend database as a <strong>Priority Tier Partner</strong>.</p>
+        <h3>${successH3}</h3>
+        <p>${successP}</p>
         <div class="pp-success-next">
           <h4>Next Steps</h4>
           <ul>
@@ -1429,42 +1535,11 @@ function partnerPageHTML() {
 <!-- FAQ -->
 <section class="pp-faq">
   <div class="pp-faq-inner">
-    <span class="pp-sec-label">FAQ</span>
-    <h2 class="pp-sec-h">Common Questions</h2>
+    <span class="pp-sec-label">${faqLabel}</span>
+    <h2 class="pp-sec-h">${faqH2}</h2>
+    ${faqIntro ? `<p style="color:var(--muted,#6B7280);font-size:15px;line-height:1.65;margin-bottom:8px">${faqIntro}</p>` : ''}
     <div class="pp-faq-list">
-
-      <div class="pp-faq-item">
-        <button class="pp-faq-q" onclick="ppFaq(this)">
-          What exactly is a UBO or Nominee Director representative?
-          <span class="pp-faq-icon">+</span>
-        </button>
-        <p class="pp-faq-a">International corporations setting up entities globally often require localized registry representatives or temporary verification partners to complete standardized compliance setups. You act as the remote independent representative strictly for the entity's identity verification (KYC) lifecycle checkpoints.</p>
-      </div>
-
-      <div class="pp-faq-item">
-        <button class="pp-faq-q" onclick="ppFaq(this)">
-          Do I have to pay any registration fees to join the network?
-          <span class="pp-faq-icon">+</span>
-        </button>
-        <p class="pp-faq-a">Absolutely not. GCCstartup is a premier corporate services provider. We never charge our network partners. Joining the network is 100% free, and we pay you for your verification and compliance services.</p>
-      </div>
-
-      <div class="pp-faq-item">
-        <button class="pp-faq-q" onclick="ppFaq(this)">
-          Is my personal data safe with GCCstartup?
-          <span class="pp-faq-icon">+</span>
-        </button>
-        <p class="pp-faq-a">Yes. This initial registration page only captures basic contact readiness. Any formal verification data or documents requested in later project stages are stored within encrypted, secure databases that strictly comply with international privacy frameworks.</p>
-      </div>
-
-      <div class="pp-faq-item">
-        <button class="pp-faq-q" onclick="ppFaq(this)">
-          Exactly when and how do I receive the $100 USD?
-          <span class="pp-faq-icon">+</span>
-        </button>
-        <p class="pp-faq-a">Payouts are entirely milestone-based to ensure transparency. The moment your assigned client corporate verification/KYC process passes official registry approval, your $100 USD payment is immediately released to your designated account.</p>
-      </div>
-
+      ${faqs.map(f => `<div class="pp-faq-item"><button class="pp-faq-q" onclick="ppFaq(this)">${f.q}<span class="pp-faq-icon">+</span></button><p class="pp-faq-a">${f.a}</p></div>`).join('\n      ')}
     </div>
   </div>
 </section>
@@ -1532,7 +1607,7 @@ function ppSubmit(e) {
   return false;
 }
 </script>
-` + footer('I am interested in joining the GCCstartup Philippines verification network.') + `
+` + footer('I am interested in joining the GCCstartup Philippines verification network.', 'en', settings) + `
 </body></html>`;
   return linkFix(html, 'en');
 }
