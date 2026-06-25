@@ -85,6 +85,27 @@ export default buildConfig({
         } catch (tableError: any) {
           payload.logger.warn('onInit services_related_links creation note: ' + tableError.message)
         }
+
+        // 5. Ensure "homepage_process" table exists (safe-sync for array relations)
+        try {
+          await pool.query(`
+            CREATE TABLE IF NOT EXISTS "homepage_process" (
+              "id" serial PRIMARY KEY,
+              "_order" integer NOT NULL,
+              "_parent_id" integer NOT NULL REFERENCES "homepage"("id") ON DELETE CASCADE,
+              "title" text,
+              "desc" text
+            )
+          `)
+          await pool.query(`
+            CREATE INDEX IF NOT EXISTS "homepage_process_order_idx" ON "homepage_process" ("_order")
+          `)
+          await pool.query(`
+            CREATE INDEX IF NOT EXISTS "homepage_process_parent_id_idx" ON "homepage_process" ("_parent_id")
+          `)
+        } catch (tableError: any) {
+          payload.logger.warn('onInit homepage_process creation note: ' + tableError.message)
+        }
       }
     } catch (e: any) {
       payload.logger.warn('onInit migration note: ' + e.message)
