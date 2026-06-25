@@ -42,10 +42,27 @@ function flattenPartnerPage(d: any): Record<string, any> {
 }
 
 export async function GET() {
-  const payload = await getPayload({ config })
-  const [partnerPage, settings] = await Promise.all([
-    payload.findGlobal({ slug: 'partnerPage' }).catch(() => null),
-    payload.findGlobal({ slug: 'siteSettings' }).catch(() => null),
-  ])
-  return htmlResponse(partnerPageHTML(flattenPartnerPage(partnerPage), settings || {}))
+  try {
+    const payload = await getPayload({ config })
+    const [partnerPage, settings] = await Promise.all([
+      payload.findGlobal({ slug: 'partnerPage' }).catch(() => null),
+      payload.findGlobal({ slug: 'siteSettings' }).catch(() => null),
+    ])
+    return htmlResponse(partnerPageHTML(flattenPartnerPage(partnerPage), settings || {}))
+  } catch (err: any) {
+    console.error('[philippines-partners GET] Server-side crash caught:', err)
+    return htmlResponse(`
+      <div style="font-family: system-ui, sans-serif; padding: 48px; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+        <h1 style="color: #ea4335;">Database Connection or Startup Error</h1>
+        <p>A server-side exception occurred while initializing Payload CMS or fetching data from PostgreSQL:</p>
+        <pre style="background: #f1f3f4; padding: 16px; border-radius: 4px; overflow-x: auto; font-family: monospace;">${err.message || err}</pre>
+        <p><strong>Troubleshooting Steps:</strong></p>
+        <ol>
+          <li>Check that your <code>DATABASE_URI</code> environment variable is set and correct.</li>
+          <li>Ensure your PostgreSQL database service is running and accessible from this container.</li>
+          <li>Check your server/container logs on Dokploy or Docker for detailed tracebacks.</li>
+        </ol>
+      </div>
+    `, 500)
+  }
 }
