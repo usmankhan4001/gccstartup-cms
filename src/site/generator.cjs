@@ -1723,7 +1723,7 @@ function ppSubmit(e) {
     page:           location.href,
   };
 
-  fetch('https://cms.gccstartup.com/api/partner-apply', {
+  fetch('/api/partner-apply', {
     method:  'POST',
     headers: { 'Content-Type': 'application/json' },
     body:    JSON.stringify(data),
