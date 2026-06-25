@@ -104,7 +104,7 @@ function dict(locale) {
   if (!locale || locale === 'en') return {}
   if (_cache[locale]) return _cache[locale]
   try {
-    _cache[locale] = JSON.parse(fs.readFileSync(path.join(__dirname, 'locales', locale + '.json'), 'utf8'))
+    _cache[locale] = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src', 'site', 'locales', locale + '.json'), 'utf8'))
   } catch (_) {
     _cache[locale] = {}
   }
