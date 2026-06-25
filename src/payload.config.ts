@@ -147,6 +147,127 @@ export default buildConfig({
         } catch (colError: any) {
           payload.logger.warn('onInit homepage columns creation note: ' + colError.message)
         }
+
+        // 7. Ensure "partner_page" table exists
+        try {
+          await pool.query(`
+            CREATE TABLE IF NOT EXISTS "partner_page" (
+              "id" serial PRIMARY KEY,
+              "seo_meta_title" text,
+              "seo_meta_desc" text,
+              "seo_meta_image_id" integer,
+              "urgency_bar" text,
+              "hero_badge" text,
+              "hero_hero_headline" text,
+              "hero_hero_subhead" text,
+              "hero_hero_cta" text,
+              "hero_hero_fine" text,
+              "how_it_works_how_label" text,
+              "how_it_works_how_headline" text,
+              "how_it_works_how_intro" text,
+              "apply_section_apply_label" text,
+              "apply_section_apply_headline" text,
+              "apply_section_apply_subhead" text,
+              "faq_section_faq_label" text,
+              "faq_section_faq_headline" text,
+              "faq_section_faq_intro" text,
+              "success_state_success_title" text,
+              "success_state_success_body" text,
+              "updated_at" timestamp with time zone,
+              "created_at" timestamp with time zone
+            )
+          `)
+        } catch (tableError: any) {
+          payload.logger.warn('onInit partner_page creation note: ' + tableError.message)
+        }
+
+        // 8. Ensure "partner_page_stats" table exists
+        try {
+          await pool.query(`
+            CREATE TABLE IF NOT EXISTS "partner_page_stats" (
+              "id" varchar PRIMARY KEY,
+              "_order" integer NOT NULL,
+              "_parent_id" integer NOT NULL REFERENCES "partner_page"("id") ON DELETE CASCADE,
+              "number" text,
+              "label" text
+            )
+          `)
+          await pool.query('CREATE INDEX IF NOT EXISTS "partner_page_stats_order_idx" ON "partner_page_stats" ("_order")')
+          await pool.query('CREATE INDEX IF NOT EXISTS "partner_page_stats_parent_id_idx" ON "partner_page_stats" ("_parent_id")')
+        } catch (tableError: any) {
+          payload.logger.warn('onInit partner_page_stats creation note: ' + tableError.message)
+        }
+
+        // 9. Ensure "partner_page_how_it_works_steps" table exists
+        try {
+          await pool.query(`
+            CREATE TABLE IF NOT EXISTS "partner_page_how_it_works_steps" (
+              "id" varchar PRIMARY KEY,
+              "_order" integer NOT NULL,
+              "_parent_id" integer NOT NULL REFERENCES "partner_page"("id") ON DELETE CASCADE,
+              "title" text,
+              "desc" text
+            )
+          `)
+          await pool.query('CREATE INDEX IF NOT EXISTS "partner_page_how_it_works_steps_order_idx" ON "partner_page_how_it_works_steps" ("_order")')
+          await pool.query('CREATE INDEX IF NOT EXISTS "partner_page_how_it_works_steps_parent_id_idx" ON "partner_page_how_it_works_steps" ("_parent_id")')
+        } catch (tableError: any) {
+          payload.logger.warn('onInit partner_page_how_it_works_steps creation note: ' + tableError.message)
+        }
+
+        // 10. Ensure "partner_page_faq_section_faq" table exists
+        try {
+          await pool.query(`
+            CREATE TABLE IF NOT EXISTS "partner_page_faq_section_faq" (
+              "id" varchar PRIMARY KEY,
+              "_order" integer NOT NULL,
+              "_parent_id" integer NOT NULL REFERENCES "partner_page"("id") ON DELETE CASCADE,
+              "q" text,
+              "a" text
+            )
+          `)
+          await pool.query('CREATE INDEX IF NOT EXISTS "partner_page_faq_section_faq_order_idx" ON "partner_page_faq_section_faq" ("_order")')
+          await pool.query('CREATE INDEX IF NOT EXISTS "partner_page_faq_section_faq_parent_id_idx" ON "partner_page_faq_section_faq" ("_parent_id")')
+        } catch (tableError: any) {
+          payload.logger.warn('onInit partner_page_faq_section_faq creation note: ' + tableError.message)
+        }
+
+        // 11. Ensure "site_settings" table exists
+        try {
+          await pool.query(`
+            CREATE TABLE IF NOT EXISTS "site_settings" (
+              "id" serial PRIMARY KEY,
+              "brand_name" text,
+              "logo_id" integer,
+              "site_url" text,
+              "contact_email" text,
+              "contact_whatsapp_number" text,
+              "footer_about" text,
+              "footer_legal" text,
+              "updated_at" timestamp with time zone,
+              "created_at" timestamp with time zone
+            )
+          `)
+        } catch (tableError: any) {
+          payload.logger.warn('onInit site_settings creation note: ' + tableError.message)
+        }
+
+        // 12. Ensure "site_settings_social" table exists
+        try {
+          await pool.query(`
+            CREATE TABLE IF NOT EXISTS "site_settings_social" (
+              "id" varchar PRIMARY KEY,
+              "_order" integer NOT NULL,
+              "_parent_id" integer NOT NULL REFERENCES "site_settings"("id") ON DELETE CASCADE,
+              "platform" text,
+              "url" text
+            )
+          `)
+          await pool.query('CREATE INDEX IF NOT EXISTS "site_settings_social_order_idx" ON "site_settings_social" ("_order")')
+          await pool.query('CREATE INDEX IF NOT EXISTS "site_settings_social_parent_id_idx" ON "site_settings_social" ("_parent_id")')
+        } catch (tableError: any) {
+          payload.logger.warn('onInit site_settings_social creation note: ' + tableError.message)
+        }
       }
     } catch (e: any) {
       payload.logger.warn('onInit migration note: ' + e.message)
