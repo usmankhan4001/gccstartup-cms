@@ -284,6 +284,53 @@ export default buildConfig({
         } catch (tableError: any) {
           payload.logger.warn('onInit site_settings_social creation note: ' + tableError.message)
         }
+
+        // 13. Ensure "leads" table exists
+        try {
+          await pool.query(`
+            CREATE TABLE IF NOT EXISTS "leads" (
+              "id" serial PRIMARY KEY,
+              "name" text,
+              "email" text,
+              "phone" text,
+              "country" text,
+              "interest" text,
+              "message" text,
+              "source" text,
+              "page" text,
+              "status" text DEFAULT 'new',
+              "fbclid" text,
+              "client_ip" text,
+              "user_agent" text,
+              "event_id" text,
+              "updated_at" timestamp with time zone,
+              "created_at" timestamp with time zone
+            )
+          `)
+        } catch (tableError: any) {
+          payload.logger.warn('onInit leads creation note: ' + tableError.message)
+        }
+
+        // 14. Ensure "partner_applications" table exists
+        try {
+          await pool.query(`
+            CREATE TABLE IF NOT EXISTS "partner_applications" (
+              "id" serial PRIMARY KEY,
+              "full_name" text,
+              "whatsapp" text,
+              "city" text,
+              "has_passport" boolean DEFAULT false,
+              "has_bank_account" boolean DEFAULT false,
+              "page" text,
+              "status" text DEFAULT 'new',
+              "notes" text,
+              "updated_at" timestamp with time zone,
+              "created_at" timestamp with time zone
+            )
+          `)
+        } catch (tableError: any) {
+          payload.logger.warn('onInit partner_applications creation note: ' + tableError.message)
+        }
       }
     } catch (e: any) {
       payload.logger.warn('onInit migration note: ' + e.message)

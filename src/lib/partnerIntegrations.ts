@@ -30,6 +30,7 @@ async function wahaSend(numberDigits: string, text: string) {
         ...(WAHA_API_KEY ? { 'X-Api-Key': WAHA_API_KEY } : {}),
       },
       body: JSON.stringify({ session: WAHA_SESSION, chatId: `${numberDigits}@c.us`, text }),
+      signal: AbortSignal.timeout(4000),
     })
     if (!res.ok) console.error('[waha-partner] send', res.status, (await res.text()).slice(0, 200))
   } catch (e) {
@@ -94,6 +95,7 @@ async function forwardToN8n(d: PartnerData): Promise<boolean> {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(4000),
     })
     if (!res.ok) console.error('[n8n-partner] forward failed', res.status)
     return true

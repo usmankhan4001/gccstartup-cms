@@ -44,6 +44,7 @@ async function twentyCreate(path: string, payload: Record<string, unknown>) {
       method: 'POST',
       headers: { Authorization: `Bearer ${TWENTY_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(4000),
     })
     if (!res.ok) {
       console.error(`[twenty] ${path} ${res.status}`, (await res.text()).slice(0, 300))
@@ -90,6 +91,7 @@ async function wahaSend(numberDigits: string, text: string) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', ...(WAHA_API_KEY ? { 'X-Api-Key': WAHA_API_KEY } : {}) },
       body: JSON.stringify({ session: WAHA_SESSION, chatId: `${numberDigits}@c.us`, text }),
+      signal: AbortSignal.timeout(4000),
     })
     if (!res.ok) console.error('[waha] send', res.status, (await res.text()).slice(0, 200))
   } catch (e) {
@@ -140,6 +142,7 @@ async function forwardToN8n(d: LeadData): Promise<boolean> {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(4000),
     })
     if (!res.ok) console.error('[n8n] forward failed', res.status)
     return true
@@ -188,7 +191,7 @@ async function sendMetaCapi(d: LeadData) {
 
     const res = await fetch(
       `https://graph.facebook.com/v19.0/${META_PIXEL_ID}/events?access_token=${META_ACCESS_TOKEN}`,
-      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
+      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(4000) }
     )
     if (!res.ok) console.error('[meta-capi] failed', res.status, (await res.text()).slice(0, 300))
     else console.log('[meta-capi] Lead event sent')
