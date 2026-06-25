@@ -29,4 +29,4 @@ COPY website-static ./website-static
 RUN echo "runtime website-static:" && ls website-static | head
 EXPOSE 3000
 # Media volume is mounted at /app/media (see docker-compose / Dokploy)
-CMD ["pnpm", "start"]
+CMD ["sh", "-c", "node migrate.cjs && pnpm start"]
