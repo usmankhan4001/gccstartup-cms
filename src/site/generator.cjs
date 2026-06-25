@@ -1222,8 +1222,9 @@ function localeIndexHtml(locale) {
 }
 
 // The homepage HTML (index.html) with editable bits swapped in from the CMS homepage global.
-function homepageHTML(hp, settings, locale = 'en') {
+function homepageHTML(hp, settings, locale = 'en', countries = [], services = [], pricing = []) {
   const L = I18N.byCode(locale);
+  const tr = I18N.translator(locale);
   let html = localeIndexHtml(locale);
   if (hp && hp.hero) {
     if (hp.hero.eyebrow) html = html.replace('Company Formation · Global Banking · Tax Residency', hp.hero.eyebrow);
@@ -1279,6 +1280,63 @@ function homepageHTML(hp, settings, locale = 'en') {
         );
       }
     }
+  }
+  // Inject dynamic services grid
+  if (services && services.length) {
+    const servicesHtml = `<div class="services-grid">
+` + services.map((s, i) => {
+      const delay = i > 0 ? ` style="transition-delay:.${i * 6}s"` : '';
+      const num = String(i + 1).padStart(2, '0');
+      const iconSvg = SVC_ICON[s.slug] || SVG.building;
+      return `      <div class="service-item reveal"${delay}>
+        <div class="icon-c"><span class="ico">${iconSvg}</span></div>
+        <span class="svc-num">${num}</span>
+        <h3>${s.name}</h3>
+        <p>${s.intro || ''}</p>
+        <a href="service-${s.slug}.html" class="svc-link">${tr('Learn more →')}</a>
+      </div>`;
+    }).join('\n') + '\n    </div>';
+    html = html.replace(/<div class="services-grid">[\s\S]*?<\/div>\s*<\/div>\s*<\/section>/i, servicesHtml + '\n  </div>\n</section>');
+  }
+  // Inject dynamic jurisdictions grid
+  if (countries && countries.length) {
+    const jurHtml = `<div class="jur-grid">
+` + countries.map((c, i) => {
+      const delay = i > 0 ? ` style="transition-delay:.${i * 6}s"` : '';
+      return `      <a class="jur-card reveal" data-r="${c.region || 'gulf'}"${delay} href="country-${c.slug}.html">
+        <span class="jur-flag">${c.flag || '🌐'}</span>
+        <div class="jur-name">${c.name}</div>
+        <div class="jur-rate">${c.tax || ''}</div>
+        <p class="jur-desc">${c.intro || ''}</p>
+        <div class="jur-meta"><span>${c.timeline || ''}</span><strong>${tr('From')} ${c.fromPrice || ''}</strong></div>
+      </a>`;
+    }).join('\n') + '\n    </div>';
+    html = html.replace(/<div class="jur-grid">[\s\S]*?<\/div>/i, jurHtml);
+  }
+  // Inject dynamic pricing grid
+  if (pricing && pricing.length) {
+    const pricingHtml = `<div class="pricing-grid reveal">
+` + pricing.map((t, i) => {
+      const isFeatured = !!t.featured;
+      const cardClass = isFeatured ? 'pricing-card featured' : 'pricing-card';
+      const delay = i > 0 ? ` style="transition-delay:.${i * 8}s"` : '';
+      const buttonClass = isFeatured ? 'pricing-btn orange' : 'pricing-btn outline';
+      return `      <div class="${cardClass}"${delay}>
+        ${isFeatured ? `        <span class="pricing-popular">${tr('Most popular')}</span>` : ''}
+        <span class="pricing-tier">${t.tierLabel || `Tier 0${i + 1}`}</span>
+        <div class="pricing-name">${t.name}</div>
+        <p class="pricing-desc">${t.intro || ''}</p>
+        <div class="pricing-amount">
+          <div class="pricing-price">${t.price || ''}</div>
+          <div class="pricing-note">${t.priceNote || ''}</div>
+        </div>
+        <ul class="pricing-list">
+          ${(t.features || []).slice(0, 5).map(f => `          <li><span class="pricing-check">✓</span>${f.title || f[0] || ''}</li>`).join('\n')}
+        </ul>
+        <a href="pricing-${t.slug}.html" class="${buttonClass}">${tr('View full breakdown →')}</a>
+      </div>`;
+    }).join('\n') + '\n    </div>';
+    html = html.replace(/<div class="pricing-grid reveal">[\s\S]*?<\/div>\s*<\/div>\s*<\/section>/i, pricingHtml + '\n  </div>\n</section>');
   }
   // Inject process steps
   if (hp && hp.process && hp.process.length) {

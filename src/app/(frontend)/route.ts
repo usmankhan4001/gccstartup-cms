@@ -8,11 +8,14 @@ export async function GET(request: Request) {
   try {
     const locale = new URL(request.url).searchParams.get('locale') || 'en'
     const payload = await getPayload({ config })
-    const [hp, settings] = await Promise.all([
+    const [hp, settings, countriesRes, servicesRes, pricingRes] = await Promise.all([
       payload.findGlobal({ slug: 'homepage' }).catch(() => null),
       payload.findGlobal({ slug: 'siteSettings' }).catch(() => null),
+      payload.find({ collection: 'countries', limit: 100, locale: locale as any }).catch(() => ({ docs: [] })),
+      payload.find({ collection: 'services', limit: 100, locale: locale as any }).catch(() => ({ docs: [] })),
+      payload.find({ collection: 'pricingTiers', limit: 100, locale: locale as any }).catch(() => ({ docs: [] })),
     ])
-    return htmlResponse(homeHTML(hp, settings, locale))
+    return htmlResponse(homeHTML(hp, settings, locale, countriesRes.docs, servicesRes.docs, pricingRes.docs))
   } catch (err: any) {
     console.error('[frontend GET] Server-side crash caught:', err)
     return htmlResponse(`

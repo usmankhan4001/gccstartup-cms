@@ -78,8 +78,8 @@ export function pricingHTML(doc: any, locale = 'en', settings: any = {}): string
   )
 }
 
-export function homeHTML(hp: any, settings: any, locale = 'en'): string {
-  return gen.homepageHTML(hp, settings, locale)
+export function homeHTML(hp: any, settings: any, locale = 'en', countries: any[] = [], services: any[] = [], pricing: any[] = []): string {
+  return gen.homepageHTML(hp, settings, locale, countries, services, pricing)
 }
 
 export function partnerPageHTML(data: any = {}, settings: any = {}): string {
