@@ -13,3 +13,6 @@ payload-types.ts
 .vercel
 .idea
 .vscode
+*.tsbuildinfo
+index-decoded.html
+nul

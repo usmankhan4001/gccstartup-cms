@@ -200,13 +200,25 @@ async function sendMetaCapi(d: LeadData) {
 /** Fire all notifications. Failures are logged, never thrown. */
 export async function notifyLead(d: LeadData) {
   await Promise.all([
-    pushToTwenty(d),
-    sendMetaCapi(d),
+    pushToTwenty(d).catch((e) => console.error('[leads] Twenty CRM push failed:', e)),
+    sendMetaCapi(d).catch((e) => console.error('[leads] Meta CAPI send failed:', e)),
   ])
-  // Prefer n8n (human-like typing). Only fall back to direct WAHA if n8n isn't configured.
-  const forwarded = await forwardToN8n(d)
-  if (!forwarded) {
-    if (ADMIN_WHATSAPP) await wahaSend(ADMIN_WHATSAPP, adminMessage(d))
-    if (NOTIFY_LEAD && d.phone) await wahaSend(digits(d.phone), leadMessage(d))
+  try {
+    // Prefer n8n (human-like typing). Only fall back to direct WAHA if n8n isn't configured.
+    const forwarded = await forwardToN8n(d)
+    if (!forwarded) {
+      if (ADMIN_WHATSAPP) {
+        await wahaSend(ADMIN_WHATSAPP, adminMessage(d)).catch((e) =>
+          console.error('[leads] WAHA admin send failed:', e)
+        )
+      }
+      if (NOTIFY_LEAD && d.phone) {
+        await wahaSend(digits(d.phone), leadMessage(d)).catch((e) =>
+          console.error('[leads] WAHA lead send failed:', e)
+        )
+      }
+    }
+  } catch (e) {
+    console.error('[leads] WhatsApp routing failed:', e)
   }
 }

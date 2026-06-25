@@ -30,6 +30,10 @@ export const Leads: CollectionConfig = {
       defaultValue: 'new',
       options: ['new', 'contacted', 'qualified', 'won', 'lost'],
     },
+    { name: 'fbclid', type: 'text', admin: { position: 'sidebar' } },
+    { name: 'clientIp', type: 'text', admin: { position: 'sidebar' } },
+    { name: 'userAgent', type: 'text', admin: { position: 'sidebar' } },
+    { name: 'eventId', type: 'text', admin: { position: 'sidebar' } },
   ],
   hooks: {
     afterChange: [
@@ -45,6 +49,10 @@ export const Leads: CollectionConfig = {
           message: doc.message,
           source: doc.source,
           page: doc.page,
+          fbclid: doc.fbclid,
+          clientIp: doc.clientIp,
+          userAgent: doc.userAgent,
+          eventId: doc.eventId,
         }).catch((e) => console.error('[leads] notify error', e))
       },
     ],

@@ -104,11 +104,23 @@ async function forwardToN8n(d: PartnerData): Promise<boolean> {
 }
 
 export async function notifyPartner(d: PartnerData) {
-  const forwarded = await forwardToN8n(d)
-  if (!forwarded) {
-    // Fallback: direct WAHA
-    if (ADMIN_WHATSAPP) await wahaSend(ADMIN_WHATSAPP, adminMessage(d))
-    const applicantDigits = digits(d.whatsapp)
-    if (applicantDigits) await wahaSend(applicantDigits, applicantMessage(d))
+  try {
+    const forwarded = await forwardToN8n(d)
+    if (!forwarded) {
+      // Fallback: direct WAHA
+      if (ADMIN_WHATSAPP) {
+        await wahaSend(ADMIN_WHATSAPP, adminMessage(d)).catch((e) =>
+          console.error('[partner] Fallback WAHA admin send failed:', e)
+        )
+      }
+      const applicantDigits = digits(d.whatsapp)
+      if (applicantDigits) {
+        await wahaSend(applicantDigits, applicantMessage(d)).catch((e) =>
+          console.error('[partner] Fallback WAHA applicant send failed:', e)
+        )
+      }
+    }
+  } catch (e) {
+    console.error('[partner] Notification routing failed:', e)
   }
 }

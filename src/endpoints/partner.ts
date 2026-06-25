@@ -9,7 +9,7 @@ export const partnerEndpoint: Endpoint = {
   path: '/partner-apply',
   method: 'post',
   handler: async (req) => {
-    let body: Record<string, unknown> = {}
+    let body: Record<string, any> = {}
     try {
       body = (await req.json?.()) ?? {}
     } catch {
