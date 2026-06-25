@@ -64,6 +64,27 @@ export default buildConfig({
         } catch (fkError: any) {
           payload.logger.warn('onInit FK constraint warning (safe to ignore on cold start): ' + fkError.message)
         }
+
+        // 4. Ensure "services_related_links" table exists (safe-sync for array relations)
+        try {
+          await pool.query(`
+            CREATE TABLE IF NOT EXISTS "services_related_links" (
+              "id" serial PRIMARY KEY,
+              "_order" integer NOT NULL,
+              "_parent_id" integer NOT NULL REFERENCES "services"("id") ON DELETE CASCADE,
+              "label" text,
+              "url" text
+            )
+          `)
+          await pool.query(`
+            CREATE INDEX IF NOT EXISTS "services_related_links_order_idx" ON "services_related_links" ("_order")
+          `)
+          await pool.query(`
+            CREATE INDEX IF NOT EXISTS "services_related_links_parent_id_idx" ON "services_related_links" ("_parent_id")
+          `)
+        } catch (tableError: any) {
+          payload.logger.warn('onInit services_related_links creation note: ' + tableError.message)
+        }
       }
     } catch (e: any) {
       payload.logger.warn('onInit migration note: ' + e.message)
