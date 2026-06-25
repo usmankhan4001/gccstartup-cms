@@ -1232,6 +1232,83 @@ function homepageHTML(hp, settings, locale = 'en') {
     if (hp.hero.primaryCta) html = html.replace('Start My Company Today', hp.hero.primaryCta);
     if (hp.hero.secondaryCta) html = html.replace('Get the Free 2026 Guide', hp.hero.secondaryCta);
   }
+  // Inject stats
+  if (hp && hp.stats && hp.stats.length) {
+    const statsHtml = `<div class="stats-row">
+` + hp.stats.map((s, i) => {
+      const numMatch = s.number ? s.number.match(/^([\d,.-]+)(.*)$/) : null;
+      const num = numMatch ? numMatch[1] : (s.number || '');
+      const unit = numMatch ? numMatch[2] : '';
+      const delay = i > 0 ? ` style="transition-delay:.${i * 7}s"` : '';
+      return `  <div class="stat-cell reveal"${delay}>
+    <span class="stat-n">${num}${unit ? `<span class="stat-u">${unit}</span>` : ''}</span>
+    <div class="stat-l">${s.label || ''}</div>
+  </div>`;
+    }).join('\n') + '\n</div>';
+    html = html.replace(/<div class="stats-row">[\s\S]*?<\/div>\s*<\/div>/i, statsHtml);
+  }
+  // Inject section headers
+  if (hp && hp.sections && hp.sections.length) {
+    for (const sec of hp.sections) {
+      if (sec.key === 'services') {
+        html = html.replace(
+          /<div class="section-header reveal">[\s\S]*?What we do[\s\S]*?<\/div>/,
+          `<div class="section-header reveal">
+      <span class="eyebrow">${sec.eyebrow || 'What we do'}</span>
+      <h2>${(sec.title || 'Everything you need to go global — under one roof.').replace(/\n/g, '<br>')}</h2>
+      <p>${sec.intro || 'Formation, real banking, privacy, and ongoing compliance. One expert partner handles your entire international structure, start to finish.'}</p>
+    </div>`
+        );
+      } else if (sec.key === 'jurisdictions') {
+        html = html.replace(
+          /<div class="section-header reveal">[\s\S]*?Where we operate[\s\S]*?<\/div>/,
+          `<div class="section-header reveal">
+      <span class="eyebrow">${sec.eyebrow || 'Where we operate'}</span>
+      <h2>${(sec.title || 'Pick the country that pays you back.').replace(/\n/g, '<br>')}</h2>
+      <p>${sec.intro || 'We match your income, lifestyle, and tax situation to the jurisdiction that actually fits — not just the most popular one.'}</p>
+    </div>`
+        );
+      } else if (sec.key === 'pricing') {
+        html = html.replace(
+          /<div class="section-header center reveal">[\s\S]*?Pricing[\s\S]*?<\/div>/,
+          `<div class="section-header center reveal">
+      <span class="eyebrow">${sec.eyebrow || 'Pricing'}</span>
+      <h2>${(sec.title || 'Simple pricing. Zero surprises.').replace(/\n/g, '<br>')}</h2>
+      <p>${sec.intro || 'Every cost on the table before you sign — government fees, service charges, and renewals all agreed upfront.'}</p>
+    </div>`
+        );
+      }
+    }
+  }
+  // Inject process steps
+  if (hp && hp.process && hp.process.length) {
+    const processHtml = `<div class="process-grid">
+` + hp.process.map((p, i) => {
+      const delay = i > 0 ? ` style="transition-delay:.${i * 8}s"` : '';
+      return `      <div class="process-step reveal"${delay}>
+        <span class="step-n">0${i + 1}</span>
+        <h4>${p.title || ''}</h4>
+        <p>${p.desc || ''}</p>
+      </div>`;
+    }).join('\n') + '\n    </div>';
+    html = html.replace(/<div class="process-grid">[\s\S]*?<\/div>\s*<\/div>/i, processHtml + '\n    </div>');
+  }
+  // Inject footer CTA overrides
+  if (hp && hp.footerCta) {
+    const fc = hp.footerCta;
+    if (fc.headline) {
+      html = html.replace(/<h2>Your global company is<br><em>15 minutes away\.<\/em><\/h2>/, `<h2>${fc.headline}</h2>`);
+    }
+    if (fc.subhead) {
+      html = html.replace(/<p>Book a free strategy call — direct with the founder\.[\s\S]*?<\/p>/, `<p>${fc.subhead}</p>`);
+    }
+    if (fc.primaryCta) {
+      html = html.replace('Book a free call', fc.primaryCta);
+    }
+    if (fc.secondaryCta) {
+      html = html.replace('WhatsApp us', fc.secondaryCta);
+    }
+  }
   // Inject SEO meta from the CMS homepage global (seoPlugin fields live under hp.meta)
   if (hp && hp.meta) {
     const m = hp.meta;
@@ -1260,7 +1337,8 @@ function homepageHTML(hp, settings, locale = 'en') {
   }
   // Set lang/dir on the document and inject RTL CSS + the language switcher.
   html = html.replace(/<html[^>]*>/i, `<html lang="${L.code}" dir="${L.dir}">`);
-  const inject = (L.dir === 'rtl' ? I18N.RTL_CSS : '') + I18N.langSwitcher(locale);
+  const inject = (L.dir === 'rtl' ? I18Y_RTL_CSS_IF_NEEDED(L.dir) : '') + I18N.langSwitcher(locale);
+  function I18Y_RTL_CSS_IF_NEEDED(dir) { return dir === 'rtl' ? I18N.RTL_CSS : ''; }
   html = html.includes('</body>') ? html.replace('</body>', inject + '\n</body>') : html + inject;
   return linkFix(html, locale);
 }
