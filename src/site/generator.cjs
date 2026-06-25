@@ -410,7 +410,7 @@ function footer(waMsg, locale = 'en', settings = {}) {
       <button type="submit" class="btn btn-fill btn-arrow" style="width:100%;justify-content:center">${tr('Send my enquiry')}</button>
       <p class="lead-note">${tr('🔒 Confidential. No spam. We reply within 24 hours.')}</p>
     </form>
-    <div class="lead-success" id="leadSuccess"><div class="ls-ic">✓</div><strong>${tr('Thank you!')}</strong><br>${tr('We’ve received your enquiry and will reply within 24 hours.')}</div>
+    <div class="lead-success" id="leadSuccess"><div class="ls-ic">✓</div><strong>${tr('Thank you!')}</strong><br>${tr('We've received your enquiry and will reply within 24 hours.')}</div>
   </div>
 </div>
 <script>
@@ -529,7 +529,7 @@ const countries = [
     slug:'uae', flag:'🇦🇪', name:'UAE', file:'country-uae.html',
     tax:'9% / 0% on foreign income', timeline:'~30 days incl. visit', from:'$1,500', workDays:18,
     headline:'Set up in the <em>UAE</em> — 0% personal tax, world-class banking.',
-    intro:'The Gulf’s most credible base for founders who want substance and status. Emirates ID, full tax residency, top-tier banking and 100% ownership — handled end to end, in days.',
+    intro:'The Gulf's most credible base for founders who want substance and status. Emirates ID, full tax residency, top-tier banking and 100% ownership — handled end to end, in days.',
     benefits:[
       ['0% personal income tax','No tax on your salary, dividends or personal income as a UAE tax resident.'],
       ['Residency visa & Emirates ID','Renewable residence visa for you and your family, with full banking and lifestyle access.'],
@@ -557,7 +557,7 @@ const countries = [
     slug:'bahrain', flag:'🇧🇭', name:'Bahrain', file:'country-bahrain.html',
     tax:'0% corporate tax', timeline:'~30 days incl. visit', from:'$1,500', workDays:18,
     headline:'Go live in <em>Bahrain</em> — 0% corporate tax, lower cost.',
-    intro:'The Gulf’s most tax-efficient base: 0% corporate income tax, cheaper than the UAE, credible local banking, and a 25-minute bridge straight into the Saudi market.',
+    intro:'The Gulf's most tax-efficient base: 0% corporate income tax, cheaper than the UAE, credible local banking, and a 25-minute bridge straight into the Saudi market.',
     benefits:[
       ['0% corporate income tax','No corporate income tax on your trading profits — the strongest headline rate in the Gulf.'],
       ['Lower cost than the UAE','Comparable Gulf credibility and banking at a meaningfully lower setup and renewal cost.'],
@@ -585,7 +585,7 @@ const countries = [
     slug:'hongkong', flag:'🇭🇰', name:'Hong Kong', file:'country-hongkong.html',
     tax:'0% on foreign-sourced income', timeline:'17–18 days, remote', from:'$2,000', workDays:13,
     headline:'Launch in <em>Hong Kong</em> — 100% remote, 0% on foreign income.',
-    intro:'The digital founder’s favourite: incorporate fully online in under three weeks, pay 0% on foreign-sourced profits, and bank fast with Airwallex &amp; Wise — without ever flying out.',
+    intro:'The digital founder's favourite: incorporate fully online in under three weeks, pay 0% on foreign-sourced profits, and bank fast with Airwallex &amp; Wise — without ever flying out.',
     benefits:[
       ['0% on foreign-sourced income','Hong Kong taxes only locally-sourced profits — offshore income can be fully exempt.'],
       ['100% remote setup','No need to travel. The entire incorporation is handled online in under three weeks.'],
@@ -596,7 +596,7 @@ const countries = [
     ],
     docs:['Passport copy (all directors/shareholders)','Proof of residential address (each individual)','Proposed company name (English &/or Chinese)','Brief business description','Director & shareholder details','Significant Controllers Register details'],
     process:[
-      ['Consultation','We confirm the structure, share split and whether you’ll claim offshore status.'],
+      ['Consultation','We confirm the structure, share split and whether you'll claim offshore status.'],
       ['Incorporation','We file with the Companies Registry and obtain your Certificate of Incorporation & BR.'],
       ['Fintech banking','We guide your Airwallex / Wise application from submission to approval.'],
       ['Handover','You receive all corporate documents and credentials, ready to invoice immediately.'],
@@ -612,7 +612,7 @@ const countries = [
   {
     slug:'singapore', flag:'🇸🇬', name:'Singapore', file:'country-singapore.html',
     tax:'~5% effective (new co. relief)', timeline:'17–18 days, remote', from:'$2,000', workDays:13,
-    headline:'Build in <em>Singapore</em> — Asia’s most trusted hub.',
+    headline:'Build in <em>Singapore</em> — Asia's most trusted hub.',
     intro:'Enterprise-grade credibility with startup tax breaks, top-tier banking, and a resident nominee director included — so you own and control everything from anywhere in the world.',
     benefits:[
       ['Low effective tax','Startup exemptions and partial reliefs bring the effective rate on early profits to roughly 5%.'],
@@ -658,8 +658,8 @@ const countries = [
       ['Handover','Constitution, certificates and credentials handed over, ready to trade in the EU.'],
     ],
     faq:[
-      {q:'Do I need an EEA-resident director?',a:'Irish companies need at least one EEA-resident director, OR a Section 137 non-resident directors’ bond if none of the directors are EEA-resident. We arrange the bond so non-EEA founders can own and direct the company.'},
-      {q:'How fast can the company be registered?',a:'Using the CRO’s online scheme, incorporation is often completed in 2–3 working days once documents are signed — the fastest option we offer.'},
+      {q:'Do I need an EEA-resident director?',a:'Irish companies need at least one EEA-resident director, OR a Section 137 non-resident directors' bond if none of the directors are EEA-resident. We arrange the bond so non-EEA founders can own and direct the company.'},
+      {q:'How fast can the company be registered?',a:'Using the CRO's online scheme, incorporation is often completed in 2–3 working days once documents are signed — the fastest option we offer.'},
       {q:'Does Ireland give me EU market access?',a:'Yes. An Irish company is an EU company, with full access to the single market and EU tax directives — a key reason UK businesses choose Ireland after Brexit.'},
       {q:'Will I need to register for VAT?',a:'If you trade within the EU or exceed thresholds, yes. Irish VAT registration requires demonstrating real economic activity; we guide the application and supporting evidence.'},
       {q:'Who is Ireland best for?',a:'UK and international founders needing a credible onshore EU base, SaaS and digital businesses selling into Europe, and groups wanting a low-tax EU trading or holding company.'},
@@ -727,7 +727,7 @@ function countryPage(c, locale = 'en', settings = {}){
     <div class="section-header reveal">
       <span class="eyebrow">${tr('Why {name}', { name: c.name })}</span>
       <h2>${tr('Why founders choose {name}.', { name: c.name })}</h2>
-      <p>${tr('The real advantages — and exactly who they’re built for.')}</p>
+      <p>${tr('The real advantages — and exactly who they're built for.')}</p>
     </div>
     <div class="benefit-grid reveal">
       ${c.benefits.map((b,i)=>`<div class="benefit-item"><span class="benefit-num">0${i+1}</span><h3>${b[0]}</h3><p>${b[1]}</p></div>`).join('\n      ')}
@@ -746,8 +746,8 @@ function countryPage(c, locale = 'en', settings = {}){
     </div>
     <div style="margin-top:36px">
       <div class="midcta reveal">
-        <div><h3>${tr(‘Not sure you’ll hit your launch date?’)}</h3><p>${tr(‘Use the timeline calculator below, or message us for an honest answer in minutes.’)}</p></div>
-        <a href="${siteWaLink(settings, waMsg)}" class="btn btn-fill btn-arrow">${tr(‘Ask about my timeline’)}</a>
+        <div><h3>${tr('Not sure you'll hit your launch date?')}</h3><p>${tr('Use the timeline calculator below, or message us for an honest answer in minutes.')}</p></div>
+        <a href="${siteWaLink(settings, waMsg)}" class="btn btn-fill btn-arrow">${tr('Ask about my timeline')}</a>
       </div>
     </div>
   </div>
@@ -784,7 +784,7 @@ function countryPage(c, locale = 'en', settings = {}){
 <section class="section section-alt">
   <div class="wrap">
     <div class="section-header reveal">
-      <span class="eyebrow">${tr('What you’ll need')}</span>
+      <span class="eyebrow">${tr('What you'll need')}</span>
       <h2>${tr('{name} document requirements.', { name: c.name })}</h2>
       <p>${tr('Standard requirements — we confirm the exact list for your activity during the consultation.')}</p>
     </div>
@@ -804,7 +804,7 @@ const tiers = [
   {
     slug:'self-ubo', file:'pricing-self-ubo.html', tierLabel:'Tier 01', name:'Self as UBO',
     price:'<sup>$</sup>1,500', note:'Company registration + $500 per bank account',
-    intro:'You are the registered director and ultimate beneficial owner. Full transparency, the lowest cost, and complete compliance — ideal when privacy isn’t a priority.',
+    intro:'You are the registered director and ultimate beneficial owner. Full transparency, the lowest cost, and complete compliance — ideal when privacy isn't a priority.',
     features:[
       ['Government fees included','Official registration and authority fees are built into the price — no surprises.'],
       ['Bank account setup','A fintech or local bank account arranged for you, at $500 per account.'],
@@ -830,10 +830,10 @@ const tiers = [
   {
     slug:'nominee-ubo', file:'pricing-nominee-ubo.html', tierLabel:'Tier 02', name:'Nominee UBO', featured:true,
     price:'<sup>$</sup>2,250<sup style="font-size:20px">+</sup>', note:'Registration + bank + nominee from $750',
-    intro:'GCC Startup provides a nominated UBO so your name stays off the public record. You keep full control and account access; we hold the nominee’s legal liability. Our most requested service.',
+    intro:'GCC Startup provides a nominated UBO so your name stays off the public record. You keep full control and account access; we hold the nominee's legal liability. Our most requested service.',
     features:[
       ['Full corporate privacy','A professional nominee appears as owner — your identity stays off the public register.'],
-      ['We hold nominee liability','GCC Startup assumes the nominee’s legal responsibility, documented in your favour.'],
+      ['We hold nominee liability','GCC Startup assumes the nominee's legal responsibility, documented in your favour.'],
       ['You retain control','You hold the bank account access and run the business; the nominee is non-executive.'],
       ['Priority support','Faster response times and a dedicated point of contact.'],
       ['Annual renewal from $750','Transparent, fixed nominee renewal — agreed up front, no surprises.'],
@@ -849,7 +849,7 @@ const tiers = [
     faq:[
       {q:'Is a Nominee UBO legal?',a:'Yes. Nominee arrangements are a long-established, legal tool for legitimate privacy. The structure is fully disclosed to banks and authorities where required; it is privacy, not concealment. We comply with all KYC, FATF and CRS obligations.'},
       {q:'Do I lose control of my company?',a:'No. You hold a Declaration of Trust and Power of Attorney confirming you as the true owner, and you control the bank account. The nominee acts only on your instruction and cannot transact or transfer ownership.'},
-      {q:'What liability does the nominee carry?',a:'GCC Startup assumes the nominee’s formal legal liability as the registered party, while your protection deeds ensure the economic ownership and control remain entirely yours.'},
+      {q:'What liability does the nominee carry?',a:'GCC Startup assumes the nominee's formal legal liability as the registered party, while your protection deeds ensure the economic ownership and control remain entirely yours.'},
       {q:'What does the $2,250+ cover?',a:'It bundles company registration, a bank account and the nominee appointment (nominee from $750). The exact figure depends on jurisdiction and number of accounts — confirmed up front.'},
       {q:'How does annual renewal work?',a:'The nominee service renews annually from $750/year, fixed at setup. We remind you ahead of time and handle the filing so there is no deadline risk.'},
     ],
@@ -883,11 +883,11 @@ const tiers = [
   },
 ];
 
-function pricingPage(t, locale = ‘en’, settings = {}){
+function pricingPage(t, locale = 'en', settings = {}){
   const tr = I18N.translator(locale);
-  const waMsg = `Hi, I’d like to know more about the ${t.name} package.`;
-  const defaultTitle = `${t.name} — Pricing, What’s Included & FAQ | GCC Startup`;
-  const defaultDesc = `${t.name} (${t.tierLabel}) from GCC Startup. Full breakdown of pricing, what’s included, who it’s for, the process and FAQs.`;
+  const waMsg = `Hi, I'd like to know more about the ${t.name} package.`;
+  const defaultTitle = `${t.name} — Pricing, What's Included & FAQ | GCC Startup`;
+  const defaultDesc = `${t.name} (${t.tierLabel}) from GCC Startup. Full breakdown of pricing, what's included, who it's for, the process and FAQs.`;
   return head(t.metaTitle || defaultTitle, t.metaDesc || defaultDesc, locale, { title: t.metaTitle || defaultTitle, description: t.metaDesc || defaultDesc, image: t.metaImage, canonical: t.canonical, robots: t.robots })
   + nav(locale, settings)
   + `
@@ -911,7 +911,7 @@ function pricingPage(t, locale = ‘en’, settings = {}){
 <section class="section">
   <div class="wrap">
     <div class="section-header reveal">
-      <span class="eyebrow">${tr('What’s included')}</span>
+      <span class="eyebrow">${tr('What's included')}</span>
       <h2>${tr('Everything in the {name} package.', { name: t.name })}</h2>
       <p>${tr('Defined up front. Government fees, service charges and renewals — all agreed before you sign.')}</p>
     </div>
@@ -1023,12 +1023,12 @@ const services = [
   {
     slug:'nominee-ubo', file:'service-nominee-ubo.html', name:'Nominee UBO Service',
     headline:'Privacy with a <em>nominee UBO</em> — you keep control.', meta:[['Full privacy','Off public register'],['From $750','+ renewal'],['Liability','We hold it']],
-    intro:'GCC Startup provides a nominated Ultimate Beneficial Owner so your name stays off the public record. You retain complete control and bank access; we assume the nominee’s legal liability. Our most requested service.',
+    intro:'GCC Startup provides a nominated Ultimate Beneficial Owner so your name stays off the public record. You retain complete control and bank access; we assume the nominee's legal liability. Our most requested service.',
     features:[
       ['Professional nominee','A vetted nominee appears as the registered owner in public filings.'],
       ['Declaration of trust','A signed deed confirms you as the true beneficial owner at all times.'],
       ['Power of attorney','You hold a POA giving you full authority over the company and its affairs.'],
-      ['We hold liability','GCC Startup assumes the nominee’s formal legal responsibility.'],
+      ['We hold liability','GCC Startup assumes the nominee's formal legal responsibility.'],
       ['You control banking','You are the controlling signatory on the bank account — the nominee cannot transact.'],
       ['Fixed annual renewal','Transparent nominee renewal from $750/year, agreed at setup.'],
     ],
@@ -1119,9 +1119,9 @@ const services = [
     related:'<a href="index.html#tiers" class="btn btn-ghost btn-arrow">See pricing</a><a href="https://wa.me/gccstartup" class="btn btn-fill">Ask about my renewals</a>',
     faq:[
       {q:'Are renewal fees fixed?',a:'Yes. We agree your annual renewal costs at setup so you know exactly what to budget each year — including license and, where applicable, nominee renewals.'},
-      {q:'What happens if I miss a deadline?',a:'We track every deadline and remind you in advance, so you shouldn’t. If a filing is late, we move quickly to resolve it and minimise any penalty.'},
+      {q:'What happens if I miss a deadline?',a:'We track every deadline and remind you in advance, so you shouldn't. If a filing is late, we move quickly to resolve it and minimise any penalty.'},
       {q:'Do you handle audits and substance filings?',a:'Yes. Where a jurisdiction requires an audit (e.g. Hong Kong) or economic-substance reporting (e.g. BVI/Cayman), we coordinate and file it for you.'},
-      {q:'Can you take over renewals for a company you didn’t register?',a:'Often yes. Send us your current corporate documents and we’ll review whether we can take over the renewals and ongoing compliance.'},
+      {q:'Can you take over renewals for a company you didn't register?',a:'Often yes. Send us your current corporate documents and we'll review whether we can take over the renewals and ongoing compliance.'},
     ],
   },
 ];
@@ -1154,7 +1154,7 @@ function servicePage(s, locale = 'en', settings = {}){
 <section class="section">
   <div class="wrap">
     <div class="section-header reveal">
-      <span class="eyebrow">${tr('What’s included')}</span>
+      <span class="eyebrow">${tr('What's included')}</span>
       <h2>${tr('Everything in our {name} service.', { name: s.name })}</h2>
       <p>${tr('Clear scope, fixed pricing, founder-led delivery.')}</p>
     </div>
