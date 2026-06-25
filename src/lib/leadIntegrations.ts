@@ -144,7 +144,10 @@ async function forwardToN8n(d: LeadData): Promise<boolean> {
       body: JSON.stringify(payload),
       signal: AbortSignal.timeout(4000),
     })
-    if (!res.ok) console.error('[n8n] forward failed', res.status)
+    if (!res.ok) {
+      console.error('[n8n] forward failed', res.status)
+      return false
+    }
     return true
   } catch (e) {
     console.error('[n8n] error', (e as Error).message)

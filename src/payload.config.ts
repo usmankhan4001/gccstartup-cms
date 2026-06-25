@@ -29,8 +29,15 @@ export default buildConfig({
   collections: [Users, Media, Countries, Services, PricingTiers, Posts, Leads, PartnerApplications],
   globals: [Homepage, SiteSettings, PartnerPage],
   endpoints: [leadEndpoint, partnerEndpoint],
-  cors: (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(','),
-  csrf: (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(','),
+  cors: '*',
+  csrf: [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://cms.gccstartup.com',
+    'https://gccstartup.com',
+    'https://www.gccstartup.com',
+    ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',').map((x: string) => x.trim()) : [])
+  ],
   db: postgresAdapter({
     pool: { connectionString: process.env.DATABASE_URI || '' },
     push: true,
