@@ -252,6 +252,22 @@ export default buildConfig({
           payload.logger.warn('onInit site_settings creation note: ' + tableError.message)
         }
 
+        // Ensure "site_settings" table has all correct columns
+        try {
+          await pool.query(`
+            ALTER TABLE "site_settings"
+              ADD COLUMN IF NOT EXISTS "brand_name" text,
+              ADD COLUMN IF NOT EXISTS "logo_id" integer,
+              ADD COLUMN IF NOT EXISTS "site_url" text,
+              ADD COLUMN IF NOT EXISTS "contact_email" text,
+              ADD COLUMN IF NOT EXISTS "contact_whatsapp_number" text,
+              ADD COLUMN IF NOT EXISTS "footer_about" text,
+              ADD COLUMN IF NOT EXISTS "footer_legal" text
+          `)
+        } catch (colError: any) {
+          payload.logger.warn('onInit site_settings columns creation note: ' + colError.message)
+        }
+
         // 12. Ensure "site_settings_social" table exists
         try {
           await pool.query(`
