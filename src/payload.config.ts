@@ -106,6 +106,19 @@ export default buildConfig({
         } catch (tableError: any) {
           payload.logger.warn('onInit homepage_process creation note: ' + tableError.message)
         }
+
+        // 6. Ensure "homepage" table has the new footer cta columns
+        try {
+          await pool.query(`
+            ALTER TABLE "homepage"
+              ADD COLUMN IF NOT EXISTS "footer_cta_headline" text,
+              ADD COLUMN IF NOT EXISTS "footer_cta_subhead" text,
+              ADD COLUMN IF NOT EXISTS "footer_cta_primary_cta" text,
+              ADD COLUMN IF NOT EXISTS "footer_cta_secondary_cta" text
+          `)
+        } catch (colError: any) {
+          payload.logger.warn('onInit homepage columns creation note: ' + colError.message)
+        }
       }
     } catch (e: any) {
       payload.logger.warn('onInit migration note: ' + e.message)
