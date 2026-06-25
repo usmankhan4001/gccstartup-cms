@@ -37,19 +37,34 @@ export default buildConfig({
   }),
   onInit: async (payload) => {
     // Ensure partner_applications_id column exists in payload_locked_documents_rels.
-    // push: true doesn't always add FK columns to Payload's internal relation tables
-    // in production, so we patch it here using the already-open pool.
+    // We create the column as a plain integer first to avoid foreign key errors on cold start.
     try {
       const pool = (payload.db as any).pool
-      await pool.query(`
-        ALTER TABLE "payload_locked_documents_rels"
-          ADD COLUMN IF NOT EXISTS "partner_applications_id" integer
-            REFERENCES "partner_applications"("id") ON DELETE CASCADE
-      `)
-      await pool.query(`
-        CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_partner_applications_id_idx"
-          ON "payload_locked_documents_rels" ("partner_applications_id")
-      `)
+      if (pool) {
+        // 1. Create the column (failsafe, no foreign key dependency)
+        await pool.query(`
+          ALTER TABLE "payload_locked_documents_rels"
+            ADD COLUMN IF NOT EXISTS "partner_applications_id" integer
+        `)
+        
+        // 2. Create the index
+        await pool.query(`
+          CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_partner_applications_id_idx"
+            ON "payload_locked_documents_rels" ("partner_applications_id")
+        `)
+
+        // 3. Try to add the Foreign Key constraint (runs only if partner_applications table exists)
+        try {
+          await pool.query(`
+            ALTER TABLE "payload_locked_documents_rels"
+              ADD CONSTRAINT "payload_locked_documents_rels_partner_applications_id_fk"
+                FOREIGN KEY ("partner_applications_id")
+                REFERENCES "partner_applications"("id") ON DELETE CASCADE
+          `)
+        } catch (fkError: any) {
+          payload.logger.warn('onInit FK constraint warning (safe to ignore on cold start): ' + fkError.message)
+        }
+      }
     } catch (e: any) {
       payload.logger.warn('onInit migration note: ' + e.message)
     }
