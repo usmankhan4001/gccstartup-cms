@@ -67,9 +67,23 @@ export default buildConfig({
 
         // 4. Ensure "services_related_links" table exists (safe-sync for array relations)
         try {
+          // Check if "services_related_links" has id column as integer/serial, and drop/recreate with varchar if so
+          const res = await pool.query(`
+            SELECT data_type FROM information_schema.columns 
+            WHERE table_name = 'services_related_links' AND column_name = 'id'
+          `)
+          if (res.rows.length > 0 && res.rows[0].data_type === 'integer') {
+            payload.logger.info('Dropping outdated integer-id services_related_links table...')
+            await pool.query('DROP TABLE IF EXISTS "services_related_links" CASCADE')
+          }
+        } catch (e: any) {
+          payload.logger.warn('Failed checking services_related_links id column: ' + e.message)
+        }
+
+        try {
           await pool.query(`
             CREATE TABLE IF NOT EXISTS "services_related_links" (
-              "id" serial PRIMARY KEY,
+              "id" varchar PRIMARY KEY,
               "_order" integer NOT NULL,
               "_parent_id" integer NOT NULL REFERENCES "services"("id") ON DELETE CASCADE,
               "label" text,
@@ -88,9 +102,23 @@ export default buildConfig({
 
         // 5. Ensure "homepage_process" table exists (safe-sync for array relations)
         try {
+          // Check if "homepage_process" has id column as integer/serial, and drop/recreate with varchar if so
+          const res = await pool.query(`
+            SELECT data_type FROM information_schema.columns 
+            WHERE table_name = 'homepage_process' AND column_name = 'id'
+          `)
+          if (res.rows.length > 0 && res.rows[0].data_type === 'integer') {
+            payload.logger.info('Dropping outdated integer-id homepage_process table...')
+            await pool.query('DROP TABLE IF EXISTS "homepage_process" CASCADE')
+          }
+        } catch (e: any) {
+          payload.logger.warn('Failed checking homepage_process id column: ' + e.message)
+        }
+
+        try {
           await pool.query(`
             CREATE TABLE IF NOT EXISTS "homepage_process" (
-              "id" serial PRIMARY KEY,
+              "id" varchar PRIMARY KEY,
               "_order" integer NOT NULL,
               "_parent_id" integer NOT NULL REFERENCES "homepage"("id") ON DELETE CASCADE,
               "title" text,
