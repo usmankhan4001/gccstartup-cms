@@ -5,8 +5,23 @@ import Hero from '@/components/blocks/Hero';
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-  const payload = await getPayload({ config });
-  const hp = await payload.findGlobal({ slug: 'homepage' });
+  let hp: any = {
+    hero: {
+      headline: 'Global Company Registration & Tax Optimization',
+      subhead: 'Founded by a Finance Director with deep UAE corporate finance expertise. Trusted by 500+ entrepreneurs worldwide.',
+    }
+  };
+
+  try {
+    const payload = await getPayload({ config });
+    const fetched = await payload.findGlobal({ slug: 'homepage' });
+    if (fetched) {
+      hp = fetched;
+    }
+  } catch (error) {
+    console.error('Error fetching homepage global data:', error);
+  }
+
   return (
     <div className="homepage">
       <Hero headline={hp.hero?.headline || 'Global Company Registration'} intro={hp.hero?.subhead || ''} />

@@ -3,7 +3,7 @@ services:
     build: .
     restart: unless-stopped
     environment:
-      DATABASE_URI: ${DATABASE_URI}
+      DATABASE_URI: ${DATABASE_URI:-file:/app/data/payload.db}
       PAYLOAD_SECRET: ${PAYLOAD_SECRET}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:3000}
       R2_BUCKET: ${R2_BUCKET}
@@ -18,3 +18,13 @@ services:
       WAHA_API_KEY: ${WAHA_API_KEY}
       ADMIN_WHATSAPP: ${ADMIN_WHATSAPP}
       NOTIFY_LEAD: ${NOTIFY_LEAD:-true}
+      N8N_WEBHOOK_URL: ${N8N_WEBHOOK_URL}
+      META_PIXEL_ID: ${META_PIXEL_ID}
+      META_ACCESS_TOKEN: ${META_ACCESS_TOKEN}
+      NEXT_PUBLIC_SERVER_URL: ${NEXT_PUBLIC_SERVER_URL}
+    volumes:
+      - db-data:/app/data
+
+volumes:
+  db-data:
+
