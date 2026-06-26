@@ -3,7 +3,7 @@ import type { GlobalConfig } from 'payload'
 export const PartnerPage: GlobalConfig = {
   slug: 'partnerPage',
   label: 'Philippines Partner Page',
-  admin: { group: 'Content' },
+  admin: { group: 'Pages' },
   access: { read: () => true },
   fields: [
     // SEO

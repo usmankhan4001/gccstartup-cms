@@ -5,5 +5,9 @@ export const Users: CollectionConfig = {
   admin: { useAsTitle: 'email', group: 'System' },
   auth: true,
   access: { read: ({ req }) => Boolean(req.user) },
-  fields: [{ name: 'name', type: 'text' }],
+  fields: [
+    { name: 'name', type: 'text' },
+    { name: 'role', type: 'select', options: ['admin', 'editor', 'viewer'], defaultValue: 'editor' },
+    { name: 'avatar', type: 'upload', relationTo: 'media' }
+  ],
 }

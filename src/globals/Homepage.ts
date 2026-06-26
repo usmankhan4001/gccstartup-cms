@@ -2,7 +2,7 @@ import type { GlobalConfig } from 'payload'
 
 export const Homepage: GlobalConfig = {
   slug: 'homepage',
-  admin: { group: 'Content' },
+  admin: { group: 'Pages' },
   access: { read: () => true },
   fields: [
     // ── Hero ──
@@ -75,6 +75,26 @@ export const Homepage: GlobalConfig = {
         { name: 'subhead', type: 'textarea' },
         { name: 'primaryCta', type: 'text' },
         { name: 'secondaryCta', type: 'text' },
+      ],
+    },
+    // ── FAQ ──
+    {
+      name: 'faq',
+      type: 'array',
+      fields: [
+        { name: 'q', type: 'text' },
+        { name: 'a', type: 'textarea' },
+      ],
+    },
+    // ── Testimonials ──
+    {
+      name: 'testimonials',
+      type: 'array',
+      fields: [
+        { name: 'quote', type: 'textarea' },
+        { name: 'author', type: 'text' },
+        { name: 'role', type: 'text' },
+        { name: 'company', type: 'text' },
       ],
     },
   ],

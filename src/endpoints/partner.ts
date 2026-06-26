@@ -11,7 +11,22 @@ export const partnerEndpoint: Endpoint = {
   handler: async (req) => {
     let body: Record<string, any> = {}
     try {
-      body = (await req.json?.()) ?? {}
+      if (req.headers.get('content-type')?.includes('multipart/form-data')) {
+        const formData = await req.formData()
+        for (const [key, value] of formData.entries()) {
+          if (body[key]) {
+            if (Array.isArray(body[key])) body[key].push(value)
+            else body[key] = [body[key], value]
+          } else {
+            body[key] = value
+          }
+        }
+        if (typeof body.attachments === 'string' && body.attachments.startsWith('[')) {
+          try { body.attachments = JSON.parse(body.attachments) } catch {}
+        }
+      } else {
+        body = (await req.json?.()) ?? {}
+      }
     } catch {
       body = {}
     }
@@ -34,6 +49,8 @@ export const partnerEndpoint: Endpoint = {
           hasPassport:    Boolean(body.hasPassport),
           hasBankAccount: Boolean(body.hasBankAccount),
           page:           body.page || req.headers.get('referer') || '',
+          email:          body.email,
+          attachments:    body.attachments,
         },
       })
     } catch (e) {

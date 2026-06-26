@@ -12,7 +12,22 @@ export const leadEndpoint: Endpoint = {
   handler: async (req) => {
     let body: Record<string, any> = {}
     try {
-      body = (await req.json?.()) ?? {}
+      if (req.headers.get('content-type')?.includes('multipart/form-data')) {
+        const formData = await req.formData()
+        for (const [key, value] of formData.entries()) {
+          if (body[key]) {
+            if (Array.isArray(body[key])) body[key].push(value)
+            else body[key] = [body[key], value]
+          } else {
+            body[key] = value
+          }
+        }
+        if (typeof body.attachments === 'string' && body.attachments.startsWith('[')) {
+          try { body.attachments = JSON.parse(body.attachments) } catch {}
+        }
+      } else {
+        body = (await req.json?.()) ?? {}
+      }
     } catch {
       body = {}
     }
@@ -41,6 +56,13 @@ export const leadEndpoint: Endpoint = {
                      || '',
           userAgent: req.headers.get('user-agent') || '',
           eventId:   body.eventId,
+          attachments: body.attachments,
+          utmSource: body.utmSource,
+          utmMedium: body.utmMedium,
+          utmCampaign: body.utmCampaign,
+          utmContent: body.utmContent,
+          utmTerm:   body.utmTerm,
+          referrer:  body.referrer,
         },
       })
     } catch (e) {

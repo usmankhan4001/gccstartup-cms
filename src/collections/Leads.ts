@@ -6,7 +6,7 @@ export const Leads: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'email', 'country', 'interest', 'createdAt'],
-    group: 'Sales',
+    group: 'Lead Management',
   },
   access: {
     // Creates come through the /api/lead endpoint (overrideAccess), not directly.
@@ -34,10 +34,18 @@ export const Leads: CollectionConfig = {
     { name: 'clientIp', type: 'text', admin: { position: 'sidebar' } },
     { name: 'userAgent', type: 'text', admin: { position: 'sidebar' } },
     { name: 'eventId', type: 'text', admin: { position: 'sidebar' } },
+    { name: 'utmSource', type: 'text' },
+    { name: 'utmMedium', type: 'text' },
+    { name: 'utmCampaign', type: 'text' },
+    { name: 'utmContent', type: 'text' },
+    { name: 'utmTerm', type: 'text' },
+    { name: 'attachments', type: 'relationship', relationTo: 'media', hasMany: true },
+    { name: 'referrer', type: 'text' },
+    { name: 'assignedTo', type: 'relationship', relationTo: 'users' },
   ],
   hooks: {
     afterChange: [
-      async ({ doc, operation }) => {
+      async ({ doc, operation, req }) => {
         if (operation !== 'create') return
         // Fire-and-forget: never block the response or fail the save.
         notifyLead({
@@ -53,7 +61,7 @@ export const Leads: CollectionConfig = {
           clientIp: doc.clientIp,
           userAgent: doc.userAgent,
           eventId: doc.eventId,
-        }).catch((e) => console.error('[leads] notify error', e))
+        }, req.payload).catch((e) => console.error('[leads] notify error', e))
       },
     ],
   },

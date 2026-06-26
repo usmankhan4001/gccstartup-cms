@@ -22,14 +22,6 @@ export type LeadData = {
 
 const TWENTY_BASE_URL = (process.env.TWENTY_BASE_URL || '').replace(/\/$/, '')
 const TWENTY_API_KEY = process.env.TWENTY_API_KEY || ''
-const WAHA_BASE_URL = (process.env.WAHA_BASE_URL || '').replace(/\/$/, '')
-const WAHA_SESSION = process.env.WAHA_SESSION || 'default'
-const WAHA_API_KEY = process.env.WAHA_API_KEY || ''
-const ADMIN_WHATSAPP = (process.env.ADMIN_WHATSAPP || '').replace(/[^\d]/g, '')
-const NOTIFY_LEAD = String(process.env.NOTIFY_LEAD || 'true') === 'true'
-// When set, leads are forwarded to n8n which runs the human-like WhatsApp flow
-// (start typing → wait → stop typing → send). The CMS composes the messages.
-const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || ''
 // Meta Conversions API
 const META_PIXEL_ID    = process.env.META_PIXEL_ID || ''
 const META_ACCESS_TOKEN = process.env.META_ACCESS_TOKEN || ''
@@ -84,13 +76,13 @@ export async function pushToTwenty(d: LeadData) {
   return personId
 }
 
-async function wahaSend(numberDigits: string, text: string) {
-  if (!WAHA_BASE_URL || !numberDigits) return
+async function wahaSend(numberDigits: string, text: string, config: any) {
+  if (!config.wahaBaseUrl || !numberDigits) return
   try {
-    const res = await fetch(`${WAHA_BASE_URL}/api/sendText`, {
+    const res = await fetch(`${config.wahaBaseUrl}/api/sendText`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...(WAHA_API_KEY ? { 'X-Api-Key': WAHA_API_KEY } : {}) },
-      body: JSON.stringify({ session: WAHA_SESSION, chatId: `${numberDigits}@c.us`, text }),
+      headers: { 'Content-Type': 'application/json', ...(config.wahaApiKey ? { 'X-Api-Key': config.wahaApiKey } : {}) },
+      body: JSON.stringify({ session: config.wahaSession, chatId: `${numberDigits}@c.us`, text }),
       signal: AbortSignal.timeout(4000),
     })
     if (!res.ok) console.error('[waha] send', res.status, (await res.text()).slice(0, 200))
@@ -123,22 +115,22 @@ const leadMessage = (d: LeadData) => {
 }
 
 /** Forward the lead to n8n, which runs the human-like WhatsApp sequence. */
-async function forwardToN8n(d: LeadData): Promise<boolean> {
-  if (!N8N_WEBHOOK_URL) return false
+async function forwardToN8n(d: LeadData, config: any): Promise<boolean> {
+  if (!config.n8nWebhookUrl) return false
   const payload = {
     // composed messages — n8n only adds the typing/wait/send behavior
     leadChatId: d.phone ? `${digits(d.phone)}@c.us` : '',
     leadText: leadMessage(d),
-    adminChatId: ADMIN_WHATSAPP ? `${ADMIN_WHATSAPP}@c.us` : '',
+    adminChatId: config.adminWhatsapp ? `${config.adminWhatsapp}@c.us` : '',
     adminText: adminMessage(d),
-    notifyLead: NOTIFY_LEAD && Boolean(d.phone),
+    notifyLead: config.notifyLead && Boolean(d.phone),
     lead: {
       name: d.name, email: d.email, phone: d.phone, country: d.country,
       interest: d.interest, message: d.message, source: d.source, page: d.page,
     },
   }
   try {
-    const res = await fetch(N8N_WEBHOOK_URL, {
+    const res = await fetch(config.n8nWebhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -204,22 +196,48 @@ async function sendMetaCapi(d: LeadData) {
 }
 
 /** Fire all notifications. Failures are logged, never thrown. */
-export async function notifyLead(d: LeadData) {
+export async function notifyLead(d: LeadData, payload?: any) {
   await Promise.all([
     pushToTwenty(d).catch((e) => console.error('[leads] Twenty CRM push failed:', e)),
     sendMetaCapi(d).catch((e) => console.error('[leads] Meta CAPI send failed:', e)),
   ])
+
+  let config = {
+    wahaBaseUrl: (process.env.WAHA_BASE_URL || '').replace(/\/$/, ''),
+    wahaSession: process.env.WAHA_SESSION || 'default',
+    wahaApiKey: process.env.WAHA_API_KEY || '',
+    adminWhatsapp: (process.env.ADMIN_WHATSAPP || '').replace(/[^\d]/g, ''),
+    notifyLead: String(process.env.NOTIFY_LEAD || 'true') === 'true',
+    n8nWebhookUrl: process.env.N8N_WEBHOOK_URL || ''
+  }
+
+  if (payload) {
+    try {
+      const settings = await payload.findGlobal({ slug: 'wahaSettings' })
+      if (settings) {
+        if (settings.wahaBaseUrl) config.wahaBaseUrl = settings.wahaBaseUrl.replace(/\/$/, '')
+        if (settings.wahaSession) config.wahaSession = settings.wahaSession
+        if (settings.wahaApiKey) config.wahaApiKey = settings.wahaApiKey
+        if (settings.adminWhatsappNumber) config.adminWhatsapp = settings.adminWhatsappNumber.replace(/[^\d]/g, '')
+        if (settings.notifyLead !== undefined && settings.notifyLead !== null) config.notifyLead = settings.notifyLead
+        if (settings.n8nWebhookUrl) config.n8nWebhookUrl = settings.n8nWebhookUrl
+      }
+    } catch (e) {
+      console.error('[leads] failed to load wahaSettings from payload', e)
+    }
+  }
+
   try {
     // Prefer n8n (human-like typing). Only fall back to direct WAHA if n8n isn't configured.
-    const forwarded = await forwardToN8n(d)
+    const forwarded = await forwardToN8n(d, config)
     if (!forwarded) {
-      if (ADMIN_WHATSAPP) {
-        await wahaSend(ADMIN_WHATSAPP, adminMessage(d)).catch((e) =>
+      if (config.adminWhatsapp) {
+        await wahaSend(config.adminWhatsapp, adminMessage(d), config).catch((e) =>
           console.error('[leads] WAHA admin send failed:', e)
         )
       }
-      if (NOTIFY_LEAD && d.phone) {
-        await wahaSend(digits(d.phone), leadMessage(d)).catch((e) =>
+      if (config.notifyLead && d.phone) {
+        await wahaSend(digits(d.phone), leadMessage(d), config).catch((e) =>
           console.error('[leads] WAHA lead send failed:', e)
         )
       }

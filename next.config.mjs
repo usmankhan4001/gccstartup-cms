@@ -4,6 +4,7 @@ import { withPayload } from '@payloadcms/next/withPayload'
 const nextConfig = {
   // Payload/sharp must not be bundled by Next's server build
   serverExternalPackages: ['sharp'],
+  output: 'standalone',
 }
 
 export default withPayload(nextConfig)

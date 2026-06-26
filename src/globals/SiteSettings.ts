@@ -32,5 +32,22 @@ export const SiteSettings: GlobalConfig = {
         { name: 'url', type: 'text' },
       ],
     },
+    {
+      name: 'navMenu',
+      type: 'array',
+      fields: [
+        { name: 'label', type: 'text' },
+        { name: 'url', type: 'text' },
+      ],
+    },
+    {
+      name: 'announcementBar',
+      type: 'group',
+      fields: [
+        { name: 'enabled', type: 'checkbox' },
+        { name: 'text', type: 'text' },
+        { name: 'link', type: 'text' },
+      ],
+    },
   ],
 }

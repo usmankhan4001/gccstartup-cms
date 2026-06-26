@@ -14,8 +14,10 @@ export const Posts: CollectionConfig = {
     { name: 'excerpt', type: 'textarea', admin: { description: 'Short summary for listing + meta description fallback' } },
     { name: 'coverImage', type: 'upload', relationTo: 'media' },
     { name: 'publishedAt', type: 'date', admin: { date: { pickerAppearance: 'dayOnly' } } },
-    { name: 'author', type: 'text' },
+    { name: 'author', type: 'relationship', relationTo: 'users' },
     { name: 'tags', type: 'array', fields: [{ name: 'tag', type: 'text' }] },
     { name: 'content', type: 'richText' },
+    { name: 'category', type: 'select', options: ['news', 'guide', 'update'] },
+    { name: 'readingTime', type: 'number' },
   ],
 }

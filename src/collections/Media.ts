@@ -12,7 +12,15 @@ export const Media: CollectionConfig = {
       { name: 'card', width: 800 },
       { name: 'hero', width: 1600 },
     ],
-    mimeTypes: ['image/*'],
   },
-  fields: [{ name: 'alt', type: 'text' }],
+  fields: [
+    { name: 'alt', type: 'text' },
+    { name: 'caption', type: 'text' },
+    { name: 'credit', type: 'text' },
+    {
+      name: 'category',
+      type: 'select',
+      options: ['image', 'video', 'document', 'other'],
+    },
+  ],
 }

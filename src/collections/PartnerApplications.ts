@@ -6,7 +6,7 @@ export const PartnerApplications: CollectionConfig = {
   admin: {
     useAsTitle: 'fullName',
     defaultColumns: ['fullName', 'whatsapp', 'city', 'hasPassport', 'hasBankAccount', 'status', 'createdAt'],
-    group: 'Partners',
+    group: 'Lead Management',
   },
   access: {
     create: ({ req }) => Boolean(req.user),
@@ -28,6 +28,7 @@ export const PartnerApplications: CollectionConfig = {
       options: [
         { label: 'New',       value: 'new' },
         { label: 'Reviewing', value: 'reviewing' },
+        { label: 'Contacted', value: 'contacted' },
         { label: 'Approved',  value: 'approved' },
         { label: 'Rejected',  value: 'rejected' },
         { label: 'Matched',   value: 'matched' },
@@ -38,6 +39,16 @@ export const PartnerApplications: CollectionConfig = {
       name: 'notes',
       type: 'textarea',
       admin: { description: 'Internal notes about this applicant' },
+    },
+    { name: 'attachments', type: 'relationship', relationTo: 'media', hasMany: true },
+    { name: 'email', type: 'email' },
+    {
+      name: 'notesTimeline',
+      type: 'array',
+      fields: [
+        { name: 'date', type: 'date' },
+        { name: 'note', type: 'textarea' },
+      ],
     },
   ],
   hooks: {
