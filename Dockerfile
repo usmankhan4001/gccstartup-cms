@@ -49,6 +49,11 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/embeds ./embeds
 
+# Copy source files needed for the seed script
+COPY --from=builder --chown=nextjs:nodejs /app/seed.ts ./seed.ts
+COPY --from=builder --chown=nextjs:nodejs /app/src ./src
+
+
 USER nextjs
 
 EXPOSE 3000
