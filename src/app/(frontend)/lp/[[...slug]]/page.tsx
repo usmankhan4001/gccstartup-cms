@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import RichText from '@/components/RichText';
 import LandingPageForm from '@/components/LandingPageForm';
 import type { Metadata } from 'next';
+import fs from 'fs';
+import path from 'path';
 
 export const dynamic = 'force-dynamic';
 
@@ -83,11 +85,34 @@ async function fetchLandingPage(slug: string): Promise<{ doc: LandingPageDoc; is
   }
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
+const formatCountry = (c: string) => {
+  return c.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug?: string[] }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const slugArray = resolvedParams.slug || [];
+  
+  let slug = '';
+  let country = '';
+
+  if (slugArray.length === 2) {
+    country = slugArray[0];
+    slug = slugArray[1];
+  } else if (slugArray.length === 1) {
+    slug = slugArray[0];
+  } else {
+    return { title: 'Not Found' };
+  }
+
   const { doc } = await fetchLandingPage(slug);
-  const title = `${doc.heroHeadline || doc.title} — GCC Startup`;
-  const description = doc.heroSubhead || "Discover premium global corporate solutions with GCC Startup.";
+  const countryName = country ? formatCountry(country) : '';
+  
+  const rawTitle = doc.heroHeadline || doc.title;
+  const title = (countryName ? rawTitle.replace(/{{country}}/gi, countryName) : rawTitle) + ' — GCC Startup';
+  
+  const rawDesc = doc.heroSubhead || "Discover premium global corporate solutions with GCC Startup.";
+  const description = countryName ? rawDesc.replace(/{{country}}/gi, countryName) : rawDesc;
   
   return {
     title,
@@ -99,9 +124,24 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function LandingPageRoute({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default async function LandingPageRoute({ params }: { params: Promise<{ slug?: string[] }> }) {
+  const resolvedParams = await params;
+  const slugArray = resolvedParams.slug || [];
+  
+  let slug = '';
+  let country = '';
+
+  if (slugArray.length === 2) {
+    country = slugArray[0];
+    slug = slugArray[1];
+  } else if (slugArray.length === 1) {
+    slug = slugArray[0];
+  } else {
+    notFound();
+  }
+
   const { doc, isFallback } = await fetchLandingPage(slug);
+  const countryName = country ? formatCountry(country) : '';
 
   const heroImageUrl = doc.heroImage && typeof doc.heroImage === 'object' ? doc.heroImage.url : null;
   const utmData = {
@@ -109,6 +149,20 @@ export default async function LandingPageRoute({ params }: { params: Promise<{ s
     utmMedium: doc.utmMedium || undefined,
     utmCampaign: doc.utmCampaign || undefined,
   };
+
+  const headline = doc.heroHeadline 
+    ? doc.heroHeadline.replace(/{{country}}/gi, countryName) 
+    : doc.title;
+    
+  const subhead = doc.heroSubhead 
+    ? doc.heroSubhead.replace(/{{country}}/gi, countryName) 
+    : '';
+
+  const chatBubblePath = path.join(process.cwd(), 'embeds', '4-whatsapp-chat-bubble.html')
+  const promoBannerPath = path.join(process.cwd(), 'embeds', '3-promo-banner.html')
+  
+  const chatBubble = fs.existsSync(chatBubblePath) ? fs.readFileSync(chatBubblePath, 'utf8') : ''
+  const promoBanner = fs.existsSync(promoBannerPath) ? fs.readFileSync(promoBannerPath, 'utf8') : ''
 
   return (
     <div className="landing-page" style={{ background: 'var(--bg)', minHeight: '100vh', fontFamily: 'var(--font)' }}>
@@ -147,11 +201,11 @@ export default async function LandingPageRoute({ params }: { params: Promise<{ s
 
           <div style={{ maxWidth: '800px' }}>
             <h1 style={{ color: 'var(--white)', marginBottom: '16px', fontSize: 'clamp(32px, 5vw, 52px)' }}>
-              {doc.heroHeadline || doc.title}
+              {headline}
             </h1>
-            {doc.heroSubhead && (
+            {subhead && (
               <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '18px', lineHeight: '1.6', margin: 0 }}>
-                {doc.heroSubhead}
+                {subhead}
               </p>
             )}
           </div>
@@ -206,6 +260,10 @@ export default async function LandingPageRoute({ params }: { params: Promise<{ s
           }
         }
       `}} />
+
+      {/* CTAs */}
+      {promoBanner && <div dangerouslySetInnerHTML={{ __html: promoBanner }} />}
+      {chatBubble && <div dangerouslySetInnerHTML={{ __html: chatBubble }} />}
     </div>
   );
 }
