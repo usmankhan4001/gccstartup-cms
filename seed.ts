@@ -172,8 +172,10 @@ const countries = [
   },
 ];
 
-async function seed() {
+export async function runSeed() {
   const payload = await getPayload({ config })
+
+  console.log('Seeding database...')
   
   for (const c of countries) {
     const layout = [
@@ -257,7 +259,5 @@ async function seed() {
   }
   
   console.log('Done!');
-  process.exit(0)
+  return { success: true }
 }
-
-seed().catch(console.error)
