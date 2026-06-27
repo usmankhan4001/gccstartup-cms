@@ -2,10 +2,8 @@ services:
   app:
     build: .
     restart: unless-stopped
-    depends_on:
-      - mongo
     environment:
-      DATABASE_URI: ${DATABASE_URI:-mongodb://mongo:27017/gccstartup}
+      DATABASE_URI: ${DATABASE_URI}
       PAYLOAD_SECRET: ${PAYLOAD_SECRET}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:3000}
       R2_BUCKET: ${R2_BUCKET}
@@ -27,14 +25,5 @@ services:
     volumes:
       - db-data:/app/data
 
-  mongo:
-    image: mongo:6-jammy
-    restart: unless-stopped
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-
 volumes:
   db-data:
-  mongo-data:

@@ -1,5 +1,5 @@
 import { buildConfig } from 'payload'
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { s3Storage } from '@payloadcms/storage-s3'
@@ -65,8 +65,9 @@ export default buildConfig({
     'https://www.gccstartup.com',
     ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',').map((x: string) => x.trim()) : [])
   ],
-  db: mongooseAdapter({
-    url: process.env.DATABASE_URI || 'mongodb://127.0.0.1:27017/gccstartup',
+  db: postgresAdapter({
+    pool: { connectionString: process.env.DATABASE_URI || '' },
+    push: true,
   }),
   secret: process.env.PAYLOAD_SECRET || '',
   sharp,
