@@ -374,8 +374,8 @@ function submitLead(e){
 }
 (function wireCtas(){
   function ctxOf(h){ var s=h.match(/subject=([^&]*)/), t=h.match(/[?&]text=([^&]*)/);
-    if(s) return decodeURIComponent(s[1].replace(/\+/g,' '));
-    if(t) return decodeURIComponent(t[1].replace(/\+/g,' '));
+    if(s) return decodeURIComponent(s[1].replace(/\\+/g,' '));
+    if(t) return decodeURIComponent(t[1].replace(/\\+/g,' '));
     return ''; }
   document.querySelectorAll('a[href^="mailto:"], a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(a){
     a.addEventListener('click',function(e){ e.preventDefault(); openForm(ctxOf(a.getAttribute('href')||'')); });
