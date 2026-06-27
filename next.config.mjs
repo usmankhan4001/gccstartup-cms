@@ -8,7 +8,7 @@ const dirname = path.dirname(filename)
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Payload/sharp must not be bundled by Next's server build
-  serverExternalPackages: ['sharp', 'libsql', '@libsql/client'],
+  serverExternalPackages: ['sharp'],
   output: process.platform === 'win32' ? undefined : 'standalone',
   outputFileTracingRoot: dirname,
 }
