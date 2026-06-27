@@ -1,5 +1,5 @@
 import { buildConfig } from 'payload'
-import { sqliteAdapter } from '@payloadcms/db-sqlite'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { s3Storage } from '@payloadcms/storage-s3'
@@ -65,11 +65,8 @@ export default buildConfig({
     'https://www.gccstartup.com',
     ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',').map((x: string) => x.trim()) : [])
   ],
-  db: sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URI || 'file:./payload.db',
-    },
-    push: true,
+  db: mongooseAdapter({
+    url: process.env.DATABASE_URI || 'mongodb://127.0.0.1:27017/gccstartup',
   }),
   secret: process.env.PAYLOAD_SECRET || '',
   sharp,
