@@ -1,5 +1,5 @@
 import { buildConfig } from 'payload'
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { s3Storage } from '@payloadcms/storage-s3'
@@ -65,8 +65,8 @@ export default buildConfig({
     'https://www.gccstartup.com',
     ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',').map((x: string) => x.trim()) : [])
   ],
-  db: postgresAdapter({
-    pool: { connectionString: process.env.DATABASE_URI || '' },
+  db: sqliteAdapter({
+    client: { url: process.env.DATABASE_URI || 'file:./payload.db' },
     push: true,
   }),
   secret: process.env.PAYLOAD_SECRET || '',
