@@ -23,6 +23,10 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN pnpm build
 
+# Dereference pnpm symlinks for libsql so they can be safely copied to standalone
+RUN mkdir -p /app/dereferenced_modules/@libsql && cp -rL /app/node_modules/@libsql/* /app/dereferenced_modules/@libsql/ || true
+RUN mkdir -p /app/dereferenced_modules/libsql && cp -rL /app/node_modules/libsql/* /app/dereferenced_modules/libsql/ || true
+
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
@@ -49,9 +53,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/embeds ./embeds
 
-# Ensure libsql native bindings are copied since Next.js tracing drops dynamic require()s
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@libsql ./node_modules/@libsql
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/libsql ./node_modules/libsql
+# Copy the dereferenced native modules to standalone
+COPY --from=builder --chown=nextjs:nodejs /app/dereferenced_modules/@libsql ./node_modules/@libsql
+COPY --from=builder --chown=nextjs:nodejs /app/dereferenced_modules/libsql ./node_modules/libsql
 
 USER nextjs
 
