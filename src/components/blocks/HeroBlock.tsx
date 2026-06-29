@@ -7,7 +7,7 @@ export const HeroBlock = ({ eyebrow, title, description, primaryCta, primaryCtaL
       <div className="hero-inner">
         <div className="hero-copy">
           {eyebrow && <span className="eyebrow">{eyebrow}</span>}
-          {title && <h1 dangerouslySetInnerHTML={{ __html: title }} />}
+          {title && <h1>{title}</h1>}
           {description && <p>{description}</p>}
           <div className="hero-btns">
             {primaryCta && <a href={primaryCtaLink} className="btn btn-fill btn-arrow">{primaryCta}</a>}

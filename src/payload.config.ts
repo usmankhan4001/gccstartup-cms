@@ -17,6 +17,7 @@ import { Posts } from './collections/Posts'
 import { Leads } from './collections/Leads'
 import { PartnerApplications } from './collections/PartnerApplications'
 import { LandingPages } from './collections/LandingPages'
+import { Pages } from './collections/Pages'
 import { FormSubmissions } from './collections/FormSubmissions'
 import { Homepage } from './globals/Homepage'
 import { SiteSettings } from './globals/SiteSettings'
@@ -24,9 +25,18 @@ import { PartnerPage } from './globals/PartnerPage'
 import { WahaSettings } from './globals/WahaSettings'
 import { leadEndpoint } from './endpoints/lead'
 import { partnerEndpoint } from './endpoints/partner'
+import { defaultLocale, locales } from './i18n/locales'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'https://cms.gccstartup.com',
+  'https://gccstartup.com',
+  'https://www.gccstartup.com',
+  ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',').map((x: string) => x.trim()).filter(Boolean) : []),
+]
 
 export default buildConfig({
   admin: { 
@@ -53,18 +63,16 @@ export default buildConfig({
     },
   },
   editor: lexicalEditor(),
-  collections: [Users, Media, Documents, Countries, Services, PricingTiers, Posts, Leads, PartnerApplications, LandingPages, FormSubmissions],
+  collections: [Users, Media, Documents, Countries, Services, PricingTiers, Posts, Leads, PartnerApplications, Pages, LandingPages, FormSubmissions],
   globals: [Homepage, SiteSettings, PartnerPage, WahaSettings],
   endpoints: [leadEndpoint, partnerEndpoint],
-  cors: '*',
-  csrf: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://cms.gccstartup.com',
-    'https://gccstartup.com',
-    'https://www.gccstartup.com',
-    ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',').map((x: string) => x.trim()) : [])
-  ],
+  cors: allowedOrigins,
+  csrf: allowedOrigins,
+  localization: {
+    locales: locales.map(({ label, code }) => ({ label, code })),
+    defaultLocale,
+    fallback: true,
+  },
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',

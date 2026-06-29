@@ -1,15 +1,16 @@
 import type { CollectionConfig } from 'payload'
+import { publicReadAdminWrite } from '../access'
 
 export const Services: CollectionConfig = {
   slug: 'services',
   admin: { useAsTitle: 'name', defaultColumns: ['name', 'slug'], group: 'Content' },
-  access: { read: () => true },
+  access: publicReadAdminWrite,
   fields: [
-    { name: 'name', type: 'text', required: true },
+    { name: 'name', type: 'text', required: true, localized: true },
     { name: 'slug', type: 'text', required: true, unique: true, admin: { description: 'URL: /services/<slug>' } },
     { name: 'icon', type: 'select', options: ['building', 'bank', 'shield', 'box', 'id', 'refresh'], admin: { description: 'Icon key' } },
-    { name: 'headline', type: 'text', admin: { description: 'Hero headline. Wrap emphasis in <em>…</em>' } },
-    { name: 'intro', type: 'textarea' },
+    { name: 'headline', type: 'text', localized: true, admin: { description: 'Hero headline. Avoid raw HTML; emphasis is handled by frontend styling.' } },
+    { name: 'intro', type: 'textarea', localized: true },
     {
       name: 'statChips',
       type: 'array',

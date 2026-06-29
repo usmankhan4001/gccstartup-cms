@@ -1,10 +1,11 @@
 import type { GlobalConfig } from 'payload'
+import { isAdmin, publicRead } from '../access'
 
 export const PartnerPage: GlobalConfig = {
   slug: 'partnerPage',
   label: 'Philippines Partner Page',
   admin: { group: 'Pages' },
-  access: { read: () => true },
+  access: { read: publicRead, update: isAdmin },
   fields: [
     // SEO
     {

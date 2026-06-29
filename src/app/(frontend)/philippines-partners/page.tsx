@@ -3,6 +3,7 @@ import config from '@payload-config';
 import PartnerApplicationForm from '@/components/PartnerApplicationForm';
 import PartnerFaqAccordion from '@/components/PartnerFaqAccordion';
 import BenefitGrid from '@/components/blocks/BenefitGrid';
+import { generateHreflang, getBaseUrl, getLocale, localePath } from '@/lib/locale';
 import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -107,9 +108,10 @@ const fallbackData: PartnerPageData = {
 };
 
 async function getPartnerPageData(): Promise<PartnerPageData> {
+  const locale = await getLocale();
   try {
     const payload = await getPayload({ config });
-    const data = await payload.findGlobal({ slug: 'partnerPage' }) as any;
+    const data = await payload.findGlobal({ slug: 'partnerPage', locale: locale as any }) as any;
     if (!data) return fallbackData;
     return {
       ...fallbackData,
@@ -126,8 +128,15 @@ async function getPartnerPageData(): Promise<PartnerPageData> {
   }
 }
 
+const stripInlineMarkup = (text?: string) => String(text || '').replace(/<\/?(em|strong|b|i)>/g, '')
+
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getPartnerPageData();
+  const locale = await getLocale();
+  const payload = await getPayload({ config });
+  const settings = await payload.findGlobal({ slug: 'siteSettings', locale: locale as any }).catch(() => null);
+  const baseUrl = getBaseUrl((settings as any)?.siteUrl);
+  const path = '/philippines-partners';
   const title = data.seo?.metaTitle || "Philippines Partner Program — GCC Startup";
   const description = data.seo?.metaDesc || "Become a verified partner in the Philippines and earn premium commissions assisting entrepreneurs.";
   
@@ -137,17 +146,16 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
-    }
+    },
+    alternates: {
+      canonical: `${baseUrl}${localePath(path, locale)}`,
+      languages: generateHreflang(path, baseUrl),
+    },
   };
 }
 
 export default async function PhilippinesPartnersPage() {
   const data = await getPartnerPageData();
-
-  // Helper to format headline HTML
-  const formatHeadline = (text: string) => {
-    return text.replace(/<em>(.*?)<\/em>/g, '<span style="color: var(--orange); font-style: normal;">$1</span>');
-  };
 
   return (
     <div className="partner-landing-page" style={{ background: 'var(--bg)', minHeight: '100vh', fontFamily: 'var(--font)' }}>
@@ -165,8 +173,9 @@ export default async function PhilippinesPartnersPage() {
             position: 'relative',
             zIndex: 10
           }}
-          dangerouslySetInnerHTML={{ __html: data.urgencyBar }}
-        />
+        >
+          {stripInlineMarkup(data.urgencyBar)}
+        </div>
       )}
 
       {/* Hero Section */}
@@ -227,8 +236,9 @@ export default async function PhilippinesPartnersPage() {
               lineHeight: 1.1,
               letterSpacing: '-0.02em'
             }}
-            dangerouslySetInnerHTML={{ __html: formatHeadline(data.hero?.heroHeadline || '') }}
-          />
+          >
+            {stripInlineMarkup(data.hero?.heroHeadline)}
+          </h1>
 
           <p 
             style={{ 
@@ -371,7 +381,7 @@ export default async function PhilippinesPartnersPage() {
       )}
 
       {/* Custom responsive styles */}
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style>{`
         @media (max-width: 768px) {
           .stats-grid-responsive {
             grid-template-columns: 1fr 1fr !important;
@@ -400,7 +410,7 @@ export default async function PhilippinesPartnersPage() {
             padding-bottom: 0 !important;
           }
         }
-      `}} />
+      `}</style>
     </div>
   );
 }

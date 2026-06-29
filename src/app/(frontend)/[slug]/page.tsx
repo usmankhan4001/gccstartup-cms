@@ -3,9 +3,40 @@ import config from '@payload-config'
 import Hero from '@/components/blocks/Hero'
 import BenefitGrid from '@/components/blocks/BenefitGrid'
 import RequirementList from '@/components/blocks/RequirementList'
+import { BlockRenderer } from '@/components/BlockRenderer'
 import { notFound } from 'next/navigation'
+import { getLocale, getBaseUrl, generateHreflang, localePath } from '@/lib/locale'
+import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params
+  const locale = await getLocale()
+  let baseUrl = getBaseUrl()
+  const path = `/${slug}`
+  const payload = await getPayload({ config })
+  const [pages, settings] = await Promise.all([
+    payload.find({ collection: 'pages' as any, where: { slug: { equals: slug } }, locale: locale as any, limit: 1 }),
+    payload.findGlobal({ slug: 'siteSettings', locale: locale as any }).catch(() => null),
+  ])
+  baseUrl = getBaseUrl((settings as any)?.siteUrl)
+  const page: any = pages.docs[0]
+  if (page?.seo) return {
+    title: page.seo.metaTitle || page.title,
+    description: page.seo.metaDescription || undefined,
+    robots: page.seo.noIndex ? { index: false, follow: false } : undefined,
+    alternates: { canonical: page.seo.canonicalUrl || `${baseUrl}${localePath(path, locale)}`, languages: generateHreflang(path, baseUrl) },
+  }
+
+  const countries = await payload.find({ collection: 'countries', where: { slug: { equals: slug } }, locale: locale as any, limit: 1 })
+  const country: any = countries.docs[0]
+  return {
+    title: country ? `${country.name} Company Registration | GCC Startup` : 'GCC Startup',
+    description: country?.intro || undefined,
+    alternates: { canonical: `${baseUrl}${localePath(path, locale)}`, languages: generateHreflang(path, baseUrl) },
+  }
+}
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -13,13 +44,29 @@ interface PageProps {
 
 export default async function CountryPage({ params }: PageProps) {
   const { slug } = await params
+  const locale = await getLocale()
   let doc: any = null
+  let page: any = null
 
   try {
     const payload = await getPayload({ config })
+    const pages = await payload.find({
+      collection: 'pages' as any,
+      where: { slug: { equals: slug } },
+      locale: locale as any,
+      depth: 2,
+      limit: 1,
+    })
+    page = pages.docs[0] || null
+
+    if (page) {
+      return <BlockRenderer blocks={page.layout} />
+    }
+
     const res = await payload.find({
       collection: 'countries',
       where: { slug: { equals: slug } },
+      locale: locale as any,
       limit: 1,
     })
     doc = res.docs[0] || null

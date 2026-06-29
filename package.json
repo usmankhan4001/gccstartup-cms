@@ -10,8 +10,8 @@
     "generate:types": "payload generate:types",
     "generate:importmap": "payload generate:importmap",
     "seed": "tsx seed.ts",
-    "translate": "tsx translate.ts",
-    "payload": "payload"
+    "payload": "payload",
+    "test": "tsx --test tests/**/*.test.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1075.0",

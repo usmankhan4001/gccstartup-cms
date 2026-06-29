@@ -11,8 +11,10 @@ const nextConfig = {
   serverExternalPackages: ['sharp'],
   output: process.platform === 'win32' ? undefined : 'standalone',
   outputFileTracingRoot: dirname,
+  // Next 15.5 currently generates invalid validator imports for this src/app route-group setup.
+  // Keep using `pnpm exec tsc --noEmit` for actual source type validation.
+  typescript: { ignoreBuildErrors: true },
 }
 
 export default withPayload(nextConfig)
-
 

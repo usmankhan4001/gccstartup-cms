@@ -2,66 +2,50 @@ import { getPayload } from 'payload';
 import config from '@payload-config';
 import PricingCard from '@/components/blocks/PricingCard';
 import RequirementList from '@/components/blocks/RequirementList';
+import { BlockRenderer } from '@/components/BlockRenderer';
+import { notFound } from 'next/navigation';
+import { getLocale, getBaseUrl, generateHreflang, localePath } from '@/lib/locale';
+import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
 
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const locale = await getLocale();
+  let baseUrl = getBaseUrl();
+  const path = `/pricing/${slug}`;
+  const payload = await getPayload({ config });
+  const [pageRes, settings] = await Promise.all([
+    payload.find({ collection: 'pages' as any, where: { slug: { equals: `pricing/${slug}` } }, locale: locale as any, limit: 1 }),
+    payload.findGlobal({ slug: 'siteSettings', locale: locale as any }).catch(() => null),
+  ]);
+  baseUrl = getBaseUrl((settings as any)?.siteUrl);
+  const page: any = pageRes.docs[0];
+  if (page?.seo) return { title: page.seo.metaTitle || page.title, description: page.seo.metaDescription || undefined, alternates: { canonical: page.seo.canonicalUrl || `${baseUrl}${localePath(path, locale)}`, languages: generateHreflang(path, baseUrl) } };
+
+  const tierRes = await payload.find({ collection: 'pricingTiers', where: { slug: { equals: slug } }, locale: locale as any, limit: 1 });
+  const tier: any = tierRes.docs[0];
+  return { title: tier ? `${tier.name} - Pricing | GCC Startup` : 'Pricing - GCC Startup', description: tier?.intro || undefined, alternates: { canonical: `${baseUrl}${localePath(path, locale)}`, languages: generateHreflang(path, baseUrl) } };
+}
+
 export default async function PricingPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const locale = await getLocale();
   let doc: any = null;
 
   try {
     const payload = await getPayload({ config });
-    const res = await payload.find({ collection: 'pricingTiers', where: { slug: { equals: slug } }, limit: 1 });
+    const pages = await payload.find({ collection: 'pages' as any, where: { slug: { equals: `pricing/${slug}` } }, locale: locale as any, depth: 2, limit: 1 });
+    const page: any = pages.docs[0];
+    if (page) return <BlockRenderer blocks={page.layout} />;
+
+    const res = await payload.find({ collection: 'pricingTiers', where: { slug: { equals: slug } }, locale: locale as any, limit: 1 });
     doc = res.docs[0] || null;
   } catch (error) {
     console.error(`Error fetching pricing tier [slug: ${slug}]:`, error);
   }
 
-  if (!doc) {
-    const fallbackPricing: Record<string, any> = {
-      'self-ubo': {
-        name: 'Self as UBO Setup',
-        intro: 'Best for founders registering the company under their own name. Fully transparent and compliant.',
-        features: [
-          { title: 'Corporate Registration', desc: 'Full incorporation under your own name as ultimate beneficial owner.' },
-          { title: 'Standard Resolution', desc: 'Standard board resolution and share certificates.' },
-          { title: 'Local Registry Filings', desc: 'Direct filing with the relevant national registry.' }
-        ],
-        process: [
-          { title: 'Profile Setup', desc: 'Provide identity proof and proposed names.' },
-          { title: 'Registration Filing', desc: 'We prepare and file the registration dossier.' },
-          { title: 'Corporate Kit', desc: 'Receive your official corporate registration certificate.' }
-        ]
-      },
-      'nominee-ubo': {
-        name: 'Nominee UBO Setup',
-        intro: 'Maximize your privacy with a professional third-party nominee shareholder/director structure.',
-        features: [
-          { title: 'Fiduciary Director', desc: 'Professional local resident nominee director.' },
-          { title: 'Nominee Shareholder', desc: 'Registered nominee shareholder to hold equity.' },
-          { title: 'Trust Deed & Indemnity', desc: 'Signed declaration of trust to protect your ownership.' }
-        ],
-        process: [
-          { title: 'KYC Verification', desc: 'Verify the identity of the true beneficial owner.' },
-          { title: 'Deed Signing', desc: 'Execute nominee agreements and declaration of trust.' },
-          { title: 'Company Setup', desc: 'Incorporate company with nominee officers on public record.' }
-        ]
-      }
-    };
-
-    doc = fallbackPricing[slug] || {
-      name: slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
-      intro: 'Premium global corporate setup tier tailored to your specific expansion strategy.',
-      features: [
-        { title: 'Corporate Incorporation', desc: 'Official setup of legal corporate body in chosen jurisdiction.' },
-        { title: 'First Year Compliance', desc: 'Registered office address and local compliance agent setup.' }
-      ],
-      process: [
-        { title: 'Select Jurisdiction', desc: 'Align on country and corporate options.' },
-        { title: 'Filing & Processing', desc: 'Submit setup to local registrar.' }
-      ]
-    };
-  }
+  if (!doc) notFound();
 
   const features = (doc.features || []).map((f: any) => ({ title: f.title, desc: f.desc }));
   const process = (doc.process || []).map((p: any) => ({ title: p.title, desc: p.desc }));

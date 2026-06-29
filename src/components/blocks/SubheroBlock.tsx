@@ -14,7 +14,7 @@ export const SubheroBlock = (props: any) => (
         </div>
       )}
       {props.flag && <span className="subhero-flag">{props.flag}</span>}
-      {props.title && <h1 dangerouslySetInnerHTML={{ __html: props.title }} />}
+      {props.title && <h1>{props.title}</h1>}
       {props.description && <p>{props.description}</p>}
       
       <div className="subhero-btns">

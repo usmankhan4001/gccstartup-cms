@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckIcon } from '../Icons';
 
-export const PricingDetailBlock = ({ price, priceNote, features, whoFor }: any) => (
+export const PricingDetailBlock = ({ price, priceNote, features, whoFor, ctaLabel, ctaUrl }: any) => (
   <section className="section section-alt">
     <div className="wrap">
       <div className="pricing-grid">
@@ -20,7 +20,7 @@ export const PricingDetailBlock = ({ price, priceNote, features, whoFor }: any) 
               </div>
             ))}
           </div>
-          <button className="btn btn-fill btn-arrow" onClick={() => (window as any).openLeadModal?.()}>Get started</button>
+          <a className="btn btn-fill btn-arrow" href={ctaUrl || '#lead-form'}>{ctaLabel || 'Get started'}</a>
         </div>
         {whoFor?.length > 0 && (
           <div className="pricing-card reveal" style={{ transitionDelay: '.1s' }}>

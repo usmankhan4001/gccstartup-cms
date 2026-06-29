@@ -12,7 +12,7 @@ export const FaqClient = ({ items }: { items: { q: string; a: string }[] }) => {
             {f.q} <span className="faq-icon">+</span>
           </div>
           <div className={`faq-a ${openIndex === i ? 'open' : ''}`}>
-            <div dangerouslySetInnerHTML={{ __html: f.a }} />
+            <div>{f.a}</div>
           </div>
         </div>
       ))}
