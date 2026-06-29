@@ -1,21 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
-
-const LOCALE_CODES = ['ar', 'zh', 'de', 'fr', 'nl', 'es', 'it']
+import { defaultLocale, localeCodes } from '@/i18n/locales'
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const segments = pathname.split('/').filter(Boolean)
+  const requestHeaders = new Headers(request.headers)
 
-  if (segments.length > 0 && LOCALE_CODES.includes(segments[0])) {
+  if (segments.length > 0 && localeCodes.includes(segments[0] as any)) {
     const locale = segments[0]
     const rest = segments.length > 1 ? '/' + segments.slice(1).join('/') : '/'
     const url = request.nextUrl.clone()
     url.pathname = rest
-    url.searchParams.set('locale', locale)
-    return NextResponse.rewrite(url)
+    requestHeaders.set('x-locale', locale)
+    requestHeaders.set('x-pathname', rest)
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } })
   }
 
-  return NextResponse.next()
+  requestHeaders.set('x-locale', defaultLocale)
+  requestHeaders.set('x-pathname', pathname)
+  return NextResponse.next({ request: { headers: requestHeaders } })
 }
 
 export const config = {

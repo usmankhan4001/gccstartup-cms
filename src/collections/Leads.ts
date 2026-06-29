@@ -19,6 +19,7 @@ export const Leads: CollectionConfig = {
     { name: 'name', type: 'text' },
     { name: 'email', type: 'email' },
     { name: 'phone', type: 'text' },
+    { name: 'phoneDigits', type: 'text', admin: { position: 'sidebar', readOnly: true } },
     { name: 'country', type: 'text' },
     { name: 'interest', type: 'text' },
     { name: 'message', type: 'textarea' },
@@ -42,6 +43,22 @@ export const Leads: CollectionConfig = {
     { name: 'attachments', type: 'relationship', relationTo: 'media', hasMany: true },
     { name: 'referrer', type: 'text' },
     { name: 'assignedTo', type: 'relationship', relationTo: 'users' },
+    { name: 'isDuplicate', type: 'checkbox', defaultValue: false, admin: { position: 'sidebar', readOnly: true } },
+    { name: 'duplicateOf', type: 'relationship', relationTo: 'leads', admin: { position: 'sidebar', readOnly: true } },
+    { name: 'duplicateReason', type: 'text', admin: { position: 'sidebar', readOnly: true } },
+    {
+      name: 'integrationStatus',
+      type: 'group',
+      admin: { position: 'sidebar', readOnly: true },
+      fields: [
+        { name: 'twenty', type: 'select', options: ['pending', 'success', 'skipped', 'failed'], defaultValue: 'pending' },
+        { name: 'twentyId', type: 'text' },
+        { name: 'metaCapi', type: 'select', options: ['pending', 'success', 'skipped', 'failed'], defaultValue: 'pending' },
+        { name: 'n8n', type: 'select', options: ['pending', 'success', 'skipped', 'failed'], defaultValue: 'pending' },
+        { name: 'waha', type: 'select', options: ['pending', 'success', 'skipped', 'failed'], defaultValue: 'pending' },
+        { name: 'lastError', type: 'textarea' },
+      ],
+    },
   ],
   hooks: {
     afterChange: [
@@ -61,7 +78,14 @@ export const Leads: CollectionConfig = {
           clientIp: doc.clientIp,
           userAgent: doc.userAgent,
           eventId: doc.eventId,
-        }, req.payload).catch((e) => console.error('[leads] notify error', e))
+        }, req.payload)
+          .then((integrationStatus) => req.payload.update({
+            collection: 'leads',
+            id: doc.id,
+            overrideAccess: true,
+            data: { integrationStatus } as any,
+          }))
+          .catch((e) => console.error('[leads] notify error', e))
       },
     ],
   },

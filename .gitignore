@@ -16,3 +16,6 @@ payload-types.ts
 *.tsbuildinfo
 index-decoded.html
 nul
+
+payload.db
+

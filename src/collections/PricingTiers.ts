@@ -1,10 +1,11 @@
 import type { CollectionConfig } from 'payload'
+import { publicReadAdminWrite } from '../access'
 
 export const PricingTiers: CollectionConfig = {
   slug: 'pricingTiers',
   labels: { singular: 'Pricing tier', plural: 'Pricing tiers' },
   admin: { useAsTitle: 'name', defaultColumns: ['name', 'slug', 'price'], group: 'Content' },
-  access: { read: () => true },
+  access: publicReadAdminWrite,
   fields: [
     { name: 'name', type: 'text', required: true },
     { name: 'slug', type: 'text', required: true, unique: true, admin: { description: 'URL: /pricing/<slug>' } },

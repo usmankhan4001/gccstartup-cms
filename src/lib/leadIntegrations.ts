@@ -20,6 +20,17 @@ export type LeadData = {
   eventId?: string
 }
 
+type IntegrationState = 'pending' | 'success' | 'skipped' | 'failed'
+
+export type LeadIntegrationStatus = {
+  twenty: IntegrationState
+  twentyId?: string
+  metaCapi: IntegrationState
+  n8n: IntegrationState
+  waha: IntegrationState
+  lastError?: string
+}
+
 const TWENTY_BASE_URL = (process.env.TWENTY_BASE_URL || '').replace(/\/$/, '')
 const TWENTY_API_KEY = process.env.TWENTY_API_KEY || ''
 // Meta Conversions API
@@ -49,7 +60,8 @@ async function twentyCreate(path: string, payload: Record<string, unknown>) {
   }
 }
 
-export async function pushToTwenty(d: LeadData) {
+export async function pushToTwenty(d: LeadData): Promise<{ status: IntegrationState; id?: string; error?: string }> {
+  if (!TWENTY_BASE_URL || !TWENTY_API_KEY) return { status: 'skipped' }
   const [firstName, ...rest] = String(d.name || '').trim().split(' ')
   const person = await twentyCreate('people', {
     name: { firstName: firstName || d.name || 'Website', lastName: rest.join(' ') || 'Lead' },
@@ -59,6 +71,7 @@ export async function pushToTwenty(d: LeadData) {
     city: d.country || '',
   })
   const personId = person?.data?.createPerson?.id || person?.data?.id || person?.id || null
+  if (!personId) return { status: 'failed', error: 'Twenty person create failed' }
 
   const body = [
     `Interest: ${d.interest || '—'}`,
@@ -73,11 +86,11 @@ export async function pushToTwenty(d: LeadData) {
   const note = await twentyCreate('notes', { title: `Website enquiry — ${d.name || 'Lead'}`, body })
   const noteId = note?.data?.id || note?.id
   if (noteId && personId) await twentyCreate('noteTargets', { noteId, personId })
-  return personId
+  return { status: 'success', id: personId }
 }
 
-async function wahaSend(numberDigits: string, text: string, config: any) {
-  if (!config.wahaBaseUrl || !numberDigits) return
+async function wahaSend(numberDigits: string, text: string, config: any): Promise<IntegrationState> {
+  if (!config.wahaBaseUrl || !numberDigits) return 'skipped'
   try {
     const res = await fetch(`${config.wahaBaseUrl}/api/sendText`, {
       method: 'POST',
@@ -85,9 +98,14 @@ async function wahaSend(numberDigits: string, text: string, config: any) {
       body: JSON.stringify({ session: config.wahaSession, chatId: `${numberDigits}@c.us`, text }),
       signal: AbortSignal.timeout(4000),
     })
-    if (!res.ok) console.error('[waha] send', res.status, (await res.text()).slice(0, 200))
+    if (!res.ok) {
+      console.error('[waha] send', res.status, (await res.text()).slice(0, 200))
+      return 'failed'
+    }
+    return 'success'
   } catch (e) {
     console.error('[waha] error', (e as Error).message)
+    return 'failed'
   }
 }
 
@@ -151,8 +169,8 @@ async function forwardToN8n(d: LeadData, config: any): Promise<boolean> {
 const sha256 = (s: string) => crypto.createHash('sha256').update(s.trim().toLowerCase()).digest('hex')
 
 /** Send a Lead event to Meta Conversions API. Silently no-ops if not configured. */
-async function sendMetaCapi(d: LeadData) {
-  if (!META_PIXEL_ID || !META_ACCESS_TOKEN) return
+async function sendMetaCapi(d: LeadData): Promise<IntegrationState> {
+  if (!META_PIXEL_ID || !META_ACCESS_TOKEN) return 'skipped'
   try {
     const userData: Record<string, string> = {}
     if (d.email) userData['em'] = sha256(d.email)
@@ -188,19 +206,29 @@ async function sendMetaCapi(d: LeadData) {
       `https://graph.facebook.com/v19.0/${META_PIXEL_ID}/events?access_token=${META_ACCESS_TOKEN}`,
       { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(4000) }
     )
-    if (!res.ok) console.error('[meta-capi] failed', res.status, (await res.text()).slice(0, 300))
-    else console.log('[meta-capi] Lead event sent')
+    if (!res.ok) {
+      console.error('[meta-capi] failed', res.status, (await res.text()).slice(0, 300))
+      return 'failed'
+    }
+    console.log('[meta-capi] Lead event sent')
+    return 'success'
   } catch (e) {
     console.error('[meta-capi] error', (e as Error).message)
+    return 'failed'
   }
 }
 
 /** Fire all notifications. Failures are logged, never thrown. */
-export async function notifyLead(d: LeadData, payload?: any) {
-  await Promise.all([
-    pushToTwenty(d).catch((e) => console.error('[leads] Twenty CRM push failed:', e)),
-    sendMetaCapi(d).catch((e) => console.error('[leads] Meta CAPI send failed:', e)),
+export async function notifyLead(d: LeadData, payload?: any): Promise<LeadIntegrationStatus> {
+  const status: LeadIntegrationStatus = { twenty: 'pending', metaCapi: 'pending', n8n: 'pending', waha: 'pending' }
+  const [twenty, metaCapi] = await Promise.all([
+    pushToTwenty(d).catch((e) => ({ status: 'failed' as IntegrationState, error: String(e?.message || e) })),
+    sendMetaCapi(d).catch(() => 'failed' as IntegrationState),
   ])
+  status.twenty = twenty.status
+  if ('id' in twenty) status.twentyId = twenty.id
+  status.metaCapi = metaCapi
+  if (twenty.error) status.lastError = twenty.error
 
   let config = {
     wahaBaseUrl: (process.env.WAHA_BASE_URL || '').replace(/\/$/, ''),
@@ -230,19 +258,25 @@ export async function notifyLead(d: LeadData, payload?: any) {
   try {
     // Prefer n8n (human-like typing). Only fall back to direct WAHA if n8n isn't configured.
     const forwarded = await forwardToN8n(d, config)
+    status.n8n = config.n8nWebhookUrl ? (forwarded ? 'success' : 'failed') : 'skipped'
     if (!forwarded) {
+      let wahaStatus: IntegrationState = 'skipped'
       if (config.adminWhatsapp) {
-        await wahaSend(config.adminWhatsapp, adminMessage(d), config).catch((e) =>
-          console.error('[leads] WAHA admin send failed:', e)
-        )
+        wahaStatus = await wahaSend(config.adminWhatsapp, adminMessage(d), config)
       }
       if (config.notifyLead && d.phone) {
-        await wahaSend(digits(d.phone), leadMessage(d), config).catch((e) =>
-          console.error('[leads] WAHA lead send failed:', e)
-        )
+        const leadWahaStatus = await wahaSend(digits(d.phone), leadMessage(d), config)
+        if (leadWahaStatus === 'failed' || wahaStatus === 'skipped') wahaStatus = leadWahaStatus
       }
+      status.waha = wahaStatus
+    } else {
+      status.waha = 'skipped'
     }
   } catch (e) {
     console.error('[leads] WhatsApp routing failed:', e)
+    status.waha = 'failed'
+    status.lastError = String((e as Error).message || e)
   }
+
+  return status
 }
