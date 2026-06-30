@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package.json ./
 
 # Install dependencies (ignoring the large payload/next dependencies to keep it light)
-RUN npm install express cors
+RUN npm install express cors --legacy-peer-deps
 
 # Copy all other project files
 COPY . .
