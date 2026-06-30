@@ -1,0 +1,208 @@
+{
+  "lang": "en",
+  "dir": "ltr",
+  "name": "English",
+  "hero": {
+    "headline": "Global Company Structures, Built for Founders Who Move Fast",
+    "subtitle": "Launch, bank and structure your international business with a compliance-first partner across the UAE, Bahrain, Hong Kong, Singapore and Ireland.",
+    "cta": "Speak to a Structuring Advisor"
+  },
+  "tone_note": "Website tone: premium, direct and compliance-led. Use the figures below as baseline marketing facts and verify final legal/tax wording before publishing.",
+  "countries": {
+    "uae": {
+      "name": "United Arab Emirates (UAE)",
+      "description": "Gulf hub for companies that need regional credibility, banking access and investor/residency pathways.",
+      "tax_baseline": {
+        "label": "Tax baseline",
+        "value": "9% Corporate Tax / 0% on Foreign Income / 0% Personal Income Tax"
+      },
+      "setup_timeline": {
+        "label": "Setup timeline",
+        "value": "Approx. 30 days, including required in-person huddle / medical visit"
+      },
+      "starting_fee": {
+        "label": "Starting structural fee",
+        "value": "From $1,500 base government fee"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Company Registration & Setup",
+          "description": "Launch your United Arab Emirates (UAE) company through a clean, end-to-end formation path designed for founders who need speed, credibility and compliant execution. GCC Startup coordinates the name reservation, approvals, license filing and local statutory steps so your business can move from idea to operating structure with confidence.",
+          "requirements": "Typical requirements: Passport copies, proof of address, proposed company names and business activity details."
+        },
+        "bank_account": {
+          "title": "Global & Local Bank Account Setup",
+          "description": "Build the financial rails your company needs from day one. We prepare the corporate profile, ownership story and business model documentation for local banks and trusted fintech platforms, helping your account application look clear, credible and investor-ready.",
+          "requirements": "Typical requirements: Corporate documents, UBO/KYC records, shareholder background profile and bank reference or statement history where required."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Tier 02 Privacy Package",
+          "description": "Protect public-facing exposure while staying aligned with compliance expectations. Our nominee privacy structure is supported by due diligence, legal declarations and control documentation so operational rights remain clearly protected.",
+          "requirements": "Typical requirements: KYC clearance, beneficiary identity records and signed trust/authorization documentation."
+        },
+        "tax_residency": {
+          "title": "Personal Tax Residency & Visas",
+          "description": "Create a personal footprint around your company with practical residency, tax-positioning and substance guidance. We support document preparation, local appointments and compliance checkpoints so your structure is more than a registration on paper.",
+          "requirements": "Typical requirements: Passport or entry records, biometrics/medical checks where applicable, local substance records and tax-residency evaluation files."
+        }
+      },
+      "cta": "Speak to a Structuring Advisor"
+    },
+    "bahrain": {
+      "name": "Bahrain",
+      "description": "A lean GCC base for standard commercial and trading profiles with 100% foreign ownership routes.",
+      "tax_baseline": {
+        "label": "Tax baseline",
+        "value": "0% Corporate Income Tax on standard commercial/trading profiles"
+      },
+      "setup_timeline": {
+        "label": "Setup timeline",
+        "value": "Approx. 30 days for a complete corporate workflow"
+      },
+      "starting_fee": {
+        "label": "Starting structural fee",
+        "value": "From $1,500 starting entry tier"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Company Registration & Setup",
+          "description": "Launch your Bahrain company through a clean, end-to-end formation path designed for founders who need speed, credibility and compliant execution. GCC Startup coordinates the name reservation, approvals, license filing and local statutory steps so your business can move from idea to operating structure with confidence.",
+          "requirements": "Typical requirements: Passport copies, proof of address, proposed company names and business activity details."
+        },
+        "bank_account": {
+          "title": "Global & Local Bank Account Setup",
+          "description": "Build the financial rails your company needs from day one. We prepare the corporate profile, ownership story and business model documentation for local banks and trusted fintech platforms, helping your account application look clear, credible and investor-ready.",
+          "requirements": "Typical requirements: Corporate documents, UBO/KYC records, shareholder background profile and bank reference or statement history where required."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Tier 02 Privacy Package",
+          "description": "Protect public-facing exposure while staying aligned with compliance expectations. Our nominee privacy structure is supported by due diligence, legal declarations and control documentation so operational rights remain clearly protected.",
+          "requirements": "Typical requirements: KYC clearance, beneficiary identity records and signed trust/authorization documentation."
+        },
+        "tax_residency": {
+          "title": "Personal Tax Residency & Visas",
+          "description": "Create a personal footprint around your company with practical residency, tax-positioning and substance guidance. We support document preparation, local appointments and compliance checkpoints so your structure is more than a registration on paper.",
+          "requirements": "Typical requirements: Passport or entry records, biometrics/medical checks where applicable, local substance records and tax-residency evaluation files."
+        }
+      },
+      "cta": "Speak to a Structuring Advisor"
+    },
+    "hongkong": {
+      "name": "Hong Kong",
+      "description": "A remote-friendly Asian gateway for international founders, trading companies and digital operations.",
+      "tax_baseline": {
+        "label": "Tax baseline",
+        "value": "0% territorial tax on foreign-sourced profits"
+      },
+      "setup_timeline": {
+        "label": "Setup timeline",
+        "value": "17-18 days with 100% remote workflow execution"
+      },
+      "starting_fee": {
+        "label": "Starting structural fee",
+        "value": "From $2,000 entry package"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Company Registration & Setup",
+          "description": "Launch your Hong Kong company through a clean, end-to-end formation path designed for founders who need speed, credibility and compliant execution. GCC Startup coordinates the name reservation, approvals, license filing and local statutory steps so your business can move from idea to operating structure with confidence.",
+          "requirements": "Typical requirements: Passport copies, proof of address, proposed company names and business activity details."
+        },
+        "bank_account": {
+          "title": "Global & Local Bank Account Setup",
+          "description": "Build the financial rails your company needs from day one. We prepare the corporate profile, ownership story and business model documentation for local banks and trusted fintech platforms, helping your account application look clear, credible and investor-ready.",
+          "requirements": "Typical requirements: Corporate documents, UBO/KYC records, shareholder background profile and bank reference or statement history where required."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Tier 02 Privacy Package",
+          "description": "Protect public-facing exposure while staying aligned with compliance expectations. Our nominee privacy structure is supported by due diligence, legal declarations and control documentation so operational rights remain clearly protected.",
+          "requirements": "Typical requirements: KYC clearance, beneficiary identity records and signed trust/authorization documentation."
+        },
+        "tax_residency": {
+          "title": "Personal Tax Residency & Visas",
+          "description": "Create a personal footprint around your company with practical residency, tax-positioning and substance guidance. We support document preparation, local appointments and compliance checkpoints so your structure is more than a registration on paper.",
+          "requirements": "Typical requirements: Passport or entry records, biometrics/medical checks where applicable, local substance records and tax-residency evaluation files."
+        }
+      },
+      "cta": "Speak to a Structuring Advisor"
+    },
+    "singapore": {
+      "name": "Singapore",
+      "description": "A premium Asian base for founders who need credibility, banking depth and structured corporate governance.",
+      "tax_baseline": {
+        "label": "Tax baseline",
+        "value": "Approx. 5% effective corporate tax when startup relief criteria apply"
+      },
+      "setup_timeline": {
+        "label": "Setup timeline",
+        "value": "17-18 days with 100% remote structural setup"
+      },
+      "starting_fee": {
+        "label": "Starting structural fee",
+        "value": "From $2,000 operational minimum"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Company Registration & Setup",
+          "description": "Launch your Singapore company through a clean, end-to-end formation path designed for founders who need speed, credibility and compliant execution. GCC Startup coordinates the name reservation, approvals, license filing and local statutory steps so your business can move from idea to operating structure with confidence.",
+          "requirements": "Typical requirements: Passport copies, proof of address, proposed company names and business activity details."
+        },
+        "bank_account": {
+          "title": "Global & Local Bank Account Setup",
+          "description": "Build the financial rails your company needs from day one. We prepare the corporate profile, ownership story and business model documentation for local banks and trusted fintech platforms, helping your account application look clear, credible and investor-ready.",
+          "requirements": "Typical requirements: Corporate documents, UBO/KYC records, shareholder background profile and bank reference or statement history where required."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Tier 02 Privacy Package",
+          "description": "Protect public-facing exposure while staying aligned with compliance expectations. Our nominee privacy structure is supported by due diligence, legal declarations and control documentation so operational rights remain clearly protected.",
+          "requirements": "Typical requirements: KYC clearance, beneficiary identity records and signed trust/authorization documentation."
+        },
+        "tax_residency": {
+          "title": "Personal Tax Residency & Visas",
+          "description": "Create a personal footprint around your company with practical residency, tax-positioning and substance guidance. We support document preparation, local appointments and compliance checkpoints so your structure is more than a registration on paper.",
+          "requirements": "Typical requirements: Passport or entry records, biometrics/medical checks where applicable, local substance records and tax-residency evaluation files."
+        }
+      },
+      "cta": "Speak to a Structuring Advisor"
+    },
+    "ireland": {
+      "name": "Ireland",
+      "description": "A fast EU entry point for founders who want an onshore European structure and single-market positioning.",
+      "tax_baseline": {
+        "label": "Tax baseline",
+        "value": "12.5% standard onshore corporate tax for trading income"
+      },
+      "setup_timeline": {
+        "label": "Setup timeline",
+        "value": "2-3 working days - fastest remote pipeline in the network"
+      },
+      "starting_fee": {
+        "label": "Starting structural fee",
+        "value": "From $1,500 baseline structure cost"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Company Registration & Setup",
+          "description": "Launch your Ireland company through a clean, end-to-end formation path designed for founders who need speed, credibility and compliant execution. GCC Startup coordinates the name reservation, approvals, license filing and local statutory steps so your business can move from idea to operating structure with confidence.",
+          "requirements": "Typical requirements: Passport copies, proof of address, proposed company names and business activity details."
+        },
+        "bank_account": {
+          "title": "Global & Local Bank Account Setup",
+          "description": "Build the financial rails your company needs from day one. We prepare the corporate profile, ownership story and business model documentation for local banks and trusted fintech platforms, helping your account application look clear, credible and investor-ready.",
+          "requirements": "Typical requirements: Corporate documents, UBO/KYC records, shareholder background profile and bank reference or statement history where required."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Tier 02 Privacy Package",
+          "description": "Protect public-facing exposure while staying aligned with compliance expectations. Our nominee privacy structure is supported by due diligence, legal declarations and control documentation so operational rights remain clearly protected.",
+          "requirements": "Typical requirements: KYC clearance, beneficiary identity records and signed trust/authorization documentation."
+        },
+        "tax_residency": {
+          "title": "Personal Tax Residency & Visas",
+          "description": "Create a personal footprint around your company with practical residency, tax-positioning and substance guidance. We support document preparation, local appointments and compliance checkpoints so your structure is more than a registration on paper.",
+          "requirements": "Typical requirements: Passport or entry records, biometrics/medical checks where applicable, local substance records and tax-residency evaluation files."
+        }
+      },
+      "cta": "Speak to a Structuring Advisor"
+    }
+  }
+}

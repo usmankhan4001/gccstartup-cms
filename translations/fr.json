@@ -1,0 +1,208 @@
+{
+  "lang": "fr",
+  "dir": "ltr",
+  "name": "Français",
+  "hero": {
+    "headline": "Des structures internationales pour les fondateurs qui avancent vite",
+    "subtitle": "Créez, bancarisez et structurez votre activité internationale avec un partenaire orienté conformité aux EAU, à Bahreïn, Hong Kong, Singapour et en Irlande.",
+    "cta": "Parler à un conseiller en structuration"
+  },
+  "tone_note": "Ton du site : premium, direct et axé conformité. Les chiffres ci-dessous servent de base marketing et doivent être validés juridiquement/fiscalement avant publication.",
+  "countries": {
+    "uae": {
+      "name": "Émirats arabes unis (EAU)",
+      "description": "Un hub du Golfe pour les entreprises qui recherchent crédibilité régionale, accès bancaire et options investisseur/résidence.",
+      "tax_baseline": {
+        "label": "Base fiscale",
+        "value": "9% d’impôt sur les sociétés / 0% sur les revenus étrangers / 0% d’impôt sur le revenu personnel"
+      },
+      "setup_timeline": {
+        "label": "Délai de mise en place",
+        "value": "Environ 30 jours, incluant le rendez-vous en personne et/ou la visite médicale requis"
+      },
+      "starting_fee": {
+        "label": "Frais structurels de départ",
+        "value": "À partir de 1 500 USD de frais gouvernementaux de base"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Création & immatriculation de société",
+          "description": "Lancez votre société à Émirats arabes unis (EAU) via un parcours de création clair et complet, pensé pour les fondateurs qui veulent rapidité, crédibilité et exécution conforme. GCC Startup coordonne la réservation de nom, les approbations, la licence et les formalités locales afin de transformer votre idée en structure opérationnelle solide.",
+          "requirements": "Exigences habituelles: Copies de passeport, justificatif d’adresse, noms de société proposés et description de l’activité."
+        },
+        "bank_account": {
+          "title": "Ouverture de comptes locaux & internationaux",
+          "description": "Mettez en place les rails financiers dont votre société a besoin dès le premier jour. Nous préparons le profil corporate, l’histoire de propriété et les documents du modèle d’affaires pour les banques locales et les fintechs de confiance, afin de rendre votre demande claire, crédible et prête pour les investisseurs.",
+          "requirements": "Exigences habituelles: Documents corporate, dossiers UBO/KYC, profil des actionnaires et référence bancaire ou historique de relevés si nécessaire."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Package confidentialité Tier 02",
+          "description": "Réduisez l’exposition publique tout en restant aligné avec les attentes de conformité. Notre structure de confidentialité nominee repose sur la due diligence, des déclarations juridiques et des documents de contrôle afin que les droits opérationnels restent clairement protégés.",
+          "requirements": "Exigences habituelles: Validation KYC, preuves d’identité du bénéficiaire effectif et documents de trust/autorisation signés."
+        },
+        "tax_residency": {
+          "title": "Résidence fiscale personnelle & visas",
+          "description": "Construisez une présence personnelle autour de votre société grâce à un accompagnement pratique sur la résidence, le positionnement fiscal et la substance. Nous soutenons la préparation des documents, les rendez-vous locaux et les points de conformité pour que votre structure dépasse la simple immatriculation.",
+          "requirements": "Exigences habituelles: Passeport ou dossiers d’entrée, biométrie/visites médicales le cas échéant, preuves de substance locale et dossier d’évaluation de résidence fiscale."
+        }
+      },
+      "cta": "Parler à un conseiller en structuration"
+    },
+    "bahrain": {
+      "name": "Bahreïn",
+      "description": "Une base GCC agile pour les activités commerciales et de trading standards, avec des voies vers 100% de propriété étrangère.",
+      "tax_baseline": {
+        "label": "Base fiscale",
+        "value": "0% d’impôt sur les sociétés pour les profils commerciaux/trading standards"
+      },
+      "setup_timeline": {
+        "label": "Délai de mise en place",
+        "value": "Environ 30 jours pour le flux corporate complet"
+      },
+      "starting_fee": {
+        "label": "Frais structurels de départ",
+        "value": "À partir de 1 500 USD pour le niveau d’entrée"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Création & immatriculation de société",
+          "description": "Lancez votre société à Bahreïn via un parcours de création clair et complet, pensé pour les fondateurs qui veulent rapidité, crédibilité et exécution conforme. GCC Startup coordonne la réservation de nom, les approbations, la licence et les formalités locales afin de transformer votre idée en structure opérationnelle solide.",
+          "requirements": "Exigences habituelles: Copies de passeport, justificatif d’adresse, noms de société proposés et description de l’activité."
+        },
+        "bank_account": {
+          "title": "Ouverture de comptes locaux & internationaux",
+          "description": "Mettez en place les rails financiers dont votre société a besoin dès le premier jour. Nous préparons le profil corporate, l’histoire de propriété et les documents du modèle d’affaires pour les banques locales et les fintechs de confiance, afin de rendre votre demande claire, crédible et prête pour les investisseurs.",
+          "requirements": "Exigences habituelles: Documents corporate, dossiers UBO/KYC, profil des actionnaires et référence bancaire ou historique de relevés si nécessaire."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Package confidentialité Tier 02",
+          "description": "Réduisez l’exposition publique tout en restant aligné avec les attentes de conformité. Notre structure de confidentialité nominee repose sur la due diligence, des déclarations juridiques et des documents de contrôle afin que les droits opérationnels restent clairement protégés.",
+          "requirements": "Exigences habituelles: Validation KYC, preuves d’identité du bénéficiaire effectif et documents de trust/autorisation signés."
+        },
+        "tax_residency": {
+          "title": "Résidence fiscale personnelle & visas",
+          "description": "Construisez une présence personnelle autour de votre société grâce à un accompagnement pratique sur la résidence, le positionnement fiscal et la substance. Nous soutenons la préparation des documents, les rendez-vous locaux et les points de conformité pour que votre structure dépasse la simple immatriculation.",
+          "requirements": "Exigences habituelles: Passeport ou dossiers d’entrée, biométrie/visites médicales le cas échéant, preuves de substance locale et dossier d’évaluation de résidence fiscale."
+        }
+      },
+      "cta": "Parler à un conseiller en structuration"
+    },
+    "hongkong": {
+      "name": "Hong Kong",
+      "description": "Une passerelle asiatique compatible avec le remote pour les fondateurs internationaux, le trading et les opérations digitales.",
+      "tax_baseline": {
+        "label": "Base fiscale",
+        "value": "0% d’impôt territorial sur les bénéfices de source étrangère"
+      },
+      "setup_timeline": {
+        "label": "Délai de mise en place",
+        "value": "17-18 jours avec une exécution 100% à distance"
+      },
+      "starting_fee": {
+        "label": "Frais structurels de départ",
+        "value": "À partir de 2 000 USD pour le package d’entrée"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Création & immatriculation de société",
+          "description": "Lancez votre société à Hong Kong via un parcours de création clair et complet, pensé pour les fondateurs qui veulent rapidité, crédibilité et exécution conforme. GCC Startup coordonne la réservation de nom, les approbations, la licence et les formalités locales afin de transformer votre idée en structure opérationnelle solide.",
+          "requirements": "Exigences habituelles: Copies de passeport, justificatif d’adresse, noms de société proposés et description de l’activité."
+        },
+        "bank_account": {
+          "title": "Ouverture de comptes locaux & internationaux",
+          "description": "Mettez en place les rails financiers dont votre société a besoin dès le premier jour. Nous préparons le profil corporate, l’histoire de propriété et les documents du modèle d’affaires pour les banques locales et les fintechs de confiance, afin de rendre votre demande claire, crédible et prête pour les investisseurs.",
+          "requirements": "Exigences habituelles: Documents corporate, dossiers UBO/KYC, profil des actionnaires et référence bancaire ou historique de relevés si nécessaire."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Package confidentialité Tier 02",
+          "description": "Réduisez l’exposition publique tout en restant aligné avec les attentes de conformité. Notre structure de confidentialité nominee repose sur la due diligence, des déclarations juridiques et des documents de contrôle afin que les droits opérationnels restent clairement protégés.",
+          "requirements": "Exigences habituelles: Validation KYC, preuves d’identité du bénéficiaire effectif et documents de trust/autorisation signés."
+        },
+        "tax_residency": {
+          "title": "Résidence fiscale personnelle & visas",
+          "description": "Construisez une présence personnelle autour de votre société grâce à un accompagnement pratique sur la résidence, le positionnement fiscal et la substance. Nous soutenons la préparation des documents, les rendez-vous locaux et les points de conformité pour que votre structure dépasse la simple immatriculation.",
+          "requirements": "Exigences habituelles: Passeport ou dossiers d’entrée, biométrie/visites médicales le cas échéant, preuves de substance locale et dossier d’évaluation de résidence fiscale."
+        }
+      },
+      "cta": "Parler à un conseiller en structuration"
+    },
+    "singapore": {
+      "name": "Singapour",
+      "description": "Une base asiatique premium pour les fondateurs qui veulent crédibilité, profondeur bancaire et gouvernance structurée.",
+      "tax_baseline": {
+        "label": "Base fiscale",
+        "value": "Environ 5% d’impôt effectif sur les sociétés lorsque les allègements startup s’appliquent"
+      },
+      "setup_timeline": {
+        "label": "Délai de mise en place",
+        "value": "17-18 jours avec une structuration 100% à distance"
+      },
+      "starting_fee": {
+        "label": "Frais structurels de départ",
+        "value": "À partir de 2 000 USD minimum opérationnel"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Création & immatriculation de société",
+          "description": "Lancez votre société à Singapour via un parcours de création clair et complet, pensé pour les fondateurs qui veulent rapidité, crédibilité et exécution conforme. GCC Startup coordonne la réservation de nom, les approbations, la licence et les formalités locales afin de transformer votre idée en structure opérationnelle solide.",
+          "requirements": "Exigences habituelles: Copies de passeport, justificatif d’adresse, noms de société proposés et description de l’activité."
+        },
+        "bank_account": {
+          "title": "Ouverture de comptes locaux & internationaux",
+          "description": "Mettez en place les rails financiers dont votre société a besoin dès le premier jour. Nous préparons le profil corporate, l’histoire de propriété et les documents du modèle d’affaires pour les banques locales et les fintechs de confiance, afin de rendre votre demande claire, crédible et prête pour les investisseurs.",
+          "requirements": "Exigences habituelles: Documents corporate, dossiers UBO/KYC, profil des actionnaires et référence bancaire ou historique de relevés si nécessaire."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Package confidentialité Tier 02",
+          "description": "Réduisez l’exposition publique tout en restant aligné avec les attentes de conformité. Notre structure de confidentialité nominee repose sur la due diligence, des déclarations juridiques et des documents de contrôle afin que les droits opérationnels restent clairement protégés.",
+          "requirements": "Exigences habituelles: Validation KYC, preuves d’identité du bénéficiaire effectif et documents de trust/autorisation signés."
+        },
+        "tax_residency": {
+          "title": "Résidence fiscale personnelle & visas",
+          "description": "Construisez une présence personnelle autour de votre société grâce à un accompagnement pratique sur la résidence, le positionnement fiscal et la substance. Nous soutenons la préparation des documents, les rendez-vous locaux et les points de conformité pour que votre structure dépasse la simple immatriculation.",
+          "requirements": "Exigences habituelles: Passeport ou dossiers d’entrée, biométrie/visites médicales le cas échéant, preuves de substance locale et dossier d’évaluation de résidence fiscale."
+        }
+      },
+      "cta": "Parler à un conseiller en structuration"
+    },
+    "ireland": {
+      "name": "Irlande",
+      "description": "Un point d’entrée rapide dans l’UE pour les fondateurs qui veulent une structure européenne onshore et une présence marché unique.",
+      "tax_baseline": {
+        "label": "Base fiscale",
+        "value": "12,5% d’impôt sur les sociétés onshore standard pour les revenus commerciaux"
+      },
+      "setup_timeline": {
+        "label": "Délai de mise en place",
+        "value": "2-3 jours ouvrés - le parcours remote le plus rapide du réseau"
+      },
+      "starting_fee": {
+        "label": "Frais structurels de départ",
+        "value": "À partir de 1 500 USD de coût structurel de base"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Création & immatriculation de société",
+          "description": "Lancez votre société à Irlande via un parcours de création clair et complet, pensé pour les fondateurs qui veulent rapidité, crédibilité et exécution conforme. GCC Startup coordonne la réservation de nom, les approbations, la licence et les formalités locales afin de transformer votre idée en structure opérationnelle solide.",
+          "requirements": "Exigences habituelles: Copies de passeport, justificatif d’adresse, noms de société proposés et description de l’activité."
+        },
+        "bank_account": {
+          "title": "Ouverture de comptes locaux & internationaux",
+          "description": "Mettez en place les rails financiers dont votre société a besoin dès le premier jour. Nous préparons le profil corporate, l’histoire de propriété et les documents du modèle d’affaires pour les banques locales et les fintechs de confiance, afin de rendre votre demande claire, crédible et prête pour les investisseurs.",
+          "requirements": "Exigences habituelles: Documents corporate, dossiers UBO/KYC, profil des actionnaires et référence bancaire ou historique de relevés si nécessaire."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Package confidentialité Tier 02",
+          "description": "Réduisez l’exposition publique tout en restant aligné avec les attentes de conformité. Notre structure de confidentialité nominee repose sur la due diligence, des déclarations juridiques et des documents de contrôle afin que les droits opérationnels restent clairement protégés.",
+          "requirements": "Exigences habituelles: Validation KYC, preuves d’identité du bénéficiaire effectif et documents de trust/autorisation signés."
+        },
+        "tax_residency": {
+          "title": "Résidence fiscale personnelle & visas",
+          "description": "Construisez une présence personnelle autour de votre société grâce à un accompagnement pratique sur la résidence, le positionnement fiscal et la substance. Nous soutenons la préparation des documents, les rendez-vous locaux et les points de conformité pour que votre structure dépasse la simple immatriculation.",
+          "requirements": "Exigences habituelles: Passeport ou dossiers d’entrée, biométrie/visites médicales le cas échéant, preuves de substance locale et dossier d’évaluation de résidence fiscale."
+        }
+      },
+      "cta": "Parler à un conseiller en structuration"
+    }
+  }
+}
