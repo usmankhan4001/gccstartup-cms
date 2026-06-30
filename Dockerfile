@@ -53,6 +53,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/tsconfig.json ./tsconfig.json
 # Copy public assets if there are any
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/embeds ./embeds
+COPY --from=builder --chown=nextjs:nodejs /app/Pages ./Pages
 
 # Copy source files needed for the seed script
 COPY --from=builder --chown=nextjs:nodejs /app/seed.ts ./seed.ts

@@ -1,0 +1,431 @@
+<!-- GCCStartup — NL→HK Guide Thank You Page -->
+<style>
+  .gcc-ty *{box-sizing:border-box;margin:0;padding:0;}
+  .gcc-ty{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+    background:#0757B8;
+    color:#fff;
+    overflow:hidden;
+  }
+  .gcc-ty-wrap{
+    width:100%;
+    min-height:720px;
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    position:relative;
+  }
+  @media(max-width:850px){.gcc-ty-wrap{grid-template-columns:1fr;min-height:auto;}}
+
+  .gcc-ty-left{
+    padding:76px 56px;
+    background:linear-gradient(135deg,#0757B8 0%,#064AA0 100%);
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .gcc-ty-left:before{
+    content:"";
+    position:absolute;
+    width:420px;height:420px;
+    border-radius:50%;
+    background:rgba(255,255,255,.07);
+    top:-180px;right:-160px;
+  }
+  .gcc-ty-left:after{
+    content:"";
+    position:absolute;
+    width:280px;height:280px;
+    border-radius:50%;
+    background:rgba(242,101,34,.25);
+    bottom:-140px;left:-110px;
+  }
+  .gcc-ty-content{position:relative;z-index:2;max-width:680px;}
+  @media(max-width:600px){.gcc-ty-left{padding:48px 24px;}}
+
+  .gcc-ty-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    width:fit-content;
+    padding:8px 14px;
+    border-radius:999px;
+    background:#F26522;
+    color:#fff;
+    font-size:12px;
+    line-height:1;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    margin-bottom:24px;
+  }
+  .gcc-ty-check{
+    width:18px;height:18px;
+    border-radius:50%;
+    background:#24D05A;
+    color:#fff;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    font-weight:900;
+  }
+  .gcc-ty h1{
+    font-size:clamp(38px,5vw,72px);
+    line-height:.98;
+    letter-spacing:-.055em;
+    font-weight:950;
+    margin-bottom:20px;
+  }
+  .gcc-ty h1 span{color:#F26522;}
+  .gcc-ty-sub{
+    font-size:clamp(17px,2vw,22px);
+    line-height:1.55;
+    color:rgba(255,255,255,.86);
+    max-width:620px;
+    margin-bottom:34px;
+  }
+  .gcc-ty-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-bottom:28px;
+  }
+  .gcc-ty-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    min-height:56px;
+    padding:16px 24px;
+    border-radius:9px;
+    text-decoration:none !important;
+    font-weight:950;
+    font-size:16px;
+    transition:transform .15s ease,background .15s ease,box-shadow .15s ease;
+  }
+  .gcc-ty-btn:hover{transform:translateY(-2px);}
+  .gcc-ty-download{
+    background:#F26522;
+    color:#fff !important;
+    box-shadow:0 12px 30px rgba(242,101,34,.35);
+  }
+  .gcc-ty-download:hover{background:#D9561E;color:#fff !important;}
+  .gcc-ty-whatsapp{
+    background:#fff;
+    color:#0757B8 !important;
+    box-shadow:0 12px 30px rgba(0,0,0,.14);
+  }
+  .gcc-ty-whatsapp:hover{background:#f5f7fb;color:#0757B8 !important;}
+  .gcc-ty-note{
+    font-size:12px;
+    line-height:1.6;
+    color:rgba(255,255,255,.65);
+    max-width:600px;
+  }
+
+  .gcc-ty-right{
+    background:#fff;
+    color:#111;
+    padding:64px 48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  @media(max-width:600px){.gcc-ty-right{padding:42px 24px;}}
+
+  .gcc-ty-card{
+    width:100%;
+    max-width:480px;
+    border:1px solid #eef0f4;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 24px 60px rgba(0,0,0,.12);
+    background:#fff;
+  }
+  .gcc-ty-card-top{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding-bottom:22px;
+    border-bottom:1px solid #f0f1f4;
+    margin-bottom:22px;
+  }
+  .gcc-ty-book{
+    width:74px;
+    height:98px;
+    border-radius:3px 8px 8px 3px;
+    background:linear-gradient(140deg,#0757B8,#064AA0);
+    position:relative;
+    box-shadow:8px 10px 22px rgba(0,0,0,.18);
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  .gcc-ty-book:before{
+    content:"";
+    position:absolute;
+    left:0;top:0;bottom:0;
+    width:6px;
+    background:#F26522;
+  }
+  .gcc-ty-book:after{
+    content:"GUIDE";
+    position:absolute;
+    top:16px;left:14px;
+    font-size:10px;
+    font-weight:950;
+    color:#fff;
+    letter-spacing:.1em;
+  }
+  .gcc-ty-book-title{
+    position:absolute;
+    bottom:14px;left:14px;right:10px;
+    font-size:11px;
+    line-height:1.15;
+    color:#fff;
+    font-weight:900;
+  }
+  .gcc-ty-card h2{
+    font-size:25px;
+    line-height:1.15;
+    letter-spacing:-.03em;
+    font-weight:950;
+    margin-bottom:6px;
+  }
+  .gcc-ty-card p{
+    font-size:14px;
+    color:#6b7280;
+    line-height:1.6;
+  }
+  .gcc-ty-steps{
+    display:grid;
+    gap:12px;
+    margin-bottom:24px;
+  }
+  .gcc-ty-step{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:#f8f9fb;
+    border:1px solid #f1f2f5;
+    border-radius:12px;
+    padding:14px;
+  }
+  .gcc-ty-num{
+    width:28px;height:28px;
+    border-radius:50%;
+    background:#F26522;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:950;
+    font-size:13px;
+    flex-shrink:0;
+  }
+  .gcc-ty-step strong{
+    display:block;
+    font-size:14px;
+    margin-bottom:2px;
+    color:#111;
+  }
+  .gcc-ty-step span{
+    display:block;
+    font-size:12.5px;
+    line-height:1.45;
+    color:#7a7f8a;
+  }
+  .gcc-ty-small-btn{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:14px 18px;
+    border-radius:9px;
+    background:#0757B8;
+    color:#fff !important;
+    text-decoration:none !important;
+    font-weight:950;
+    margin-top:10px;
+  }
+  .gcc-ty-small-btn:hover{background:#064AA0;color:#fff !important;}
+  .gcc-ty-legal{
+    margin-top:18px;
+    padding-top:16px;
+    border-top:1px solid #f0f1f4;
+    font-size:11px !important;
+    color:#9ca3af !important;
+  }
+
+  .gcc-ty-buildings{
+    position:absolute;
+    right:22px;
+    bottom:18px;
+    opacity:.25;
+    display:flex;
+    align-items:flex-end;
+    gap:5px;
+    z-index:1;
+  }
+  .gcc-ty-building{
+    width:28px;
+    background:#F26522;
+    border:2px solid rgba(255,255,255,.8);
+  }
+  .gcc-ty-building:nth-child(1){height:54px;}
+  .gcc-ty-building:nth-child(2){height:86px;}
+  .gcc-ty-building:nth-child(3){height:124px;}
+  .gcc-ty-building:nth-child(4){height:70px;}
+  @media(max-width:850px){.gcc-ty-buildings{display:none;}}
+</style>
+
+<section class="gcc-ty">
+  <div class="gcc-ty-wrap">
+    <div class="gcc-ty-left">
+      <div class="gcc-ty-content">
+        <div class="gcc-ty-badge"><span class="gcc-ty-check">✓</span> Guide Request Received</div>
+
+        <h1>Your Free Guide Is <span>Ready.</span></h1>
+
+        <p class="gcc-ty-sub">
+          Download the GCCStartup Tax Optimization Guide below. It explains how online sellers,
+          freelancers and consultants can explore Hong Kong company structures, fintech banking
+          and legal tax optimization.
+        </p>
+
+        <div class="gcc-ty-actions">
+          <a class="gcc-ty-btn gcc-ty-download ty-download-guide"
+             href="https://gccstartup.com/wp-content/uploads/2022/11/GCCStartup_TaxOptimization_Guide.pdf"
+             download="GCCStartup_TaxOptimization_Guide.pdf">
+            ⬇ Download Guide
+          </a>
+
+          <a class="gcc-ty-btn gcc-ty-whatsapp ty-whatsapp"
+             href="https://wa.me/YOURWHATSAPPNUMBER?text=Hi%20GCCStartup%2C%20I%20downloaded%20the%20Tax%20Optimization%20Guide%20and%20want%20a%20free%20consultation%20for%20the%20Netherlands%20to%20Hong%20Kong%20structure."
+             target="_blank" rel="noopener">
+            💬 Free WhatsApp Review
+          </a>
+        </div>
+
+        <p class="gcc-ty-note">
+          Legal tax optimization only. GCCStartup does not provide tax evasion services.
+          For your personal tax position, always consult a qualified local tax advisor.
+        </p>
+      </div>
+
+      <div class="gcc-ty-buildings" aria-hidden="true">
+        <div class="gcc-ty-building"></div>
+        <div class="gcc-ty-building"></div>
+        <div class="gcc-ty-building"></div>
+        <div class="gcc-ty-building"></div>
+      </div>
+    </div>
+
+    <div class="gcc-ty-right">
+      <div class="gcc-ty-card">
+        <div class="gcc-ty-card-top">
+          <div class="gcc-ty-book"><div class="gcc-ty-book-title">Tax Optimization<br>Guide</div></div>
+          <div>
+            <h2>What to do next</h2>
+            <p>Use the guide first, then request a quick structure review.</p>
+          </div>
+        </div>
+
+        <div class="gcc-ty-steps">
+          <div class="gcc-ty-step">
+            <div class="gcc-ty-num">1</div>
+            <div>
+              <strong>Read the 5-step structure</strong>
+              <span>Understand company setup, fintech banking, income routing and compliance.</span>
+            </div>
+          </div>
+
+          <div class="gcc-ty-step">
+            <div class="gcc-ty-num">2</div>
+            <div>
+              <strong>Check if you qualify</strong>
+              <span>Best fit: e-commerce, freelancing, consulting, IT services and digital income.</span>
+            </div>
+          </div>
+
+          <div class="gcc-ty-step">
+            <div class="gcc-ty-num">3</div>
+            <div>
+              <strong>Book a free review</strong>
+              <span>Send your business model on WhatsApp and we’ll suggest the most suitable route.</span>
+            </div>
+          </div>
+        </div>
+
+        <a class="gcc-ty-small-btn ty-whatsapp"
+           href="https://wa.me/YOURWHATSAPPNUMBER?text=Hi%20GCCStartup%2C%20please%20review%20my%20business%20for%20the%20Hong%20Kong%20company%20structure."
+           target="_blank" rel="noopener">
+          Start Free WhatsApp Review →
+        </a>
+
+        <p class="gcc-ty-legal">
+          This page is for guide delivery and consultation booking only. Results depend on your business model,
+          residence country, income source, and compliance requirements.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var PDF_URL = 'https://gccstartup.com/wp-content/uploads/2022/11/GCCStartup_TaxOptimization_Guide.pdf';
+
+  function getParam(name){
+    return new URLSearchParams(window.location.search).get(name) || '';
+  }
+
+  function createEventId(){
+    return 'nlhk-' + Date.now() + '-' + Math.random().toString(16).slice(2);
+  }
+
+  var eventId = getParam('event_id') || sessionStorage.getItem('nl_hk_guide_event_id') || createEventId();
+  sessionStorage.setItem('nl_hk_guide_event_id', eventId);
+
+  // Fire Meta Lead once when thank-you page loads.
+  if (typeof fbq === 'function' && !sessionStorage.getItem('nl_hk_guide_lead_fired')) {
+    fbq('track', 'Lead', {
+      content_name: 'NL-HK Tax Optimization Guide',
+      content_category: 'Guide Download',
+      campaign: 'nl_hk_guide_leads'
+    }, {
+      eventID: eventId
+    });
+    sessionStorage.setItem('nl_hk_guide_lead_fired', '1');
+  }
+
+  // Track PDF download clicks.
+  document.querySelectorAll('.ty-download-guide').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (typeof fbq === 'function') {
+        fbq('trackCustom', 'Guide_Download_Click', {
+          content_name: 'NL-HK Tax Optimization Guide PDF'
+        });
+      }
+    });
+  });
+
+  // Track WhatsApp consultation clicks.
+  document.querySelectorAll('.ty-whatsapp').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (typeof fbq === 'function') {
+        fbq('track', 'Contact', {
+          content_name: 'NL-HK WhatsApp Consultation'
+        });
+      }
+    });
+  });
+
+  // Set all download links to the current PDF URL.
+  document.querySelectorAll('.ty-download-guide').forEach(function(btn){
+    btn.href = PDF_URL;
+  });
+})();
+</script>
