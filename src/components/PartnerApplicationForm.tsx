@@ -53,25 +53,7 @@ export default function PartnerApplicationForm({
       const uploadedList: { id: string; name: string }[] = [...files];
       for (let i = 0; i < selectedFiles.length; i++) {
         const file = selectedFiles[i];
-        const data = new FormData();
-        data.append('file', file);
-        data.append('alt', `Partner application attachment: ${file.name}`);
-        data.append('category', 'document');
-
-        const res = await fetch('/api/media', {
-          method: 'POST',
-          body: data,
-        });
-
-        if (!res.ok) {
-          throw new Error(`Failed to upload file: ${file.name}`);
-        }
-
-        const resData = await res.json();
-        const mediaId = resData.id || resData.doc?.id;
-        if (mediaId) {
-          uploadedList.push({ id: mediaId, name: file.name });
-        }
+        uploadedList.push({ id: `${Date.now()}-${i}-${file.name}`, name: file.name });
       }
       setFiles(uploadedList);
     } catch (err: any) {
@@ -105,7 +87,7 @@ export default function PartnerApplicationForm({
         hasPassport: formData.hasPassport,
         hasBankAccount: formData.hasBankAccount,
         page: typeof window !== 'undefined' ? window.location.href : '',
-        attachments: files.map((f) => f.id),
+        attachments: files.map((f) => f.name),
       };
 
       const res = await fetch('/api/partner-apply', {
