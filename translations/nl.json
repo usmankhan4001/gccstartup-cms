@@ -1,0 +1,208 @@
+{
+  "lang": "nl",
+  "dir": "ltr",
+  "name": "Nederlands",
+  "hero": {
+    "headline": "Wereldwijde bedrijfsstructuren voor oprichters die snel schakelen",
+    "subtitle": "Start, bankier en structureer uw internationale bedrijf met een compliance-first partner in de VAE, Bahrein, Hongkong, Singapore en Ierland.",
+    "cta": "Spreek met een structuuradviseur"
+  },
+  "tone_note": "Websitetoon: premium, direct en compliance-gedreven. Gebruik onderstaande cijfers als basismarketingfeiten en laat juridische/fiscale formuleringen vóór publicatie controleren.",
+  "countries": {
+    "uae": {
+      "name": "Verenigde Arabische Emiraten (VAE)",
+      "description": "Een Golfhub voor bedrijven die regionale geloofwaardigheid, banktoegang en investeerder-/verblijfsroutes nodig hebben.",
+      "tax_baseline": {
+        "label": "Fiscale basis",
+        "value": "9% vennootschapsbelasting / 0% op buitenlandse inkomsten / 0% persoonlijke inkomstenbelasting"
+      },
+      "setup_timeline": {
+        "label": "Setupduur",
+        "value": "Ongeveer 30 dagen, inclusief verplichte fysieke afspraak en/of medische keuring"
+      },
+      "starting_fee": {
+        "label": "Startkosten structuur",
+        "value": "Vanaf USD 1.500 basisoverheidskosten"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Bedrijfsregistratie & oprichting",
+          "description": "Start uw bedrijf in Verenigde Arabische Emiraten (VAE) via een helder end-to-end oprichtingstraject voor oprichters die snelheid, geloofwaardigheid en correcte uitvoering nodig hebben. GCC Startup coördineert naamreservering, goedkeuringen, licentieaanvraag en lokale wettelijke stappen, zodat uw idee kan doorgroeien naar een werkbare bedrijfsstructuur.",
+          "requirements": "Gebruikelijke vereisten: Paspoortkopieën, adresbewijs, voorgestelde bedrijfsnamen en informatie over de bedrijfsactiviteit."
+        },
+        "bank_account": {
+          "title": "Wereldwijde & lokale bankrekening setup",
+          "description": "Bouw vanaf dag één de financiële rails die uw bedrijf nodig heeft. Wij bereiden het bedrijfsprofiel, de eigendomsstructuur en documentatie van het businessmodel voor lokale banken en betrouwbare fintech-platforms voor, zodat uw aanvraag helder, geloofwaardig en investeerdersklaar is.",
+          "requirements": "Gebruikelijke vereisten: Bedrijfsdocumenten, UBO-/KYC-gegevens, aandeelhoudersprofiel en bankreferentie of rekeninghistorie waar vereist."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Tier 02 Privacy Package",
+          "description": "Beperk publieke zichtbaarheid zonder de compliance uit het oog te verliezen. Onze nominee-privacystructuur wordt ondersteund door due diligence, juridische verklaringen en controledocumentatie, zodat operationele rechten duidelijk beschermd blijven.",
+          "requirements": "Gebruikelijke vereisten: KYC-goedkeuring, identiteit van de uiteindelijke begunstigde en ondertekende trust-/autorisatiedocumenten."
+        },
+        "tax_residency": {
+          "title": "Persoonlijke fiscale residentie & visa",
+          "description": "Creëer een persoonlijke footprint rond uw bedrijf met praktische begeleiding voor residentie, fiscale positionering en substance. Wij ondersteunen documentvoorbereiding, lokale afspraken en compliancechecks, zodat uw structuur meer is dan een registratie op papier.",
+          "requirements": "Gebruikelijke vereisten: Paspoort- of inreisgegevens, biometrie/medische checks waar van toepassing, lokale substance-gegevens en fiscale residentiebeoordeling."
+        }
+      },
+      "cta": "Spreek met een structuuradviseur"
+    },
+    "bahrain": {
+      "name": "Bahrein",
+      "description": "Een slanke GCC-basis voor standaard commerciële en handelsactiviteiten, met routes naar 100% buitenlands eigendom.",
+      "tax_baseline": {
+        "label": "Fiscale basis",
+        "value": "0% vennootschapsbelasting voor standaard commerciële/handelsprofielen"
+      },
+      "setup_timeline": {
+        "label": "Setupduur",
+        "value": "Ongeveer 30 dagen voor de volledige corporate workflow"
+      },
+      "starting_fee": {
+        "label": "Startkosten structuur",
+        "value": "Vanaf USD 1.500 instapniveau"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Bedrijfsregistratie & oprichting",
+          "description": "Start uw bedrijf in Bahrein via een helder end-to-end oprichtingstraject voor oprichters die snelheid, geloofwaardigheid en correcte uitvoering nodig hebben. GCC Startup coördineert naamreservering, goedkeuringen, licentieaanvraag en lokale wettelijke stappen, zodat uw idee kan doorgroeien naar een werkbare bedrijfsstructuur.",
+          "requirements": "Gebruikelijke vereisten: Paspoortkopieën, adresbewijs, voorgestelde bedrijfsnamen en informatie over de bedrijfsactiviteit."
+        },
+        "bank_account": {
+          "title": "Wereldwijde & lokale bankrekening setup",
+          "description": "Bouw vanaf dag één de financiële rails die uw bedrijf nodig heeft. Wij bereiden het bedrijfsprofiel, de eigendomsstructuur en documentatie van het businessmodel voor lokale banken en betrouwbare fintech-platforms voor, zodat uw aanvraag helder, geloofwaardig en investeerdersklaar is.",
+          "requirements": "Gebruikelijke vereisten: Bedrijfsdocumenten, UBO-/KYC-gegevens, aandeelhoudersprofiel en bankreferentie of rekeninghistorie waar vereist."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Tier 02 Privacy Package",
+          "description": "Beperk publieke zichtbaarheid zonder de compliance uit het oog te verliezen. Onze nominee-privacystructuur wordt ondersteund door due diligence, juridische verklaringen en controledocumentatie, zodat operationele rechten duidelijk beschermd blijven.",
+          "requirements": "Gebruikelijke vereisten: KYC-goedkeuring, identiteit van de uiteindelijke begunstigde en ondertekende trust-/autorisatiedocumenten."
+        },
+        "tax_residency": {
+          "title": "Persoonlijke fiscale residentie & visa",
+          "description": "Creëer een persoonlijke footprint rond uw bedrijf met praktische begeleiding voor residentie, fiscale positionering en substance. Wij ondersteunen documentvoorbereiding, lokale afspraken en compliancechecks, zodat uw structuur meer is dan een registratie op papier.",
+          "requirements": "Gebruikelijke vereisten: Paspoort- of inreisgegevens, biometrie/medische checks waar van toepassing, lokale substance-gegevens en fiscale residentiebeoordeling."
+        }
+      },
+      "cta": "Spreek met een structuuradviseur"
+    },
+    "hongkong": {
+      "name": "Hongkong",
+      "description": "Een remote-vriendelijke Aziatische toegangspoort voor internationale oprichters, handelsbedrijven en digitale activiteiten.",
+      "tax_baseline": {
+        "label": "Fiscale basis",
+        "value": "0% territoriale belasting op winsten uit buitenlandse bron"
+      },
+      "setup_timeline": {
+        "label": "Setupduur",
+        "value": "17-18 dagen met 100% remote uitvoering"
+      },
+      "starting_fee": {
+        "label": "Startkosten structuur",
+        "value": "Vanaf USD 2.000 instappakket"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Bedrijfsregistratie & oprichting",
+          "description": "Start uw bedrijf in Hongkong via een helder end-to-end oprichtingstraject voor oprichters die snelheid, geloofwaardigheid en correcte uitvoering nodig hebben. GCC Startup coördineert naamreservering, goedkeuringen, licentieaanvraag en lokale wettelijke stappen, zodat uw idee kan doorgroeien naar een werkbare bedrijfsstructuur.",
+          "requirements": "Gebruikelijke vereisten: Paspoortkopieën, adresbewijs, voorgestelde bedrijfsnamen en informatie over de bedrijfsactiviteit."
+        },
+        "bank_account": {
+          "title": "Wereldwijde & lokale bankrekening setup",
+          "description": "Bouw vanaf dag één de financiële rails die uw bedrijf nodig heeft. Wij bereiden het bedrijfsprofiel, de eigendomsstructuur en documentatie van het businessmodel voor lokale banken en betrouwbare fintech-platforms voor, zodat uw aanvraag helder, geloofwaardig en investeerdersklaar is.",
+          "requirements": "Gebruikelijke vereisten: Bedrijfsdocumenten, UBO-/KYC-gegevens, aandeelhoudersprofiel en bankreferentie of rekeninghistorie waar vereist."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Tier 02 Privacy Package",
+          "description": "Beperk publieke zichtbaarheid zonder de compliance uit het oog te verliezen. Onze nominee-privacystructuur wordt ondersteund door due diligence, juridische verklaringen en controledocumentatie, zodat operationele rechten duidelijk beschermd blijven.",
+          "requirements": "Gebruikelijke vereisten: KYC-goedkeuring, identiteit van de uiteindelijke begunstigde en ondertekende trust-/autorisatiedocumenten."
+        },
+        "tax_residency": {
+          "title": "Persoonlijke fiscale residentie & visa",
+          "description": "Creëer een persoonlijke footprint rond uw bedrijf met praktische begeleiding voor residentie, fiscale positionering en substance. Wij ondersteunen documentvoorbereiding, lokale afspraken en compliancechecks, zodat uw structuur meer is dan een registratie op papier.",
+          "requirements": "Gebruikelijke vereisten: Paspoort- of inreisgegevens, biometrie/medische checks waar van toepassing, lokale substance-gegevens en fiscale residentiebeoordeling."
+        }
+      },
+      "cta": "Spreek met een structuuradviseur"
+    },
+    "singapore": {
+      "name": "Singapore",
+      "description": "Een premium Aziatische basis voor oprichters die reputatie, sterke banken en duidelijke governance nodig hebben.",
+      "tax_baseline": {
+        "label": "Fiscale basis",
+        "value": "Ongeveer 5% effectieve vennootschapsbelasting wanneer startup-verlichting van toepassing is"
+      },
+      "setup_timeline": {
+        "label": "Setupduur",
+        "value": "17-18 dagen met 100% remote structuursetup"
+      },
+      "starting_fee": {
+        "label": "Startkosten structuur",
+        "value": "Vanaf USD 2.000 operationeel minimum"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Bedrijfsregistratie & oprichting",
+          "description": "Start uw bedrijf in Singapore via een helder end-to-end oprichtingstraject voor oprichters die snelheid, geloofwaardigheid en correcte uitvoering nodig hebben. GCC Startup coördineert naamreservering, goedkeuringen, licentieaanvraag en lokale wettelijke stappen, zodat uw idee kan doorgroeien naar een werkbare bedrijfsstructuur.",
+          "requirements": "Gebruikelijke vereisten: Paspoortkopieën, adresbewijs, voorgestelde bedrijfsnamen en informatie over de bedrijfsactiviteit."
+        },
+        "bank_account": {
+          "title": "Wereldwijde & lokale bankrekening setup",
+          "description": "Bouw vanaf dag één de financiële rails die uw bedrijf nodig heeft. Wij bereiden het bedrijfsprofiel, de eigendomsstructuur en documentatie van het businessmodel voor lokale banken en betrouwbare fintech-platforms voor, zodat uw aanvraag helder, geloofwaardig en investeerdersklaar is.",
+          "requirements": "Gebruikelijke vereisten: Bedrijfsdocumenten, UBO-/KYC-gegevens, aandeelhoudersprofiel en bankreferentie of rekeninghistorie waar vereist."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Tier 02 Privacy Package",
+          "description": "Beperk publieke zichtbaarheid zonder de compliance uit het oog te verliezen. Onze nominee-privacystructuur wordt ondersteund door due diligence, juridische verklaringen en controledocumentatie, zodat operationele rechten duidelijk beschermd blijven.",
+          "requirements": "Gebruikelijke vereisten: KYC-goedkeuring, identiteit van de uiteindelijke begunstigde en ondertekende trust-/autorisatiedocumenten."
+        },
+        "tax_residency": {
+          "title": "Persoonlijke fiscale residentie & visa",
+          "description": "Creëer een persoonlijke footprint rond uw bedrijf met praktische begeleiding voor residentie, fiscale positionering en substance. Wij ondersteunen documentvoorbereiding, lokale afspraken en compliancechecks, zodat uw structuur meer is dan een registratie op papier.",
+          "requirements": "Gebruikelijke vereisten: Paspoort- of inreisgegevens, biometrie/medische checks waar van toepassing, lokale substance-gegevens en fiscale residentiebeoordeling."
+        }
+      },
+      "cta": "Spreek met een structuuradviseur"
+    },
+    "ireland": {
+      "name": "Ierland",
+      "description": "Een snelle EU-ingang voor oprichters die een Europese onshore-structuur en single-market positionering zoeken.",
+      "tax_baseline": {
+        "label": "Fiscale basis",
+        "value": "12,5% standaard onshore vennootschapsbelasting op handelsinkomen"
+      },
+      "setup_timeline": {
+        "label": "Setupduur",
+        "value": "2-3 werkdagen - snelste remote route in het netwerk"
+      },
+      "starting_fee": {
+        "label": "Startkosten structuur",
+        "value": "Vanaf USD 1.500 basiskosten structuur"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Bedrijfsregistratie & oprichting",
+          "description": "Start uw bedrijf in Ierland via een helder end-to-end oprichtingstraject voor oprichters die snelheid, geloofwaardigheid en correcte uitvoering nodig hebben. GCC Startup coördineert naamreservering, goedkeuringen, licentieaanvraag en lokale wettelijke stappen, zodat uw idee kan doorgroeien naar een werkbare bedrijfsstructuur.",
+          "requirements": "Gebruikelijke vereisten: Paspoortkopieën, adresbewijs, voorgestelde bedrijfsnamen en informatie over de bedrijfsactiviteit."
+        },
+        "bank_account": {
+          "title": "Wereldwijde & lokale bankrekening setup",
+          "description": "Bouw vanaf dag één de financiële rails die uw bedrijf nodig heeft. Wij bereiden het bedrijfsprofiel, de eigendomsstructuur en documentatie van het businessmodel voor lokale banken en betrouwbare fintech-platforms voor, zodat uw aanvraag helder, geloofwaardig en investeerdersklaar is.",
+          "requirements": "Gebruikelijke vereisten: Bedrijfsdocumenten, UBO-/KYC-gegevens, aandeelhoudersprofiel en bankreferentie of rekeninghistorie waar vereist."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Tier 02 Privacy Package",
+          "description": "Beperk publieke zichtbaarheid zonder de compliance uit het oog te verliezen. Onze nominee-privacystructuur wordt ondersteund door due diligence, juridische verklaringen en controledocumentatie, zodat operationele rechten duidelijk beschermd blijven.",
+          "requirements": "Gebruikelijke vereisten: KYC-goedkeuring, identiteit van de uiteindelijke begunstigde en ondertekende trust-/autorisatiedocumenten."
+        },
+        "tax_residency": {
+          "title": "Persoonlijke fiscale residentie & visa",
+          "description": "Creëer een persoonlijke footprint rond uw bedrijf met praktische begeleiding voor residentie, fiscale positionering en substance. Wij ondersteunen documentvoorbereiding, lokale afspraken en compliancechecks, zodat uw structuur meer is dan een registratie op papier.",
+          "requirements": "Gebruikelijke vereisten: Paspoort- of inreisgegevens, biometrie/medische checks waar van toepassing, lokale substance-gegevens en fiscale residentiebeoordeling."
+        }
+      },
+      "cta": "Spreek met een structuuradviseur"
+    }
+  }
+}

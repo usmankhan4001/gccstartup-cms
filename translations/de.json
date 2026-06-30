@@ -1,0 +1,208 @@
+{
+  "lang": "de",
+  "dir": "ltr",
+  "name": "Deutsch",
+  "hero": {
+    "headline": "Globale Unternehmensstrukturen für Gründer mit Tempo",
+    "subtitle": "Gründen, banken und strukturieren Sie Ihr internationales Geschäft mit einem Compliance-first Partner in den VAE, Bahrain, Hongkong, Singapur und Irland.",
+    "cta": "Mit einem Strukturberater sprechen"
+  },
+  "tone_note": "Website-Tonalität: hochwertig, direkt und compliance-orientiert. Die folgenden Werte dienen als Baseline für Marketingtexte und sollten vor Veröffentlichung rechtlich/steuerlich final geprüft werden.",
+  "countries": {
+    "uae": {
+      "name": "Vereinigte Arabische Emirate (UAE)",
+      "description": "Ein Golf-Hub für Unternehmen, die regionale Glaubwürdigkeit, Bankzugang und Investoren-/Aufenthaltsoptionen benötigen.",
+      "tax_baseline": {
+        "label": "Steuerliche Basis",
+        "value": "9% Körperschaftsteuer / 0% auf ausländische Einkünfte / 0% persönliche Einkommensteuer"
+      },
+      "setup_timeline": {
+        "label": "Setup-Zeitrahmen",
+        "value": "Ca. 30 Tage, inklusive erforderlichem persönlichen Termin bzw. medizinischem Check"
+      },
+      "starting_fee": {
+        "label": "Startgebühr Struktur",
+        "value": "Ab 1.500 USD Basis-Regierungsgebühr"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Unternehmensregistrierung & Setup",
+          "description": "Starten Sie Ihre Gesellschaft in Vereinigte Arabische Emirate (UAE) über einen klaren End-to-End-Gründungsprozess für Gründer, die Geschwindigkeit, Glaubwürdigkeit und saubere Umsetzung benötigen. GCC Startup koordiniert Namensreservierung, Genehmigungen, Lizenzierung und lokale formale Schritte, damit aus Ihrer Idee eine belastbare operative Struktur wird.",
+          "requirements": "Typische Anforderungen: Passkopien, Adressnachweis, gewünschte Firmennamen und Angaben zur Geschäftstätigkeit."
+        },
+        "bank_account": {
+          "title": "Globale & lokale Bankkontoeröffnung",
+          "description": "Schaffen Sie die finanziellen Grundlagen, die Ihr Unternehmen ab Tag eins benötigt. Wir bereiten Unternehmensprofil, Eigentümerstruktur und Geschäftsmodell für lokale Banken und verlässliche Fintech-Plattformen auf, damit Ihr Antrag klar, glaubwürdig und investorenfähig wirkt.",
+          "requirements": "Typische Anforderungen: Gesellschaftsunterlagen, UBO-/KYC-Nachweise, Gesellschafterprofil sowie Bankreferenz oder Kontoauszugshistorie, sofern erforderlich."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Tier 02 Privacy Package",
+          "description": "Reduzieren Sie öffentliche Sichtbarkeit, ohne Compliance zu vernachlässigen. Unsere Nominee-Privacy-Struktur basiert auf Due Diligence, rechtlichen Erklärungen und Kontrolldokumenten, sodass operative Rechte eindeutig geschützt bleiben.",
+          "requirements": "Typische Anforderungen: KYC-Freigabe, Identitätsnachweise des wirtschaftlich Berechtigten sowie unterschriebene Trust-/Autorisierungsdokumente."
+        },
+        "tax_residency": {
+          "title": "Persönliche Steuerresidenz & Visa",
+          "description": "Bauen Sie rund um Ihre Gesellschaft eine persönliche Präsenz mit praxisnaher Residency-, Steuer- und Substanzberatung auf. Wir unterstützen Dokumente, lokale Termine und Compliance-Prüfpunkte, damit Ihre Struktur mehr ist als eine reine Registrierung.",
+          "requirements": "Typische Anforderungen: Pass- oder Einreisedaten, Biometrie/medizinische Checks sofern relevant, lokale Substanznachweise und Unterlagen zur Steuerresidenzprüfung."
+        }
+      },
+      "cta": "Mit einem Strukturberater sprechen"
+    },
+    "bahrain": {
+      "name": "Bahrain",
+      "description": "Eine schlanke GCC-Basis für klassische Handels- und Geschäftstätigkeiten mit Wegen zu 100% ausländischem Eigentum.",
+      "tax_baseline": {
+        "label": "Steuerliche Basis",
+        "value": "0% Körperschaftsteuer für standardmäßige Handels- und Geschäftstätigkeiten"
+      },
+      "setup_timeline": {
+        "label": "Setup-Zeitrahmen",
+        "value": "Ca. 30 Tage für den vollständigen Corporate Workflow"
+      },
+      "starting_fee": {
+        "label": "Startgebühr Struktur",
+        "value": "Ab 1.500 USD Einstiegspaket"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Unternehmensregistrierung & Setup",
+          "description": "Starten Sie Ihre Gesellschaft in Bahrain über einen klaren End-to-End-Gründungsprozess für Gründer, die Geschwindigkeit, Glaubwürdigkeit und saubere Umsetzung benötigen. GCC Startup koordiniert Namensreservierung, Genehmigungen, Lizenzierung und lokale formale Schritte, damit aus Ihrer Idee eine belastbare operative Struktur wird.",
+          "requirements": "Typische Anforderungen: Passkopien, Adressnachweis, gewünschte Firmennamen und Angaben zur Geschäftstätigkeit."
+        },
+        "bank_account": {
+          "title": "Globale & lokale Bankkontoeröffnung",
+          "description": "Schaffen Sie die finanziellen Grundlagen, die Ihr Unternehmen ab Tag eins benötigt. Wir bereiten Unternehmensprofil, Eigentümerstruktur und Geschäftsmodell für lokale Banken und verlässliche Fintech-Plattformen auf, damit Ihr Antrag klar, glaubwürdig und investorenfähig wirkt.",
+          "requirements": "Typische Anforderungen: Gesellschaftsunterlagen, UBO-/KYC-Nachweise, Gesellschafterprofil sowie Bankreferenz oder Kontoauszugshistorie, sofern erforderlich."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Tier 02 Privacy Package",
+          "description": "Reduzieren Sie öffentliche Sichtbarkeit, ohne Compliance zu vernachlässigen. Unsere Nominee-Privacy-Struktur basiert auf Due Diligence, rechtlichen Erklärungen und Kontrolldokumenten, sodass operative Rechte eindeutig geschützt bleiben.",
+          "requirements": "Typische Anforderungen: KYC-Freigabe, Identitätsnachweise des wirtschaftlich Berechtigten sowie unterschriebene Trust-/Autorisierungsdokumente."
+        },
+        "tax_residency": {
+          "title": "Persönliche Steuerresidenz & Visa",
+          "description": "Bauen Sie rund um Ihre Gesellschaft eine persönliche Präsenz mit praxisnaher Residency-, Steuer- und Substanzberatung auf. Wir unterstützen Dokumente, lokale Termine und Compliance-Prüfpunkte, damit Ihre Struktur mehr ist als eine reine Registrierung.",
+          "requirements": "Typische Anforderungen: Pass- oder Einreisedaten, Biometrie/medizinische Checks sofern relevant, lokale Substanznachweise und Unterlagen zur Steuerresidenzprüfung."
+        }
+      },
+      "cta": "Mit einem Strukturberater sprechen"
+    },
+    "hongkong": {
+      "name": "Hongkong",
+      "description": "Ein remote-freundliches Asien-Gateway für internationale Gründer, Handelsunternehmen und digitale Geschäftsmodelle.",
+      "tax_baseline": {
+        "label": "Steuerliche Basis",
+        "value": "0% Territorialsteuer auf im Ausland erzielte Gewinne"
+      },
+      "setup_timeline": {
+        "label": "Setup-Zeitrahmen",
+        "value": "17-18 Tage bei 100% Remote-Abwicklung"
+      },
+      "starting_fee": {
+        "label": "Startgebühr Struktur",
+        "value": "Ab 2.000 USD Einstiegspaket"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Unternehmensregistrierung & Setup",
+          "description": "Starten Sie Ihre Gesellschaft in Hongkong über einen klaren End-to-End-Gründungsprozess für Gründer, die Geschwindigkeit, Glaubwürdigkeit und saubere Umsetzung benötigen. GCC Startup koordiniert Namensreservierung, Genehmigungen, Lizenzierung und lokale formale Schritte, damit aus Ihrer Idee eine belastbare operative Struktur wird.",
+          "requirements": "Typische Anforderungen: Passkopien, Adressnachweis, gewünschte Firmennamen und Angaben zur Geschäftstätigkeit."
+        },
+        "bank_account": {
+          "title": "Globale & lokale Bankkontoeröffnung",
+          "description": "Schaffen Sie die finanziellen Grundlagen, die Ihr Unternehmen ab Tag eins benötigt. Wir bereiten Unternehmensprofil, Eigentümerstruktur und Geschäftsmodell für lokale Banken und verlässliche Fintech-Plattformen auf, damit Ihr Antrag klar, glaubwürdig und investorenfähig wirkt.",
+          "requirements": "Typische Anforderungen: Gesellschaftsunterlagen, UBO-/KYC-Nachweise, Gesellschafterprofil sowie Bankreferenz oder Kontoauszugshistorie, sofern erforderlich."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Tier 02 Privacy Package",
+          "description": "Reduzieren Sie öffentliche Sichtbarkeit, ohne Compliance zu vernachlässigen. Unsere Nominee-Privacy-Struktur basiert auf Due Diligence, rechtlichen Erklärungen und Kontrolldokumenten, sodass operative Rechte eindeutig geschützt bleiben.",
+          "requirements": "Typische Anforderungen: KYC-Freigabe, Identitätsnachweise des wirtschaftlich Berechtigten sowie unterschriebene Trust-/Autorisierungsdokumente."
+        },
+        "tax_residency": {
+          "title": "Persönliche Steuerresidenz & Visa",
+          "description": "Bauen Sie rund um Ihre Gesellschaft eine persönliche Präsenz mit praxisnaher Residency-, Steuer- und Substanzberatung auf. Wir unterstützen Dokumente, lokale Termine und Compliance-Prüfpunkte, damit Ihre Struktur mehr ist als eine reine Registrierung.",
+          "requirements": "Typische Anforderungen: Pass- oder Einreisedaten, Biometrie/medizinische Checks sofern relevant, lokale Substanznachweise und Unterlagen zur Steuerresidenzprüfung."
+        }
+      },
+      "cta": "Mit einem Strukturberater sprechen"
+    },
+    "singapore": {
+      "name": "Singapur",
+      "description": "Eine Premium-Asienbasis für Gründer, die Reputation, Bankentiefe und strukturierte Governance benötigen.",
+      "tax_baseline": {
+        "label": "Steuerliche Basis",
+        "value": "Ca. 5% effektive Körperschaftsteuer, sofern Startup-Erleichterungen greifen"
+      },
+      "setup_timeline": {
+        "label": "Setup-Zeitrahmen",
+        "value": "17-18 Tage bei 100% Remote-Strukturaufbau"
+      },
+      "starting_fee": {
+        "label": "Startgebühr Struktur",
+        "value": "Ab 2.000 USD operatives Minimum"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Unternehmensregistrierung & Setup",
+          "description": "Starten Sie Ihre Gesellschaft in Singapur über einen klaren End-to-End-Gründungsprozess für Gründer, die Geschwindigkeit, Glaubwürdigkeit und saubere Umsetzung benötigen. GCC Startup koordiniert Namensreservierung, Genehmigungen, Lizenzierung und lokale formale Schritte, damit aus Ihrer Idee eine belastbare operative Struktur wird.",
+          "requirements": "Typische Anforderungen: Passkopien, Adressnachweis, gewünschte Firmennamen und Angaben zur Geschäftstätigkeit."
+        },
+        "bank_account": {
+          "title": "Globale & lokale Bankkontoeröffnung",
+          "description": "Schaffen Sie die finanziellen Grundlagen, die Ihr Unternehmen ab Tag eins benötigt. Wir bereiten Unternehmensprofil, Eigentümerstruktur und Geschäftsmodell für lokale Banken und verlässliche Fintech-Plattformen auf, damit Ihr Antrag klar, glaubwürdig und investorenfähig wirkt.",
+          "requirements": "Typische Anforderungen: Gesellschaftsunterlagen, UBO-/KYC-Nachweise, Gesellschafterprofil sowie Bankreferenz oder Kontoauszugshistorie, sofern erforderlich."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Tier 02 Privacy Package",
+          "description": "Reduzieren Sie öffentliche Sichtbarkeit, ohne Compliance zu vernachlässigen. Unsere Nominee-Privacy-Struktur basiert auf Due Diligence, rechtlichen Erklärungen und Kontrolldokumenten, sodass operative Rechte eindeutig geschützt bleiben.",
+          "requirements": "Typische Anforderungen: KYC-Freigabe, Identitätsnachweise des wirtschaftlich Berechtigten sowie unterschriebene Trust-/Autorisierungsdokumente."
+        },
+        "tax_residency": {
+          "title": "Persönliche Steuerresidenz & Visa",
+          "description": "Bauen Sie rund um Ihre Gesellschaft eine persönliche Präsenz mit praxisnaher Residency-, Steuer- und Substanzberatung auf. Wir unterstützen Dokumente, lokale Termine und Compliance-Prüfpunkte, damit Ihre Struktur mehr ist als eine reine Registrierung.",
+          "requirements": "Typische Anforderungen: Pass- oder Einreisedaten, Biometrie/medizinische Checks sofern relevant, lokale Substanznachweise und Unterlagen zur Steuerresidenzprüfung."
+        }
+      },
+      "cta": "Mit einem Strukturberater sprechen"
+    },
+    "ireland": {
+      "name": "Irland",
+      "description": "Ein schneller EU-Einstieg für Gründer, die eine europäische Onshore-Struktur und Single-Market-Positionierung suchen.",
+      "tax_baseline": {
+        "label": "Steuerliche Basis",
+        "value": "12,5% reguläre Onshore-Körperschaftsteuer auf Handelserträge"
+      },
+      "setup_timeline": {
+        "label": "Setup-Zeitrahmen",
+        "value": "2-3 Werktage - schnellste Remote-Pipeline im Netzwerk"
+      },
+      "starting_fee": {
+        "label": "Startgebühr Struktur",
+        "value": "Ab 1.500 USD Basis-Strukturkosten"
+      },
+      "services": {
+        "company_registration": {
+          "title": "Unternehmensregistrierung & Setup",
+          "description": "Starten Sie Ihre Gesellschaft in Irland über einen klaren End-to-End-Gründungsprozess für Gründer, die Geschwindigkeit, Glaubwürdigkeit und saubere Umsetzung benötigen. GCC Startup koordiniert Namensreservierung, Genehmigungen, Lizenzierung und lokale formale Schritte, damit aus Ihrer Idee eine belastbare operative Struktur wird.",
+          "requirements": "Typische Anforderungen: Passkopien, Adressnachweis, gewünschte Firmennamen und Angaben zur Geschäftstätigkeit."
+        },
+        "bank_account": {
+          "title": "Globale & lokale Bankkontoeröffnung",
+          "description": "Schaffen Sie die finanziellen Grundlagen, die Ihr Unternehmen ab Tag eins benötigt. Wir bereiten Unternehmensprofil, Eigentümerstruktur und Geschäftsmodell für lokale Banken und verlässliche Fintech-Plattformen auf, damit Ihr Antrag klar, glaubwürdig und investorenfähig wirkt.",
+          "requirements": "Typische Anforderungen: Gesellschaftsunterlagen, UBO-/KYC-Nachweise, Gesellschafterprofil sowie Bankreferenz oder Kontoauszugshistorie, sofern erforderlich."
+        },
+        "nominee_ubo": {
+          "title": "Nominee UBO - Tier 02 Privacy Package",
+          "description": "Reduzieren Sie öffentliche Sichtbarkeit, ohne Compliance zu vernachlässigen. Unsere Nominee-Privacy-Struktur basiert auf Due Diligence, rechtlichen Erklärungen und Kontrolldokumenten, sodass operative Rechte eindeutig geschützt bleiben.",
+          "requirements": "Typische Anforderungen: KYC-Freigabe, Identitätsnachweise des wirtschaftlich Berechtigten sowie unterschriebene Trust-/Autorisierungsdokumente."
+        },
+        "tax_residency": {
+          "title": "Persönliche Steuerresidenz & Visa",
+          "description": "Bauen Sie rund um Ihre Gesellschaft eine persönliche Präsenz mit praxisnaher Residency-, Steuer- und Substanzberatung auf. Wir unterstützen Dokumente, lokale Termine und Compliance-Prüfpunkte, damit Ihre Struktur mehr ist als eine reine Registrierung.",
+          "requirements": "Typische Anforderungen: Pass- oder Einreisedaten, Biometrie/medizinische Checks sofern relevant, lokale Substanznachweise und Unterlagen zur Steuerresidenzprüfung."
+        }
+      },
+      "cta": "Mit einem Strukturberater sprechen"
+    }
+  }
+}

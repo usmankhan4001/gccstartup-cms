@@ -1,0 +1,7 @@
+{
+  "buildCommand": "node build.cjs",
+  "outputDirectory": "site",
+  "rewrites": [
+    { "source": "/api/lead", "destination": "/api/lead.js" }
+  ]
+}

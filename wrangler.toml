@@ -1,0 +1,5 @@
+name = "gccstartup-site"
+pages_build_output_dir = "site"
+
+[vars]
+# Add env variables here for production, or configure in dashboard
