@@ -46,7 +46,7 @@ app.post('/api/lead', async (req, res) => {
   }
 });
 
-app.get('*', (req, res) => {
+app.get(/^.*$/, (req, res) => {
   res.sendFile(path.join(__dirname, 'site', 'index.html'));
 });
 
