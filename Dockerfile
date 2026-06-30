@@ -57,6 +57,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/embeds ./embeds
 COPY --from=builder --chown=nextjs:nodejs /app/seed.ts ./seed.ts
 COPY --from=builder --chown=nextjs:nodejs /app/src ./src
 
+RUN chown -R nextjs:nodejs /app
 
 USER nextjs
 
