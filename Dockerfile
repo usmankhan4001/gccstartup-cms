@@ -1,72 +1,22 @@
-# Payload 3 + Next.js — Production image for Dokploy
-FROM node:22-alpine AS base
+FROM node:22-alpine
 
-# Install dependencies only when needed
-FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat && corepack enable
+# Set working directory
 WORKDIR /app
 
-# Install dependencies based on the preferred package manager
-COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* ./
-RUN pnpm install --frozen-lockfile || pnpm install
+# Copy package.json
+COPY package.json ./
 
-# Rebuild the source code only when needed
-FROM base AS builder
-RUN corepack enable
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+# Install dependencies (ignoring the large payload/next dependencies to keep it light)
+RUN npm install express cors
+
+# Copy all other project files
 COPY . .
 
-# Next.js telemetry is disabled
-ENV NEXT_TELEMETRY_DISABLED=1
+# Build the static site (generates the site/ folder)
+RUN node build.cjs
 
-RUN pnpm build
-
-# Production image, copy all the files and run next
-FROM base AS runner
-WORKDIR /app
-
-RUN corepack enable
-
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
-
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-# Set the correct permission for prerender cache
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
-
-# Create data directory and set ownership
-RUN mkdir -p /app/data
-RUN chown -R nextjs:nodejs /app/data
-
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
-COPY --from=builder --chown=nextjs:nodejs /app/pnpm-lock.yaml* ./
-COPY --from=builder --chown=nextjs:nodejs /app/tsconfig.json ./tsconfig.json
-# Copy public assets if there are any
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/embeds ./embeds
-COPY --from=builder --chown=nextjs:nodejs /app/Pages ./Pages
-
-# Copy source files needed for the seed script
-COPY --from=builder --chown=nextjs:nodejs /app/seed.ts ./seed.ts
-COPY --from=builder --chown=nextjs:nodejs /app/src ./src
-
-RUN chown -R nextjs:nodejs /app
-
-USER nextjs
-
+# Expose the port
 EXPOSE 3000
 
-ENV PORT=3000
-# set hostname to localhost
-ENV HOSTNAME="0.0.0.0"
-
+# Start the Express server
 CMD ["node", "server.js"]
