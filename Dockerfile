@@ -27,6 +27,8 @@ RUN pnpm build
 FROM base AS runner
 WORKDIR /app
 
+RUN corepack enable
+
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
@@ -45,6 +47,8 @@ RUN chown -R nextjs:nodejs /app/data
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/pnpm-lock.yaml* ./
 # Copy public assets if there are any
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/embeds ./embeds
