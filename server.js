@@ -1,6 +1,13 @@
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
+import express from 'express';
+import path from 'path';
+import cors from 'cors';
+import { fileURLToPath } from 'url';
+
+// Import the default export from the lead API
+import leadApiHandler from './api/lead.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,23 +21,22 @@ app.use(express.static(path.join(__dirname, 'site')));
 // Mount the serverless API (adapted for Express)
 app.post('/api/lead', async (req, res) => {
   try {
-    // Dynamic import the handler since it's ES module style or we can just require it if it's CJS.
-    // Wait, api/lead.js uses export default. We should write it such that Node.js can use it, or just copy the logic here.
-    // Actually, since api/lead.js uses `export default async function handler(req)`, it's designed for Edge/Vercel.
-    // Let's implement a simple proxy to it, or just redefine the route here if it's easier, or we can use the Next.js approach.
-    // But since Vercel handles it natively, for Dokploy let's just make it a Next.js style or standard Express.
-    // Let's import api/lead.js. Since it's ES Module, we can use dynamic import.
-    const leadApi = await import('./api/lead.js');
-    
     // We need to convert Express req to Web Request for the Edge handler
     const url = new URL(req.url, `http://${req.headers.host}`);
+    
+    // Construct headers object properly for the Web Request
+    const headers = new Headers();
+    for (const [key, value] of Object.entries(req.headers)) {
+      headers.set(key, value);
+    }
+    
     const webReq = new Request(url.href, {
       method: req.method,
-      headers: req.headers,
+      headers: headers,
       body: JSON.stringify(req.body)
     });
     
-    const webRes = await leadApi.default(webReq);
+    const webRes = await leadApiHandler(webReq);
     const text = await webRes.text();
     
     res.status(webRes.status).send(text);
