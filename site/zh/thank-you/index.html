@@ -1,0 +1,802 @@
+<!-- GCC初创企业 — NL→HK 指南 Thank You Page -->
+<style>
+  .gcc-ty *{box-sizing:border-box;margin:0;padding:0;}
+  .gcc-ty{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+    background:#0757B8;
+    color:#fff;
+    overflow:hidden;
+  }
+  .gcc-ty-wrap{
+    width:100%;
+    min-height:720px;
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    position:relative;
+  }
+  @media(max-width:850px){.gcc-ty-wrap{grid-template-columns:1fr;min-height:auto;}}
+
+  .gcc-ty-left{
+    padding:76px 56px;
+    background:linear-gradient(135deg,#0757B8 0%,#064AA0 100%);
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .gcc-ty-left:before{
+    content:"";
+    position:absolute;
+    width:420px;height:420px;
+    border-radius:50%;
+    background:rgba(255,255,255,.07);
+    top:-180px;right:-160px;
+  }
+  .gcc-ty-left:after{
+    content:"";
+    position:absolute;
+    width:280px;height:280px;
+    border-radius:50%;
+    background:rgba(242,101,34,.25);
+    bottom:-140px;left:-110px;
+  }
+  .gcc-ty-content{position:relative;z-index:2;max-width:680px;}
+  @media(max-width:600px){.gcc-ty-left{padding:48px 24px;}}
+
+  .gcc-ty-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    width:fit-content;
+    padding:8px 14px;
+    border-radius:999px;
+    background:#F26522;
+    color:#fff;
+    font-size:12px;
+    line-height:1;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    margin-bottom:24px;
+  }
+  .gcc-ty-check{
+    width:18px;height:18px;
+    border-radius:50%;
+    background:#24D05A;
+    color:#fff;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    font-weight:900;
+  }
+  .gcc-ty h1{
+    font-size:clamp(38px,5vw,72px);
+    line-height:.98;
+    letter-spacing:-.055em;
+    font-weight:950;
+    margin-bottom:20px;
+  }
+  .gcc-ty h1 span{color:#F26522;}
+  .gcc-ty-sub{
+    font-size:clamp(17px,2vw,22px);
+    line-height:1.55;
+    color:rgba(255,255,255,.86);
+    max-width:620px;
+    margin-bottom:34px;
+  }
+  .gcc-ty-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-bottom:28px;
+  }
+  .gcc-ty-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    min-height:56px;
+    padding:16px 24px;
+    border-radius:9px;
+    text-decoration:none !important;
+    font-weight:950;
+    font-size:16px;
+    transition:transform .15s ease,background .15s ease,box-shadow .15s ease;
+  }
+  .gcc-ty-btn:hover{transform:translateY(-2px);}
+  .gcc-ty-download{
+    background:#F26522;
+    color:#fff !important;
+    box-shadow:0 12px 30px rgba(242,101,34,.35);
+  }
+  .gcc-ty-download:hover{background:#D9561E;color:#fff !important;}
+  .gcc-ty-whatsapp{
+    background:#fff;
+    color:#0757B8 !important;
+    box-shadow:0 12px 30px rgba(0,0,0,.14);
+  }
+  .gcc-ty-whatsapp:hover{background:#f5f7fb;color:#0757B8 !important;}
+  .gcc-ty-note{
+    font-size:12px;
+    line-height:1.6;
+    color:rgba(255,255,255,.65);
+    max-width:600px;
+  }
+
+  .gcc-ty-right{
+    background:#fff;
+    color:#111;
+    padding:64px 48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  @media(max-width:600px){.gcc-ty-right{padding:42px 24px;}}
+
+  .gcc-ty-card{
+    width:100%;
+    max-width:480px;
+    border:1px solid #eef0f4;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 24px 60px rgba(0,0,0,.12);
+    background:#fff;
+  }
+  .gcc-ty-card-top{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding-bottom:22px;
+    border-bottom:1px solid #f0f1f4;
+    margin-bottom:22px;
+  }
+  .gcc-ty-book{
+    width:74px;
+    height:98px;
+    border-radius:3px 8px 8px 3px;
+    background:linear-gradient(140deg,#0757B8,#064AA0);
+    position:relative;
+    box-shadow:8px 10px 22px rgba(0,0,0,.18);
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  .gcc-ty-book:before{
+    content:"";
+    position:absolute;
+    left:0;top:0;bottom:0;
+    width:6px;
+    background:#F26522;
+  }
+  .gcc-ty-book:after{
+    content:"GUIDE";
+    position:absolute;
+    top:16px;left:14px;
+    font-size:10px;
+    font-weight:950;
+    color:#fff;
+    letter-spacing:.1em;
+  }
+  .gcc-ty-book-title{
+    position:absolute;
+    bottom:14px;left:14px;right:10px;
+    font-size:11px;
+    line-height:1.15;
+    color:#fff;
+    font-weight:900;
+  }
+  .gcc-ty-card h2{
+    font-size:25px;
+    line-height:1.15;
+    letter-spacing:-.03em;
+    font-weight:950;
+    margin-bottom:6px;
+  }
+  .gcc-ty-card p{
+    font-size:14px;
+    color:#6b7280;
+    line-height:1.6;
+  }
+  .gcc-ty-steps{
+    display:grid;
+    gap:12px;
+    margin-bottom:24px;
+  }
+  .gcc-ty-step{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:#f8f9fb;
+    border:1px solid #f1f2f5;
+    border-radius:12px;
+    padding:14px;
+  }
+  .gcc-ty-num{
+    width:28px;height:28px;
+    border-radius:50%;
+    background:#F26522;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:950;
+    font-size:13px;
+    flex-shrink:0;
+  }
+  .gcc-ty-step strong{
+    display:block;
+    font-size:14px;
+    margin-bottom:2px;
+    color:#111;
+  }
+  .gcc-ty-step span{
+    display:block;
+    font-size:12.5px;
+    line-height:1.45;
+    color:#7a7f8a;
+  }
+  .gcc-ty-small-btn{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:14px 18px;
+    border-radius:9px;
+    background:#0757B8;
+    color:#fff !important;
+    text-decoration:none !important;
+    font-weight:950;
+    margin-top:10px;
+  }
+  .gcc-ty-small-btn:hover{background:#064AA0;color:#fff !important;}
+  .gcc-ty-legal{
+    margin-top:18px;
+    padding-top:16px;
+    border-top:1px solid #f0f1f4;
+    font-size:11px !important;
+    color:#9ca3af !important;
+  }
+
+  .gcc-ty-buildings{
+    position:absolute;
+    right:22px;
+    bottom:18px;
+    opacity:.25;
+    display:flex;
+    align-items:flex-end;
+    gap:5px;
+    z-index:1;
+  }
+  .gcc-ty-building{
+    width:28px;
+    background:#F26522;
+    border:2px solid rgba(255,255,255,.8);
+  }
+  .gcc-ty-building:nth-child(1){height:54px;}
+  .gcc-ty-building:nth-child(2){height:86px;}
+  .gcc-ty-building:nth-child(3){height:124px;}
+  .gcc-ty-building:nth-child(4){height:70px;}
+  @media(max-width:850px){.gcc-ty-buildings{display:none;}}
+</style>
+
+<section class="gcc-ty">
+  <div class="gcc-ty-wrap">
+    <div class="gcc-ty-left">
+      <div class="gcc-ty-content">
+        <div class="gcc-ty-badge"><span class="gcc-ty-check">✓</span> 已收到指南申请</div>
+
+        <h1>您的免费指南已 <span>已就绪。</span></h1>
+
+        <p class="gcc-ty-sub">
+          Download the GCC初创企业 税务优化 指南 below. It explains how online sellers,
+          freelancers and consultants can explore 香港 company structures, fintech 银行业务
+          and legal tax optimization.
+        </p>
+
+        <div class="gcc-ty-actions">
+          <a class="gcc-ty-btn gcc-ty-download ty-download-guide"
+             href="https://gccstartup.com/wp-content/uploads/2022/11/GCC初创企业_TaxOptimization_指南.pdf"
+             download="GCC初创企业_TaxOptimization_指南.pdf">
+            ⬇ 下载指南
+          </a>
+
+          <a class="gcc-ty-btn gcc-ty-whatsapp ty-whatsapp"
+             href="https://wa.me/447868762416?text=Hi%20GCC初创企业%2C%20I%20downloaded%20the%20Tax%20Optimization%20指南%20and%20want%20a%20free%20consultation%20for%20the%20Netherlands%20to%20Hong%20Kong%20structure."
+             target="_blank" rel="noopener">
+            💬 免费WhatsApp审核
+          </a>
+        </div>
+
+        <p class="gcc-ty-note">
+          Legal tax optimization only. GCC初创企业 does not provide tax evasion services.
+          For your personal tax position, always consult a qualified local tax advisor.
+        </p>
+      </div>
+
+      <div class="gcc-ty-buildings" aria-hidden="true">
+        <div class="gcc-ty-building"></div>
+        <div class="gcc-ty-building"></div>
+        <div class="gcc-ty-building"></div>
+        <div class="gcc-ty-building"></div>
+      </div>
+    </div>
+
+    <div class="gcc-ty-right">
+      <div class="gcc-ty-card">
+        <div class="gcc-ty-card-top">
+          <div class="gcc-ty-book"><div class="gcc-ty-book-title">税务优化<br>指南</div></div>
+          <div>
+            <h2>下一步该做什么</h2>
+            <p>先参考指南，再申请一次快速的架构评估。</p>
+          </div>
+        </div>
+
+        <div class="gcc-ty-steps">
+          <div class="gcc-ty-step">
+            <div class="gcc-ty-num">1</div>
+            <div>
+              <strong>阅读五步流程说明</strong>
+              <span>了解公司注册、金融科技银行、收入路径及合规事宜。</span>
+            </div>
+          </div>
+
+          <div class="gcc-ty-step">
+            <div class="gcc-ty-num">2</div>
+            <div>
+              <strong>查看您是否符合资格</strong>
+              <span>最适合：电子商务、自由职业、咨询、IT服务和数字收入类业务。</span>
+            </div>
+          </div>
+
+          <div class="gcc-ty-step">
+            <div class="gcc-ty-num">3</div>
+            <div>
+              <strong>预约免费审核</strong>
+              <span>通过WhatsApp发送你的商业模式，我们会为你建议最合适的路径。</span>
+            </div>
+          </div>
+        </div>
+
+        <a class="gcc-ty-small-btn ty-whatsapp"
+           href="https://wa.me/447868762416?text=Hi%20GCC初创企业%2C%20please%20review%20my%20business%20for%20the%20Hong%20Kong%20company%20structure."
+           target="_blank" rel="noopener">
+          立即开始免费WhatsApp审核 →
+        </a>
+
+        <p class="gcc-ty-legal">
+          This page is for guide delivery and consultation booking only. Results depend on your business model,
+          residence country, income source, and 合规 requirements.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var PDF_URL = 'https://gccstartup.com/wp-content/uploads/2022/11/GCC初创企业_TaxOptimization_指南.pdf';
+
+  function getParam(name){
+    return new URLSearchParams(window.location.search).get(name) || '';
+  }
+
+  function createEventId(){
+    return 'nlhk-' + Date.now() + '-' + Math.random().toString(16).slice(2);
+  }
+
+  var eventId = getParam('event_id') || sessionStorage.getItem('nl_hk_guide_event_id') || createEventId();
+  sessionStorage.setItem('nl_hk_guide_event_id', eventId);
+
+  // Fire Meta Lead once when thank-you page loads.
+  if (typeof fbq === 'function' && !sessionStorage.getItem('nl_hk_guide_lead_fired')) {
+    fbq('track', 'Lead', {
+      content_name: 'NL-HK 税务优化 指南',
+      content_category: '指南 Download',
+      campaign: 'nl_hk_guide_leads'
+    }, {
+      eventID: eventId
+    });
+    sessionStorage.setItem('nl_hk_guide_lead_fired', '1');
+  }
+
+  // Track PDF download clicks.
+  document.querySelectorAll('.ty-download-guide').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (typeof fbq === 'function') {
+        fbq('trackCustom', '指南_Download_Click', {
+          content_name: 'NL-HK 税务优化 指南 PDF'
+        });
+      }
+    });
+  });
+
+  // Track WhatsApp咨询 clicks.
+  document.querySelectorAll('.ty-whatsapp').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (typeof fbq === 'function') {
+        fbq('track', '联系我们', {
+          content_name: 'NL-HK WhatsApp咨询'
+        });
+      }
+    });
+  });
+
+  // Set all download links to the current PDF URL.
+  document.querySelectorAll('.ty-download-guide').forEach(function(btn){
+    btn.href = PDF_URL;
+  });
+})();
+</script>
+
+</div><!-- .content -->
+    </div><!-- .container -->
+</div><!-- .main-container -->
+
+<?php
+global $finbiz_option;
+require get_parent_theme_file_path('inc/footer/footer-options.php'); ?>
+<footer>
+    <?php
+ get_template_part( 'inc/footer/footer','top' ); 
+?>
+</footer>
+</div><!-- #page -->
+
+ <?php wp_footer(); ?>
+
+<!-- GCC Startup — Floating WhatsApp Chat Bubble -->
+<!-- Paste ONCE in footer.php or any page — works site-wide -->
+<style>
+  /* Bubble button */
+  .gcc-bubble {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    z-index: 99998;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  .gcc-bubble__btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+    border: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .gcc-bubble__btn svg,
+  .gcc-bubble__btn svg path {
+    width: 32px !important;
+    height: 32px !important;
+    fill: #fff !important;
+    display: block !important;
+    max-width: none !important;
+  }
+  .gcc-bubble__btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 28px rgba(37,211,102,0.65);
+  }
+  .gcc-bubble__pulse {
+    position: absolute; inset: -4px;
+    border-radius: 50%;
+    border: 2px solid rgba(37,211,102,0.4);
+    animation: gcc-pulse 2s ease-out infinite;
+  }
+  @keyframes gcc-pulse {
+    0%   { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+  .gcc-bubble__tooltip {
+    background: #111;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    animation: gcc-fadein 0.3s ease;
+    cursor: pointer;
+  }
+  .gcc-bubble__tooltip::after {
+    content: '';
+    position: absolute;
+    right: 20px; bottom: -6px;
+    width: 12px; height: 12px;
+    background: #111;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+  @keyframes gcc-fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* Chat window */
+  .gcc-chat {
+    position: fixed;
+    bottom: 104px; right: 24px;
+    width: 340px;
+    z-index: 99999;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.35);
+    display: none;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    animation: gcc-slideup 0.25s ease;
+  }
+  .gcc-chat.open { display: flex; }
+  @keyframes gcc-slideup { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+  @media (max-width: 400px) {
+    .gcc-chat { width: calc(100vw - 32px); right: 16px; }
+    .gcc-bubble { bottom: 20px; right: 20px; }
+  }
+
+  /* Header */
+  .gcc-chat__head {
+    background: #075E54;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .gcc-chat__avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: #128C7E;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .gcc-chat__online {
+    position: absolute; bottom: 1px; right: 1px;
+    width: 10px; height: 10px;
+    background: #25D366;
+    border-radius: 50%;
+    border: 2px solid #075E54;
+  }
+  .gcc-chat__info { flex: 1; }
+  .gcc-chat__name { color: #fff; font-size: 15px; font-weight: 700; }
+  .gcc-chat__status { color: #9dd9d0; font-size: 12px; }
+  .gcc-chat__x {
+    background: none; border: none; color: #9dd9d0;
+    font-size: 22px; cursor: pointer; padding: 0; line-height: 1;
+  }
+
+  /* Messages */
+  .gcc-chat__body {
+    background: #ECE5DD;
+    padding: 16px 12px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4c9bc' fill-opacity='0.3'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .gcc-chat__msg {
+    background: #fff;
+    border-radius: 0 8px 8px 8px;
+    padding: 10px 12px;
+    max-width: 85%;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #111;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    position: relative;
+    display: none;
+  }
+  .gcc-chat__msg.show { display: block; animation: gcc-fadein 0.3s ease; }
+  .gcc-chat__msg-time { font-size: 11px; color: #999; margin-top: 4px; text-align: right; }
+  .gcc-chat__typing {
+    background: #fff;
+    border-radius: 0 8px 8px 8px;
+    padding: 12px 14px;
+    max-width: 70px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    display: none;
+  }
+  .gcc-chat__typing.show { display: block; }
+  .gcc-chat__dots { display: flex; gap: 4px; align-items: center; }
+  .gcc-chat__dots span {
+    width: 7px; height: 7px;
+    background: #999; border-radius: 50%;
+    animation: gcc-dot 1.2s infinite;
+  }
+  .gcc-chat__dots span:nth-child(2) { animation-delay: 0.2s; }
+  .gcc-chat__dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes gcc-dot { 0%,60%,100% { transform: none; opacity: 0.5; } 30% { transform: translateY(-4px); opacity: 1; } }
+
+  /* Input */
+  .gcc-chat__input-area {
+    background: #F0F0F0;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .gcc-chat__fields { display: none; flex-direction: column; gap: 8px; }
+  .gcc-chat__fields.show { display: flex; }
+  .gcc-chat__fields input {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 10px 16px;
+    font-size: 14px;
+    outline: none;
+    font-family: inherit;
+    color: #111;
+  }
+  .gcc-chat__fields input:focus { border-color: #25D366; }
+  .gcc-chat__fields input::placeholder { color: #aaa; }
+  .gcc-chat__send {
+    background: #25D366;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 11px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background 0.15s;
+  }
+  .gcc-chat__send:hover { background: #1da851; }
+  .gcc-chat__send:disabled { opacity: 0.6; cursor: not-allowed; }
+  .gcc-chat__reply-hint {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #aaa;
+    cursor: text;
+  }
+</style>
+
+<!-- Floating bubble -->
+<div class="gcc-bubble" id="gccBubble">
+  <div class="gcc-bubble__tooltip" id="gccTooltip" onclick="gccChatOpen()" style="display:none;">
+    👋 Chat with a GCC expert
+  </div>
+  <button class="gcc-bubble__btn" onclick="gccChatToggle()" aria-label="Chat on WhatsApp">
+    <div class="gcc-bubble__pulse"></div>
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </button>
+</div>
+
+<!-- Chat window -->
+<div class="gcc-chat" id="gccChat">
+  <div class="gcc-chat__head">
+    <div class="gcc-chat__avatar">
+      🧑‍💼
+      <div class="gcc-chat__online"></div>
+    </div>
+    <div class="gcc-chat__info">
+      <div class="gcc-chat__name">Agent — GCC Startup</div>
+      <div class="gcc-chat__status">● Online now</div>
+    </div>
+    <button class="gcc-chat__x" onclick="gccChatClose()">×</button>
+  </div>
+  <div class="gcc-chat__body" id="gccChatBody">
+    <div class="gcc-chat__typing show" id="gccTyping">
+      <div class="gcc-chat__dots"><span></span><span></span><span></span></div>
+    </div>
+    <div class="gcc-chat__msg" id="gccMsg1">
+      Hey! 👋 Thinking about setting up in the UAE or GCC?
+      <div class="gcc-chat__msg-time">Just now</div>
+    </div>
+    <div class="gcc-chat__msg" id="gccMsg2">
+      I can help you pick the right jurisdiction in under 10 minutes. What's your name?
+      <div class="gcc-chat__msg-time">Just now</div>
+    </div>
+  </div>
+  <div class="gcc-chat__input-area">
+    <div class="gcc-chat__reply-hint" id="gccReplyHint" onclick="gccShowFields()">Reply…</div>
+    <div class="gcc-chat__fields" id="gccFields">
+      <input id="gcName" type="text" placeholder="Your name" />
+      <input id="gcPhone" type="tel" placeholder="WhatsApp number" />
+      <button class="gcc-chat__send" id="gcSend" onclick="gccChatSubmit()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        Start chatting →
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var CMS = 'https://cms.gccstartup.com';
+  var PAGE = window.location.href;
+  var fbclid = new URLSearchParams(window.location.search).get('fbclid') || '';
+  var opened = false;
+
+  setTimeout(function(){
+    var t = document.getElementById('gccTooltip');
+    if (t) t.style.display = 'block';
+  }, 3000);
+
+  if (!sessionStorage.getItem('gcc_chat_seen')) {
+    setTimeout(function(){
+      if (!opened) gccChatOpen();
+    }, 8000);
+  }
+
+  function gccChatOpen(){
+    opened = true;
+    sessionStorage.setItem('gcc_chat_seen', '1');
+    document.getElementById('gccChat').classList.add('open');
+    document.getElementById('gccTooltip').style.display = 'none';
+    setTimeout(function(){
+      document.getElementById('gccTyping').classList.remove('show');
+      document.getElementById('gccMsg1').classList.add('show');
+    }, 1200);
+    setTimeout(function(){
+      document.getElementById('gccMsg2').classList.add('show');
+      var b = document.getElementById('gccChatBody');
+      b.scrollTop = b.scrollHeight;
+    }, 2200);
+  }
+
+  function gccChatClose(){
+    document.getElementById('gccChat').classList.remove('open');
+    opened = false;
+  }
+
+  function gccChatToggle(){
+    if (document.getElementById('gccChat').classList.contains('open')) gccChatClose();
+    else gccChatOpen();
+  }
+
+  function gccShowFields(){
+    document.getElementById('gccReplyHint').style.display = 'none';
+    document.getElementById('gccFields').classList.add('show');
+    document.getElementById('gcName').focus();
+  }
+
+  window.gccChatOpen   = gccChatOpen;
+  window.gccChatClose  = gccChatClose;
+  window.gccChatToggle = gccChatToggle;
+  window.gccShowFields = gccShowFields;
+
+  window.gccChatSubmit = function(){
+    var name  = document.getElementById('gcName').value.trim();
+    var phone = document.getElementById('gcPhone').value.trim();
+    if (!name || !phone) { alert('Please enter your name and WhatsApp number.'); return; }
+    var btn = document.getElementById('gcSend');
+    btn.disabled = true; btn.textContent = 'Connecting…';
+    var eventId = 'bubble-' + Date.now();
+    if (window.fbq) fbq('track', 'Lead', { content_name: 'WhatsApp Bubble' }, { eventID: eventId });
+    fetch(CMS + '/api/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name, phone: phone,
+        interest: 'WhatsApp Chat',
+        source: 'Chat Bubble', page: PAGE,
+        fbclid: fbclid, eventId: eventId
+      })
+    }).finally(function(){
+      window.open(
+        'https://wa.me/447868762416?text=' + encodeURIComponent('Hi GCCStartup! I\'d like to know the best jurisdiction for my business. My name is ' + name + '.'),
+        '_blank'
+      );
+      var body = document.getElementById('gccChatBody');
+      var done = document.createElement('div');
+      done.className = 'gcc-chat__msg show';
+      done.innerHTML = 'Perfect ' + name.split(' ')[0] + '! 🎉 Opening WhatsApp now — I\'ll be there in a moment.<div class="gcc-chat__msg-time">Just now</div>';
+      body.appendChild(done);
+      body.scrollTop = body.scrollHeight;
+      document.getElementById('gccFields').style.display = 'none';
+    });
+  };
+})();
+</script>
+
+  </body>
+</html>

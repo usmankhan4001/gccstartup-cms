@@ -1,0 +1,290 @@
+<!-- GCC Startup — Meeting Booking CTA -->
+<style>
+  @keyframes gcc2-shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+  @keyframes gcc2-blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+  .gcc2 *{box-sizing:border-box;margin:0;padding:0;}
+  .gcc2{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fff;}
+
+  /* Urgency bar */
+  .gcc2-bar{background:#F26522;padding:10px 16px;text-align:center;}
+  .gcc2-bar p{color:#fff;font-size:13px;font-weight:700;line-height:1.4;}
+  .gcc2-bar strong{text-decoration:underline;}
+
+  /* Header */
+  .gcc2-head{padding:40px 20px 28px;text-align:center;max-width:640px;margin:0 auto;}
+  .gcc2-tag{
+    display:inline-flex;align-items:center;gap:7px;
+    border:1.5px solid #F26522;color:#F26522;
+    font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+    padding:5px 13px;border-radius:20px;margin-bottom:14px;
+  }
+  .gcc2-tag::before{content:'';width:7px;height:7px;border-radius:50%;background:#F26522;animation:gcc2-blink 1.5s infinite;}
+  .gcc2-head h2{color:#111;font-size:clamp(26px,4vw,44px);font-weight:900;line-height:1.1;letter-spacing:-0.5px;margin-bottom:10px;}
+  .gcc2-head h2 em{font-style:normal;color:#F26522;}
+  .gcc2-head p{color:#666;font-size:16px;line-height:1.6;}
+
+  /* Perks */
+  .gcc2-perks{
+    background:#F26522;padding:14px 20px;
+    display:flex;justify-content:center;align-items:center;
+    gap:0;flex-wrap:wrap;
+  }
+  .gcc2-perk{
+    color:#fff;font-size:13px;font-weight:700;
+    padding:4px 16px;display:flex;align-items:center;gap:6px;
+    border-right:1px solid rgba(255,255,255,0.25);
+  }
+  .gcc2-perk:last-child{border-right:none;}
+  .gcc2-perk::before{content:'✓';font-weight:900;}
+  @media(max-width:540px){
+    .gcc2-perk{border-right:none;padding:4px 10px;font-size:12px;}
+  }
+
+  /* Calendar widget */
+  .gcc2-wrap{max-width:860px;margin:0 auto;padding:28px 20px 48px;}
+  .gcc2-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  }
+  @media(max-width:640px){.gcc2-grid{grid-template-columns:1fr;}}
+
+  /* Panels */
+  .gcc2-panel{
+    border:2px solid #f0f0f0;border-radius:10px;
+    padding:24px 20px;background:#fff;
+    box-shadow:0 2px 16px rgba(0,0,0,0.05);
+  }
+
+  /* Calendar */
+  .gcc2-cal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .gcc2-cal-month{color:#111;font-size:15px;font-weight:800;}
+  .gcc2-cal-nav{
+    background:none;border:1.5px solid #eee;color:#999;
+    width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:15px;
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color 0.15s,color 0.15s;
+  }
+  .gcc2-cal-nav:hover{border-color:#F26522;color:#F26522;}
+  .gcc2-dow{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:4px;}
+  .gcc2-dow span{color:#ccc;font-size:10px;font-weight:700;text-align:center;padding:3px 0;text-transform:uppercase;}
+  .gcc2-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+  .gcc2-day{
+    aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+    border-radius:50%;font-size:12px;font-weight:500;cursor:pointer;
+    color:#333;border:none;background:none;
+    transition:background 0.15s,color 0.15s;
+  }
+  .gcc2-day:hover:not(.empty):not(.past){background:#F26522;color:#fff;}
+  .gcc2-day.today{color:#F26522;font-weight:800;}
+  .gcc2-day.selected{background:#F26522;color:#fff;}
+  .gcc2-day.past{color:#e0e0e0;cursor:not-allowed;}
+  .gcc2-day.empty{cursor:default;}
+
+  /* Slots panel */
+  .gcc2-slots-panel{display:flex;flex-direction:column;}
+  .gcc2-prompt{color:#ccc;font-size:14px;text-align:center;margin:auto;padding:32px 0;line-height:1.6;}
+  .gcc2-prompt span{display:block;font-size:28px;margin-bottom:8px;}
+  .gcc2-slots-title{color:#111;font-size:13px;font-weight:800;margin-bottom:4px;}
+  .gcc2-slots-date{color:#F26522;font-size:12px;font-weight:700;margin-bottom:12px;}
+  .gcc2-slots-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px;}
+  .gcc2-slot{
+    border:1.5px solid #eee;border-radius:6px;padding:9px 4px;
+    text-align:center;color:#333;font-size:12px;font-weight:700;
+    cursor:pointer;background:#fff;font-family:inherit;
+    transition:border-color 0.15s,color 0.15s,background 0.15s;
+  }
+  .gcc2-slot:hover{border-color:#F26522;color:#F26522;}
+  .gcc2-slot.selected{background:#F26522;border-color:#F26522;color:#fff;}
+
+  /* Form */
+  .gcc2-form{display:none;flex-direction:column;gap:7px;}
+  .gcc2-form.show{display:flex;}
+  .gcc2-form-back{background:none;border:none;color:#F26522;font-size:12px;cursor:pointer;text-align:left;padding:0;font-family:inherit;font-weight:700;margin-bottom:2px;}
+  .gcc2-form-title{color:#111;font-size:13px;font-weight:800;margin-bottom:4px;}
+  .gcc2-form input{
+    background:#f7f7f7;border:1.5px solid #eee;border-radius:6px;
+    color:#111;font-size:14px;padding:11px 12px;outline:none;
+    font-family:inherit;width:100%;
+  }
+  .gcc2-form input:focus{border-color:#F26522;background:#fff;}
+  .gcc2-form input::placeholder{color:#bbb;}
+  .gcc2-form-btn{
+    background:#F26522;color:#fff;border:none;border-radius:6px;
+    padding:13px;font-size:14px;font-weight:800;cursor:pointer;
+    font-family:inherit;transition:background 0.15s;
+    position:relative;overflow:hidden;
+  }
+  .gcc2-form-btn::before{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
+    background-size:200% auto;animation:gcc2-shimmer 2s linear infinite;
+  }
+  .gcc2-form-btn:hover{background:#d95510;}
+  .gcc2-form-btn:disabled{opacity:0.6;cursor:not-allowed;}
+
+  /* Done */
+  .gcc2-done{display:none;text-align:center;padding:32px 16px;}
+  .gcc2-done-icon{font-size:44px;margin-bottom:12px;}
+  .gcc2-done-title{color:#111;font-size:18px;font-weight:900;margin-bottom:6px;}
+  .gcc2-done-sub{color:#888;font-size:13px;line-height:1.6;}
+
+  /* Social */
+  .gcc2-social{
+    background:#fff8f5;border-top:2px solid #ffe8da;
+    padding:16px 20px;
+    display:flex;align-items:center;justify-content:center;
+    gap:24px;flex-wrap:wrap;
+  }
+  .gcc2-social-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#555;font-weight:600;}
+  .gcc2-social-item span{font-size:16px;}
+</style>
+
+<div class="gcc2">
+  <div class="gcc2-bar">
+    <p>🗓 Solo <strong>3 espacios para llamada estratégica</strong> quedan esta semana — reserve antes de que se agoten</p>
+  </div>
+
+  <div class="gcc2-head">
+    <div class="gcc2-tag">Gratis · 30 min · Sin presión comercial</div>
+    <h2>Reserve su Gratis <em>Llamada Estratégica</em></h2>
+    <p>Sepa exactamente qué jurisdicción, licencia y estructura se adapta a su negocio.</p>
+  </div>
+
+  <div class="gcc2-perks">
+    <div class="gcc2-perk">Recomendación de jurisdicción</div>
+    <div class="gcc2-perk">Desglose de costos</div>
+    <div class="gcc2-perk">Estrategia fiscal</div>
+    <div class="gcc2-perk">Sin presión comercial</div>
+  </div>
+
+  <div class="gcc2-wrap">
+    <div class="gcc2-grid">
+      <!-- Calendar -->
+      <div class="gcc2-panel">
+        <div class="gcc2-cal-hdr">
+          <button class="gcc2-cal-nav" onclick="gcc2Prev()">‹</button>
+          <span class="gcc2-cal-month" id="gcc2Month"></span>
+          <button class="gcc2-cal-nav" onclick="gcc2Next()">›</button>
+        </div>
+        <div class="gcc2-dow">
+          <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+        </div>
+        <div class="gcc2-cal-grid" id="gcc2Grid"></div>
+      </div>
+
+      <!-- Slots -->
+      <div class="gcc2-panel gcc2-slots-panel">
+        <div class="gcc2-prompt" id="gcc2Prompt">
+          <span>🗓</span>Elija una fecha para ver los horarios disponibles
+        </div>
+        <div id="gcc2SlotWrap" style="display:none;flex-direction:column;flex:1;">
+          <p class="gcc2-slots-title">Horarios disponibles</p>
+          <p class="gcc2-slots-date" id="gcc2Date"></p>
+          <div class="gcc2-slots-grid" id="gcc2SlotGrid"></div>
+          <div class="gcc2-form" id="gcc2Form">
+            <button class="gcc2-form-back" onclick="gcc2BackSlots()">← Cambiar hora</button>
+            <p class="gcc2-form-title" id="gcc2FormTitle"></p>
+            <input id="gcc2Name" type="text" placeholder="Su nombre completo" />
+            <input id="gcc2Email" type="email" placeholder="Correo electrónico" />
+            <input id="gcc2Phone" type="tel" placeholder="Número de WhatsApp" />
+            <button class="gcc2-form-btn" id="gcc2Btn" onclick="gcc2Submit()">Confirme mi llamada gratuita →</button>
+          </div>
+        </div>
+        <div class="gcc2-done" id="gcc2Done">
+          <div class="gcc2-done-icon">🎉</div>
+          <div class="gcc2-done-title">¡Ya tiene su reserva!</div>
+          <div class="gcc2-done-sub" id="gcc2DoneSub"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gcc2-social">
+    <div class="gcc2-social-item"><span>⭐</span> 4.9/5 según más de 200 fundadores</div>
+    <div class="gcc2-social-item"><span>🏆</span> Más de 500 empresas constituidas</div>
+    <div class="gcc2-social-item"><span>⚡</span> Confirmación por WhatsApp en 1 hora</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var CMS='',PAGE=window.location.href;
+  var fbclid=new URLSearchParams(window.location.search).get('fbclid')||'';
+  var TIMES=['9:00 AM','10:00 AM','11:00 AM','12:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM'];
+  var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var today=new Date();today.setHours(0,0,0,0);
+  var cur=new Date(today.getFullYear(),today.getMonth(),1);
+  var selDate=null,selTime=null;
+
+  function render(){
+    document.getElementById('gcc2Month').textContent=MONTHS[cur.getMonth()]+' '+cur.getFullYear();
+    var g=document.getElementById('gcc2Grid');g.innerHTML='';
+    var first=new Date(cur.getFullYear(),cur.getMonth(),1).getDay();
+    var days=new Date(cur.getFullYear(),cur.getMonth()+1,0).getDate();
+    for(var i=0;i<first;i++){var e=document.createElement('button');e.className='gcc2-day empty';g.appendChild(e);}
+    for(var d=1;d<=days;d++){(function(day){
+      var date=new Date(cur.getFullYear(),cur.getMonth(),day);
+      var b=document.createElement('button');b.className='gcc2-day';b.textContent=day;
+      if(date<today||date.getDay()===0||date.getDay()===6){b.classList.add('past');}
+      else{
+        if(date.getTime()===today.getTime())b.classList.add('today');
+        if(selDate&&date.toDateString()===selDate.toDateString())b.classList.add('selected');
+        b.onclick=function(){pick(date);};
+      }
+      g.appendChild(b);
+    })(d);}
+  }
+
+  function pick(date){
+    selDate=date;selTime=null;render();
+    document.getElementById('gcc2Prompt').style.display='none';
+    var sw=document.getElementById('gcc2SlotWrap');sw.style.display='flex';
+    document.getElementById('gcc2Form').classList.remove('show');
+    document.getElementById('gcc2Date').textContent=date.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
+    var sg=document.getElementById('gcc2SlotGrid');sg.innerHTML='';
+    TIMES.forEach(function(t){
+      var b=document.createElement('button');b.className='gcc2-slot';b.textContent=t;
+      b.onclick=function(){
+        selTime=t;
+        document.querySelectorAll('.gcc2-slot').forEach(function(s){s.classList.remove('selected');});
+        b.classList.add('selected');
+        setTimeout(function(){
+          document.getElementById('gcc2Form').classList.add('show');
+          document.getElementById('gcc2FormTitle').textContent=
+            date.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})+' · '+t+' GST';
+          document.getElementById('gcc2Name').focus();
+        },200);
+      };
+      sg.appendChild(b);
+    });
+  }
+
+  window.gcc2Prev=function(){cur=new Date(cur.getFullYear(),cur.getMonth()-1,1);render();};
+  window.gcc2Next=function(){cur=new Date(cur.getFullYear(),cur.getMonth()+1,1);render();};
+  window.gcc2BackSlots=function(){
+    selTime=null;
+    document.getElementById('gcc2Form').classList.remove('show');
+    document.querySelectorAll('.gcc2-slot').forEach(function(s){s.classList.remove('selected');});
+  };
+  window.gcc2Submit=function(){
+    var n=document.getElementById('gcc2Name').value.trim();
+    var e=document.getElementById('gcc2Email').value.trim();
+    var p=document.getElementById('gcc2Phone').value.trim();
+    if(!n||!p){alert('Please enter your name and Número de WhatsApp.');return;}
+    var btn=document.getElementById('gcc2Btn');btn.disabled=true;btn.textContent='Confirming…';
+    var eid='meet-'+Date.now();
+    if(window.fbq)fbq('track','Lead',{content_name:'Llamada Estratégica'},{eventID:eid});
+    var ds=selDate.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    fetch(CMS+'/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name:n,email:e,phone:p,interest:'Llamada Estratégica',
+        message:'Call: '+ds+' at '+selTime+' GST',
+        source:'Meeting Booking CTA',page:PAGE,fbclid:fbclid,eventId:eid})
+    }).finally(function(){
+      document.getElementById('gcc2SlotWrap').style.display='none';
+      document.getElementById('gcc2Done').style.display='block';
+      document.getElementById('gcc2DoneSub').innerHTML='We\'ll confirm your call for <strong style="color:#F26522">'+ds+' at '+selTime+' GST</strong> via WhatsApp within the hour.';
+    });
+  };
+  render();
+})();
+</script>

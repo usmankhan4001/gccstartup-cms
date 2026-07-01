@@ -1,0 +1,314 @@
+<!-- GCC Startup — Tax Gids Download CTA -->
+<style>
+  .tg *{box-sizing:border-box;margin:0;padding:0;}
+  .tg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;}
+
+  .tg-wrap{
+    width:100%;overflow:hidden;
+    display:grid;grid-template-columns:1fr 1.1fr;
+  }
+  @media(max-width:740px){.tg-wrap{grid-template-columns:1fr;}}
+
+  /* ── LEFT — orange ── */
+  .tg-left{
+    background:#F26522;padding:48px 40px;
+    display:flex;flex-direction:column;gap:24px;
+    position:relative;overflow:hidden;
+  }
+  .tg-left::before{
+    content:'';position:absolute;top:-60px;right:-60px;
+    width:220px;height:220px;border-radius:50%;
+    background:rgba(255,255,255,0.07);pointer-events:none;
+  }
+  .tg-left::after{
+    content:'';position:absolute;bottom:-80px;left:-40px;
+    width:200px;height:200px;border-radius:50%;
+    background:rgba(255,255,255,0.05);pointer-events:none;
+  }
+  @media(max-width:740px){.tg-left{padding:36px 24px;}}
+
+  .tg-badge{
+    font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:#F26522;background:#fff;
+    padding:5px 13px;border-radius:20px;display:inline-block;width:fit-content;
+  }
+
+  /* Book */
+  .tg-book{position:relative;width:150px;margin:0 auto;}
+  .tg-book-shadow{
+    position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);
+    width:130px;height:12px;background:rgba(0,0,0,.25);
+    border-radius:50%;filter:blur(6px);
+  }
+  .tg-book-cover{
+    width:150px;height:200px;
+    background:linear-gradient(140deg,#fff,#f5f5f5);
+    border-radius:3px 10px 10px 3px;
+    border-left:5px solid #fff;
+    box-shadow:5px 5px 20px rgba(0,0,0,.25),-2px 0 6px rgba(0,0,0,.15);
+    position:relative;overflow:hidden;
+    display:flex;flex-direction:column;padding:18px 16px 16px;
+  }
+  .tg-book-logo{font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#F26522;margin-bottom:auto;}
+  .tg-book-icon{flex:1;display:flex;align-items:center;justify-content:center;}
+  .tg-book-title{font-size:11px;font-weight:800;color:#111;line-height:1.3;margin-bottom:6px;}
+  .tg-book-sub{font-size:8px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;}
+  .tg-book-stripe{position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#F26522,#FF8A4A);}
+  @media(max-width:740px){.tg-book{display:none;}}
+
+  /* Copy */
+  .tg-copy h3{color:#fff;font-size:clamp(20px,2.5vw,26px);font-weight:900;line-height:1.3;margin-bottom:10px;}
+  .tg-copy p{color:rgba(255,255,255,.78);font-size:14px;line-height:1.65;margin-bottom:16px;}
+  .tg-perks{list-style:none;display:flex;flex-direction:column;gap:9px;}
+  .tg-perks li{
+    display:flex;align-items:flex-start;gap:9px;
+    font-size:13px;color:rgba(255,255,255,.82);line-height:1.4;
+  }
+  .tg-perks li::before{content:'✓';color:#fff;font-weight:900;flex-shrink:0;margin-top:1px;background:rgba(255,255,255,0.2);width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;}
+
+  /* ── RIGHT — white form ── */
+  .tg-right{background:#fff;padding:48px 44px;display:flex;flex-direction:column;justify-content:center;}
+  @media(max-width:740px){.tg-right{padding:36px 24px;}}
+
+  .tg-eyebrow{
+    font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+    color:#F26522;display:block;margin-bottom:8px;
+  }
+  .tg-right h2{font-size:clamp(18px,2.2vw,22px);font-weight:900;color:#111;margin-bottom:6px;line-height:1.3;}
+  .tg-right-sub{font-size:13px;color:#999;margin-bottom:24px;line-height:1.6;}
+
+  .tg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:500px){.tg-row{grid-template-columns:1fr;}}
+
+  .tg-field{margin-bottom:12px;}
+  .tg-field label{display:block;font-size:11px;font-weight:700;color:#888;margin-bottom:5px;letter-spacing:.02em;text-transform:uppercase;}
+  .tg-field input,
+  .tg-field select,
+  .tg-field textarea{
+    width:100%;padding:11px 13px;
+    border:1.5px solid #eee;border-radius:7px;
+    font-family:inherit;font-size:14px;color:#111;background:#f9f9f9;
+    outline:none;appearance:none;transition:border-color .15s,background .15s;
+  }
+  .tg-field textarea{min-height:80px;resize:vertical;}
+  .tg-field input:focus,
+  .tg-field select:focus,
+  .tg-field textarea:focus{border-color:#F26522;background:#fff;}
+  .tg-field input::placeholder,
+  .tg-field textarea::placeholder{color:#ccc;}
+
+  .tg-submit{
+    width:100%;padding:15px;background:#F26522;color:#fff;
+    font-family:inherit;font-size:15px;font-weight:800;
+    border:none;cursor:pointer;border-radius:7px;
+    transition:background .15s,transform .15s;
+    margin-top:4px;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    box-shadow:0 4px 20px rgba(242,101,34,.35);
+    position:relative;overflow:hidden;
+  }
+  .tg-submit:hover{background:#d9561e;transform:translateY(-1px);}
+  .tg-submit:disabled{background:#ddd;cursor:not-allowed;transform:none;box-shadow:none;}
+  .tg-submit svg{width:17px;height:17px;flex-shrink:0;}
+
+  .tg-note{font-size:11px;color:#ccc;text-align:center;margin-top:10px;line-height:1.5;}
+  .tg-err{font-size:13px;color:#c0392b;margin-top:8px;text-align:center;display:none;}
+  .tg-err.show{display:block;}
+
+  /* Success */
+  .tg-success{display:none;text-align:center;padding:32px 0;}
+  .tg-success.show{display:block;}
+  .tg-success-ic{
+    width:60px;height:60px;border-radius:50%;
+    background:#F26522;color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:26px;margin:0 auto 16px;
+  }
+  .tg-success h3{font-size:20px;font-weight:900;color:#111;margin-bottom:8px;}
+  .tg-success p{font-size:13px;color:#888;line-height:1.65;margin-bottom:20px;}
+  .tg-dl-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 26px;background:#F26522;color:#fff;
+    font-family:inherit;font-weight:800;font-size:14px;
+    text-decoration:none;border-radius:7px;transition:background .15s;
+  }
+  .tg-dl-btn:hover{background:#d9561e;color:#fff;}
+  .tg-wa-note{font-size:12px;color:#bbb;margin-top:12px;}
+</style>
+
+<div class="tg">
+  <div class="tg-wrap">
+
+    <!-- LEFT — orange -->
+    <div class="tg-left">
+      <span class="tg-badge">Gratis download · Editie 2026</span>
+
+      <div class="tg-book">
+        <div class="tg-book-shadow"></div>
+        <div class="tg-book-cover">
+          <div class="tg-book-logo">GCC Startup</div>
+          <div class="tg-book-icon">
+            <svg viewBox="0 0 48 48" width="40" height="40" fill="none">
+              <rect x="6" y="4" width="36" height="40" rx="3" fill="rgba(242,101,34,.1)" stroke="#F26522" stroke-width="1.5"/>
+              <path d="M14 14h20M14 20h20M14 26h14M14 32h10" stroke="#ccc" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="34" cy="34" r="8" fill="#F26522"/>
+              <path d="M31 34l2 2 4-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="tg-book-title">Belastingoptimalisatie<br>Gids 2026</div>
+          <div class="tg-book-sub">VAE · Bahrein · HK · SG</div>
+          <div class="tg-book-stripe"></div>
+        </div>
+      </div>
+
+      <div class="tg-copy">
+        <h3>Betaal legaal 0% belasting — hier is het volledige draaiboek.</h3>
+        <p>De complete gids voor het kiezen van het juiste rechtsgebied en de juiste structuur voor uw bedrijf.</p>
+        <ul class="tg-perks">
+          <li>UAE, Bahrein, Hongkong, Singapore &amp; Ierland compared</li>
+          <li>Step-by-step costs &amp; timelines per country</li>
+          <li>0%-belastingstructuren uitgelegd in gewone taal</li>
+          <li>Nominee UBO &amp; full privacy strategies</li>
+          <li>Veelgemaakte fouten van oprichters (en hoe u ze voorkomt)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- RIGHT — white form -->
+    <div class="tg-right">
+      <form id="tgLeadForm" onsubmit="return tgLeadSubmit(event)">
+        <span class="tg-eyebrow">Gratis directe download</span>
+        <h2>Ontvang de GCC Belastingoptimalisatiegids</h2>
+        <p class="tg-right-sub">Vul uw gegevens in — de PDF wordt direct gedownload. Wij sturen u ook een kopie via WhatsApp.</p>
+
+        <div class="tg-row">
+          <div class="tg-field">
+            <label>Volledige naam *</label>
+            <input name="name" required placeholder="Uw naam" />
+          </div>
+          <div class="tg-field">
+            <label>E-mail *</label>
+            <input type="email" name="email" required placeholder="you@email.com" />
+          </div>
+        </div>
+
+        <div class="tg-row">
+          <div class="tg-field">
+            <label>WhatsApp</label>
+            <input name="phone" placeholder="+971 50 123 4567" />
+          </div>
+          <div class="tg-field">
+            <label>Land van interesse</label>
+            <select name="country">
+              <option value="">Nog niet zeker</option>
+              <option>UAE</option>
+              <option>Bahrein</option>
+              <option>Hongkong</option>
+              <option>Singapore</option>
+              <option>Ierland</option>
+              <option>BVI &amp; Cayman</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="tg-field">
+          <label>Wat heeft u nodig?</label>
+          <select name="interest">
+            <option value="">Selecteer…</option>
+            <option>Bedrijfsregistratie</option>
+            <option>Opening bankrekening</option>
+            <option>Nominee UBO</option>
+            <option>Shelf company</option>
+            <option>Fiscale residentie</option>
+            <option>Jaarlijkse verlengingen</option>
+            <option>Niet zeker / algemene vraag</option>
+          </select>
+        </div>
+
+        <div class="tg-field">
+          <label>Bericht <span style="font-weight:400;text-transform:none">(optioneel)</span></label>
+          <textarea name="message" placeholder="Vertel ons iets over uw situatie…"></textarea>
+        </div>
+
+        <input type="hidden" name="source" value="Tax Gids Download" />
+        <input type="hidden" name="page" id="tgPage" />
+
+        <button type="submit" class="tg-submit" id="tgSubmitBtn">
+          <svg viewBox="0 0 24 24" fill="#fff"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Download gratis gids
+        </button>
+        <div class="tg-err" id="tgErr">Er is iets misgegaan — probeer het opnieuw of e-mail ons op info@gccstartup.com</div>
+        <p class="tg-note">🔒 Vertrouwelijk. Geen spam. Wij reageren binnen 24 uur.</p>
+      </form>
+
+      <div class="tg-success" id="tgSuccess">
+        <div style="display:flex;justify-content:center;">
+          <div class="tg-success-ic">✓</div>
+        </div>
+        <h3>Uw gids wordt gedownload!</h3>
+        <p>Bekijk uw WhatsApp — wij hebben u de PDF-link gestuurd.<br>Een specialist neemt contact op als u nog vragen heeft.</p>
+        <a class="tg-dl-btn" id="tgDlFallback" href="#" download="GCCStartup_TaxOptimization_Gids.pdf">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="#fff"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Opnieuw downloaden
+        </a>
+        <p class="tg-wa-note">📱 Geen WhatsApp ontvangen? Reageer hier en wij sturen het opnieuw.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  var CMS='';
+  var PDF='https://gccstartup.com/wp-content/uploads/2022/11/GCCStartup_TaxOptimization_Gids.pdf';
+  document.getElementById('tgPage').value=location.href;
+
+  function param(n){return new URLSearchParams(location.search).get(n)||'';}
+  function uuid(){
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
+      var r=Math.random()*16|0;return(c==='x'?r:(r&0x3|0x8)).toString(16);
+    });
+  }
+
+  window.tgLeadSubmit=function(e){
+    e.preventDefault();
+    var btn=document.getElementById('tgSubmitBtn');
+    btn.disabled=true;btn.textContent='Sending…';
+    document.getElementById('tgErr').classList.remove('show');
+
+    var eid=uuid();
+    var data={};
+    new FormData(e.target).forEach(function(v,k){data[k]=v;});
+    data.page=location.href;
+    data.fbclid=param('fbclid');
+    data.eventId=eid;
+    data.source='Tax Gids Download'
+      +(param('utm_source')?' · '+param('utm_source'):'')
+      +(param('utm_campaign')?' · '+param('utm_campaign'):'')
+      +(param('utm_content')?' · '+param('utm_content'):'');
+
+    fetch(CMS+'/api/lead',{
+      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)
+    })
+    .then(function(r){if(!r.ok)throw new Error(r.status);return r.json();})
+    .then(function(){
+      if(typeof fbq!=='undefined'){
+        fbq('track','Lead',{content_name:'Tax Gids Download',currency:'USD',value:0},{eventID:eid});
+      }
+      var a=document.createElement('a');
+      a.href=PDF;a.download='GCCStartup_TaxOptimization_Gids.pdf';
+      document.body.appendChild(a);a.click();document.body.removeChild(a);
+      document.getElementById('tgDlFallback').href=PDF;
+      document.getElementById('tgLeadForm').style.display='none';
+      document.getElementById('tgSuccess').classList.add('show');
+    })
+    .catch(function(){
+      document.getElementById('tgErr').classList.add('show');
+      btn.disabled=false;
+      btn.innerHTML='<svg viewBox="0 0 24 24" width="17" height="17" fill="#fff"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Download gratis gids';
+    });
+    return false;
+  };
+})();
+</script>
