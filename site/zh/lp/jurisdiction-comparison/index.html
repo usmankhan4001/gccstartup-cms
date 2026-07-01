@@ -1,4 +1,4 @@
-<!-- GCC Startup — Promo CTA Band -->
+<!-- GCC 初创企业 — Promo CTA Band -->
 <style>
   @keyframes gcc3-shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
   @keyframes gcc3-blink{0%,100%{opacity:1}50%{opacity:0.3}}
@@ -129,21 +129,21 @@
 
     <!-- Orange left -->
     <div class="gcc3-left">
-      <div class="gcc3-tag">Free · No Obligation</div>
-      <h2 class="gcc3-h">Get Your <span>Free</span><br>Jurisdiction Comparison</h2>
-      <p class="gcc3-p">Tell us your business — we'll send you exactly where to set up, costs, and timeline straight to your WhatsApp.</p>
+      <div class="gcc3-tag">免费·无义务</div>
+      <h2 class="gcc3-h">立即获取 <span>Free</span><br>司法管辖区比较</h2>
+      <p class="gcc3-p">告诉我们你的业务情况——我们会通过WhatsApp直接发送最适合的注册地、成本和时间表给你。</p>
       <div class="gcc3-stats">
         <div>
           <div class="gcc3-stat-n">500+</div>
-          <div class="gcc3-stat-l">Companies set up</div>
+          <div class="gcc3-stat-l">已完成注册的公司</div>
         </div>
         <div>
           <div class="gcc3-stat-n">6</div>
-          <div class="gcc3-stat-l">GCC jurisdictions</div>
+          <div class="gcc3-stat-l">GCC司法管辖区</div>
         </div>
         <div>
           <div class="gcc3-stat-n">24h</div>
-          <div class="gcc3-stat-l">Turnaround</div>
+          <div class="gcc3-stat-l">办理时长</div>
         </div>
       </div>
     </div>
@@ -151,7 +151,7 @@
     <!-- White right form -->
     <div class="gcc3-right">
       <div class="gcc3-timer">
-        <span class="gcc3-timer-label">Offer ends</span>
+        <span class="gcc3-timer-label">优惠截止</span>
         <div class="gcc3-clock">
           <div class="gcc3-unit-col">
             <div class="gcc3-unit" id="gcc3D">02</div>
@@ -176,28 +176,28 @@
       </div>
 
       <div id="gcc3FormWrap">
-        <p class="gcc3-form-h">Claim Your Free Analysis</p>
-        <p class="gcc3-form-p">We'll WhatsApp your personalised breakdown within 24 hours.</p>
-        <input id="gcc3Name" type="text" placeholder="Your name" />
-        <input id="gcc3Phone" type="tel" placeholder="WhatsApp number" />
-        <input id="gcc3Biz" type="text" placeholder="What does your business do?" />
+        <p class="gcc3-form-h">领取您的免费分析</p>
+        <p class="gcc3-form-p">我们会在24小时内通过WhatsApp向你发送个性化分析报告。</p>
+        <input id="gcc3Name" type="text" placeholder="您的姓名" />
+        <input id="gcc3Phone" type="tel" placeholder="WhatsApp号码" />
+        <input id="gcc3Biz" type="text" placeholder="您的业务是做什么的？" />
         <select id="gcc3Stage">
-          <option value="" disabled selected>Business stage</option>
-          <option>Pre-launch / idea stage</option>
-          <option>Already trading, expanding</option>
-          <option>Relocating existing company</option>
-          <option>Investor / holding structure</option>
+          <option value="" disabled selected>业务阶段</option>
+          <option>筹备阶段/构想阶段</option>
+          <option>已在经营，正在扩展</option>
+          <option>迁移现有公司</option>
+          <option>投资/控股架构</option>
         </select>
-        <button class="gcc3-btn" id="gcc3Btn" onclick="gcc3Submit()">Send Me the Free Analysis →</button>
+        <button class="gcc3-btn" id="gcc3Btn" onclick="gcc3Submit()">发送我的免费分析 →</button>
         <div class="gcc3-fine">
-          <span>Free</span><span>No card needed</span><span>WhatsApp delivery</span>
+          <span>Free</span><span>无需信用卡</span><span>WhatsApp发送</span>
         </div>
       </div>
 
       <div class="gcc3-done" id="gcc3Done">
         <div class="gcc3-done-icon">🎯</div>
-        <div class="gcc3-done-title">Analysis on its way!</div>
-        <div class="gcc3-done-sub">Our specialist will send your personalised jurisdiction breakdown to your WhatsApp within 24 hours.</div>
+        <div class="gcc3-done-title">分析结果即将送达！</div>
+        <div class="gcc3-done-sub">我们的专员将在24小时内通过WhatsApp向你发送个性化的司法辖区分析报告。</div>
       </div>
     </div>
 
@@ -238,12 +238,12 @@
     var p=document.getElementById('gcc3Phone').value.trim();
     var b=document.getElementById('gcc3Biz').value.trim();
     var s=document.getElementById('gcc3Stage').value;
-    if(!n||!p){alert('Please enter your name and WhatsApp number.');return;}
+    if(!n||!p){alert('Please enter your name and WhatsApp号码.');return;}
     var btn=document.getElementById('gcc3Btn');btn.disabled=true;btn.textContent='Sending…';
     var eid='promo-'+Date.now();
-    if(window.fbq)fbq('track','Lead',{content_name:'Free Jurisdiction Analysis'},{eventID:eid});
+    if(window.fbq)fbq('track','Lead',{content_name:'Free 司法管辖区 Analysis'},{eventID:eid});
     fetch(CMS+'/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:n,phone:p,interest:'Free Jurisdiction Analysis',
+      body:JSON.stringify({name:n,phone:p,interest:'Free 司法管辖区 Analysis',
         message:[b?'Business: '+b:'',s?'Stage: '+s:''].filter(Boolean).join('\n'),
         source:'Promo CTA Band',page:PAGE,fbclid:fbclid,eventId:eid})
     }).finally(function(){

@@ -141,20 +141,20 @@
 
 <div class="gcc2">
   <div class="gcc2-bar">
-    <p>🗓 Only <strong>3 strategy call slots</strong> left this week — book before they're gone</p>
+    <p>🗓 Solo <strong>3 slot per chiamata strategica</strong> rimaste questa settimana — prenoti prima che finiscano</p>
   </div>
 
   <div class="gcc2-head">
-    <div class="gcc2-tag">Free · 30 Min · No Pitch</div>
-    <h2>Book Your Free <em>Strategy Call</em></h2>
-    <p>Walk away knowing exactly which jurisdiction, license, and structure fits your business.</p>
+    <div class="gcc2-tag">Gratuito · 30 Minuti · Nessuna Vendita</div>
+    <h2>Prenota la Tua Gratuita <em>Chiamata Strategica</em></h2>
+    <p>Sappia esattamente quale giurisdizione, licenza e struttura sono adatte alla Sua attività.</p>
   </div>
 
   <div class="gcc2-perks">
-    <div class="gcc2-perk">Jurisdiction recommendation</div>
-    <div class="gcc2-perk">Cost breakdown</div>
-    <div class="gcc2-perk">Tax strategy</div>
-    <div class="gcc2-perk">No sales pressure</div>
+    <div class="gcc2-perk">Raccomandazione sulla giurisdizione</div>
+    <div class="gcc2-perk">Riepilogo costi</div>
+    <div class="gcc2-perk">Strategia fiscale</div>
+    <div class="gcc2-perk">Nessuna pressione commerciale</div>
   </div>
 
   <div class="gcc2-wrap">
@@ -175,24 +175,24 @@
       <!-- Slots -->
       <div class="gcc2-panel gcc2-slots-panel">
         <div class="gcc2-prompt" id="gcc2Prompt">
-          <span>🗓</span>Pick a date to see available times
+          <span>🗓</span>Scelga una data per vedere gli orari disponibili
         </div>
         <div id="gcc2SlotWrap" style="display:none;flex-direction:column;flex:1;">
-          <p class="gcc2-slots-title">Available times</p>
+          <p class="gcc2-slots-title">Orari disponibili</p>
           <p class="gcc2-slots-date" id="gcc2Date"></p>
           <div class="gcc2-slots-grid" id="gcc2SlotGrid"></div>
           <div class="gcc2-form" id="gcc2Form">
-            <button class="gcc2-form-back" onclick="gcc2BackSlots()">← Change time</button>
+            <button class="gcc2-form-back" onclick="gcc2BackSlots()">← Cambia orario</button>
             <p class="gcc2-form-title" id="gcc2FormTitle"></p>
-            <input id="gcc2Name" type="text" placeholder="Your full name" />
-            <input id="gcc2Email" type="email" placeholder="Email address" />
-            <input id="gcc2Phone" type="tel" placeholder="WhatsApp number" />
-            <button class="gcc2-form-btn" id="gcc2Btn" onclick="gcc2Submit()">Confirm My Free Call →</button>
+            <input id="gcc2Name" type="text" placeholder="Il tuo nome completo" />
+            <input id="gcc2Email" type="email" placeholder="Indirizzo email" />
+            <input id="gcc2Phone" type="tel" placeholder="Numero WhatsApp" />
+            <button class="gcc2-form-btn" id="gcc2Btn" onclick="gcc2Submit()">Conferma la Mia Chiamata Gratuita →</button>
           </div>
         </div>
         <div class="gcc2-done" id="gcc2Done">
           <div class="gcc2-done-icon">🎉</div>
-          <div class="gcc2-done-title">You're booked in!</div>
+          <div class="gcc2-done-title">Sei prenotato!</div>
           <div class="gcc2-done-sub" id="gcc2DoneSub"></div>
         </div>
       </div>
@@ -200,9 +200,9 @@
   </div>
 
   <div class="gcc2-social">
-    <div class="gcc2-social-item"><span>⭐</span> 4.9/5 from 200+ founders</div>
-    <div class="gcc2-social-item"><span>🏆</span> 500+ companies set up</div>
-    <div class="gcc2-social-item"><span>⚡</span> WhatsApp confirmation in 1 hour</div>
+    <div class="gcc2-social-item"><span>⭐</span> 4,9/5 da oltre 200 fondatori</div>
+    <div class="gcc2-social-item"><span>🏆</span> Oltre 500 società costituite</div>
+    <div class="gcc2-social-item"><span>⚡</span> Conferma WhatsApp entro 1 ora</div>
   </div>
 </div>
 
@@ -270,13 +270,13 @@
     var n=document.getElementById('gcc2Name').value.trim();
     var e=document.getElementById('gcc2Email').value.trim();
     var p=document.getElementById('gcc2Phone').value.trim();
-    if(!n||!p){alert('Please enter your name and WhatsApp number.');return;}
+    if(!n||!p){alert('Please enter your name and Numero WhatsApp.');return;}
     var btn=document.getElementById('gcc2Btn');btn.disabled=true;btn.textContent='Confirming…';
     var eid='meet-'+Date.now();
-    if(window.fbq)fbq('track','Lead',{content_name:'Strategy Call'},{eventID:eid});
+    if(window.fbq)fbq('track','Lead',{content_name:'Chiamata Strategica'},{eventID:eid});
     var ds=selDate.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
     fetch(CMS+'/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:n,email:e,phone:p,interest:'Strategy Call',
+      body:JSON.stringify({name:n,email:e,phone:p,interest:'Chiamata Strategica',
         message:'Call: '+ds+' at '+selTime+' GST',
         source:'Meeting Booking CTA',page:PAGE,fbclid:fbclid,eventId:eid})
     }).finally(function(){

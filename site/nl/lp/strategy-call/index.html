@@ -141,20 +141,20 @@
 
 <div class="gcc2">
   <div class="gcc2-bar">
-    <p>🗓 Only <strong>3 strategy call slots</strong> left this week — book before they're gone</p>
+    <p>🗓 Alleen <strong>3 tijdslots strategiegesprek</strong> deze week vertrokken — boek voordat ze op zijn</p>
   </div>
 
   <div class="gcc2-head">
-    <div class="gcc2-tag">Free · 30 Min · No Pitch</div>
-    <h2>Book Your Free <em>Strategy Call</em></h2>
-    <p>Walk away knowing exactly which jurisdiction, license, and structure fits your business.</p>
+    <div class="gcc2-tag">Gratis · 30 min · geen verkooppraatje</div>
+    <h2>Boek uw gratis <em>Strategiegesprek</em></h2>
+    <p>Weet precies welk rechtsgebied, welke vergunning en welke structuur bij uw bedrijf past.</p>
   </div>
 
   <div class="gcc2-perks">
-    <div class="gcc2-perk">Jurisdiction recommendation</div>
-    <div class="gcc2-perk">Cost breakdown</div>
-    <div class="gcc2-perk">Tax strategy</div>
-    <div class="gcc2-perk">No sales pressure</div>
+    <div class="gcc2-perk">Aanbeveling rechtsgebied</div>
+    <div class="gcc2-perk">Kostenoverzicht</div>
+    <div class="gcc2-perk">Belastingstrategie</div>
+    <div class="gcc2-perk">Geen verkoopdruk</div>
   </div>
 
   <div class="gcc2-wrap">
@@ -175,24 +175,24 @@
       <!-- Slots -->
       <div class="gcc2-panel gcc2-slots-panel">
         <div class="gcc2-prompt" id="gcc2Prompt">
-          <span>🗓</span>Pick a date to see available times
+          <span>🗓</span>Kies een datum om beschikbare tijden te zien
         </div>
         <div id="gcc2SlotWrap" style="display:none;flex-direction:column;flex:1;">
-          <p class="gcc2-slots-title">Available times</p>
+          <p class="gcc2-slots-title">Beschikbare tijden</p>
           <p class="gcc2-slots-date" id="gcc2Date"></p>
           <div class="gcc2-slots-grid" id="gcc2SlotGrid"></div>
           <div class="gcc2-form" id="gcc2Form">
-            <button class="gcc2-form-back" onclick="gcc2BackSlots()">← Change time</button>
+            <button class="gcc2-form-back" onclick="gcc2BackSlots()">← Wijzig tijd</button>
             <p class="gcc2-form-title" id="gcc2FormTitle"></p>
-            <input id="gcc2Name" type="text" placeholder="Your full name" />
-            <input id="gcc2Email" type="email" placeholder="Email address" />
-            <input id="gcc2Phone" type="tel" placeholder="WhatsApp number" />
-            <button class="gcc2-form-btn" id="gcc2Btn" onclick="gcc2Submit()">Confirm My Free Call →</button>
+            <input id="gcc2Name" type="text" placeholder="Uw volledige naam" />
+            <input id="gcc2Email" type="email" placeholder="E-mailadres" />
+            <input id="gcc2Phone" type="tel" placeholder="WhatsApp-nummer" />
+            <button class="gcc2-form-btn" id="gcc2Btn" onclick="gcc2Submit()">Bevestig mijn gratis gesprek →</button>
           </div>
         </div>
         <div class="gcc2-done" id="gcc2Done">
           <div class="gcc2-done-icon">🎉</div>
-          <div class="gcc2-done-title">You're booked in!</div>
+          <div class="gcc2-done-title">U bent ingepland!</div>
           <div class="gcc2-done-sub" id="gcc2DoneSub"></div>
         </div>
       </div>
@@ -200,9 +200,9 @@
   </div>
 
   <div class="gcc2-social">
-    <div class="gcc2-social-item"><span>⭐</span> 4.9/5 from 200+ founders</div>
-    <div class="gcc2-social-item"><span>🏆</span> 500+ companies set up</div>
-    <div class="gcc2-social-item"><span>⚡</span> WhatsApp confirmation in 1 hour</div>
+    <div class="gcc2-social-item"><span>⭐</span> 4,9/5 van 200+ oprichters</div>
+    <div class="gcc2-social-item"><span>🏆</span> 500+ bedrijven opgericht</div>
+    <div class="gcc2-social-item"><span>⚡</span> WhatsApp-bevestiging binnen 1 uur</div>
   </div>
 </div>
 
@@ -270,13 +270,13 @@
     var n=document.getElementById('gcc2Name').value.trim();
     var e=document.getElementById('gcc2Email').value.trim();
     var p=document.getElementById('gcc2Phone').value.trim();
-    if(!n||!p){alert('Please enter your name and WhatsApp number.');return;}
+    if(!n||!p){alert('Please enter your name and WhatsApp-nummer.');return;}
     var btn=document.getElementById('gcc2Btn');btn.disabled=true;btn.textContent='Confirming…';
     var eid='meet-'+Date.now();
-    if(window.fbq)fbq('track','Lead',{content_name:'Strategy Call'},{eventID:eid});
+    if(window.fbq)fbq('track','Lead',{content_name:'Strategiegesprek'},{eventID:eid});
     var ds=selDate.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
     fetch(CMS+'/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:n,email:e,phone:p,interest:'Strategy Call',
+      body:JSON.stringify({name:n,email:e,phone:p,interest:'Strategiegesprek',
         message:'Call: '+ds+' at '+selTime+' GST',
         source:'Meeting Booking CTA',page:PAGE,fbclid:fbclid,eventId:eid})
     }).finally(function(){

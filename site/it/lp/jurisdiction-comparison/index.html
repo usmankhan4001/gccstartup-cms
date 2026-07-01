@@ -129,21 +129,21 @@
 
     <!-- Orange left -->
     <div class="gcc3-left">
-      <div class="gcc3-tag">Free · No Obligation</div>
-      <h2 class="gcc3-h">Get Your <span>Free</span><br>Jurisdiction Comparison</h2>
-      <p class="gcc3-p">Tell us your business — we'll send you exactly where to set up, costs, and timeline straight to your WhatsApp.</p>
+      <div class="gcc3-tag">Gratuito · Nessun Impegno</div>
+      <h2 class="gcc3-h">Ottieni il Tuo <span>Free</span><br>Confronto tra Giurisdizioni</h2>
+      <p class="gcc3-p">Ci racconti della Sua attività — Le invieremo esattamente dove costituire la società, costi e tempistiche direttamente su WhatsApp.</p>
       <div class="gcc3-stats">
         <div>
           <div class="gcc3-stat-n">500+</div>
-          <div class="gcc3-stat-l">Companies set up</div>
+          <div class="gcc3-stat-l">Società costituite</div>
         </div>
         <div>
           <div class="gcc3-stat-n">6</div>
-          <div class="gcc3-stat-l">GCC jurisdictions</div>
+          <div class="gcc3-stat-l">Giurisdizioni GCC</div>
         </div>
         <div>
           <div class="gcc3-stat-n">24h</div>
-          <div class="gcc3-stat-l">Turnaround</div>
+          <div class="gcc3-stat-l">Tempi di consegna</div>
         </div>
       </div>
     </div>
@@ -151,7 +151,7 @@
     <!-- White right form -->
     <div class="gcc3-right">
       <div class="gcc3-timer">
-        <span class="gcc3-timer-label">Offer ends</span>
+        <span class="gcc3-timer-label">L'offerta termina</span>
         <div class="gcc3-clock">
           <div class="gcc3-unit-col">
             <div class="gcc3-unit" id="gcc3D">02</div>
@@ -176,28 +176,28 @@
       </div>
 
       <div id="gcc3FormWrap">
-        <p class="gcc3-form-h">Claim Your Free Analysis</p>
-        <p class="gcc3-form-p">We'll WhatsApp your personalised breakdown within 24 hours.</p>
-        <input id="gcc3Name" type="text" placeholder="Your name" />
-        <input id="gcc3Phone" type="tel" placeholder="WhatsApp number" />
-        <input id="gcc3Biz" type="text" placeholder="What does your business do?" />
+        <p class="gcc3-form-h">Richiedi la Tua Analisi Gratuita</p>
+        <p class="gcc3-form-p">Le invieremo la Sua analisi personalizzata su WhatsApp entro 24 ore.</p>
+        <input id="gcc3Name" type="text" placeholder="Il tuo nome" />
+        <input id="gcc3Phone" type="tel" placeholder="Numero WhatsApp" />
+        <input id="gcc3Biz" type="text" placeholder="Di cosa si occupa la tua azienda?" />
         <select id="gcc3Stage">
-          <option value="" disabled selected>Business stage</option>
-          <option>Pre-launch / idea stage</option>
-          <option>Already trading, expanding</option>
-          <option>Relocating existing company</option>
-          <option>Investor / holding structure</option>
+          <option value="" disabled selected>Fase dell'attività</option>
+          <option>Fase pre-lancio / idea</option>
+          <option>Già operativo, in espansione</option>
+          <option>Trasferimento di società esistente</option>
+          <option>Struttura per investitori / holding</option>
         </select>
-        <button class="gcc3-btn" id="gcc3Btn" onclick="gcc3Submit()">Send Me the Free Analysis →</button>
+        <button class="gcc3-btn" id="gcc3Btn" onclick="gcc3Submit()">Inviami l'Analisi Gratuita →</button>
         <div class="gcc3-fine">
-          <span>Free</span><span>No card needed</span><span>WhatsApp delivery</span>
+          <span>Free</span><span>Nessuna carta richiesta</span><span>Invio via WhatsApp</span>
         </div>
       </div>
 
       <div class="gcc3-done" id="gcc3Done">
         <div class="gcc3-done-icon">🎯</div>
-        <div class="gcc3-done-title">Analysis on its way!</div>
-        <div class="gcc3-done-sub">Our specialist will send your personalised jurisdiction breakdown to your WhatsApp within 24 hours.</div>
+        <div class="gcc3-done-title">L'analisi è in arrivo!</div>
+        <div class="gcc3-done-sub">Il nostro specialista invierà la Sua analisi personalizzata della giurisdizione su WhatsApp entro 24 ore.</div>
       </div>
     </div>
 
@@ -238,12 +238,12 @@
     var p=document.getElementById('gcc3Phone').value.trim();
     var b=document.getElementById('gcc3Biz').value.trim();
     var s=document.getElementById('gcc3Stage').value;
-    if(!n||!p){alert('Please enter your name and WhatsApp number.');return;}
+    if(!n||!p){alert('Please enter your name and Numero WhatsApp.');return;}
     var btn=document.getElementById('gcc3Btn');btn.disabled=true;btn.textContent='Sending…';
     var eid='promo-'+Date.now();
-    if(window.fbq)fbq('track','Lead',{content_name:'Free Jurisdiction Analysis'},{eventID:eid});
+    if(window.fbq)fbq('track','Lead',{content_name:'Free Giurisdizione Analysis'},{eventID:eid});
     fetch(CMS+'/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:n,phone:p,interest:'Free Jurisdiction Analysis',
+      body:JSON.stringify({name:n,phone:p,interest:'Free Giurisdizione Analysis',
         message:[b?'Business: '+b:'',s?'Stage: '+s:''].filter(Boolean).join('\n'),
         source:'Promo CTA Band',page:PAGE,fbclid:fbclid,eventId:eid})
     }).finally(function(){
